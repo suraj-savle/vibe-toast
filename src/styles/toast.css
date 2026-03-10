@@ -1,0 +1,302 @@
+/* ================= BASE TOAST ================= */
+
+.toast {
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--toast-text);
+  background-color: var(--toast-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ================= DRAG ================= */
+
+.toast.draggable {
+  cursor: grab;
+}
+
+.toast.draggable:active {
+  cursor: grabbing;
+}
+
+/* ================= CONTENT ================= */
+
+.toast-message {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* ================= ICON ================= */
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+}
+
+.toast-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ================= CLOSE BUTTON ================= */
+
+.toast-close {
+  background: none;
+  border: none;
+  margin-left: 8px;
+
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+/* ================= PROGRESS ================= */
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+
+  background: var(--toast-progress);
+  transform-origin: left;
+}
+
+/* ================= SPINNER ================= */
+
+.toast-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ================= FEEDBACK TOAST ================= */
+.toast.feedback {
+  width: 320px;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  
+  /* Vertical layout */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Consistent spacing between all elements */
+}
+
+.feedback-head {
+  display: flex;
+  align-items: flex-start; /* Align items to top */
+  justify-content: space-between;
+  gap: 12px; /* Space between title and close button */
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+  padding: 4px;
+  line-height: 1;
+  flex-shrink: 0; /* Prevent button from shrinking */
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.toast-close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.toast.feedback strong {
+  font-size: 18px; /* Balanced size */
+  font-weight: 600;
+  line-height: 1.4;
+  flex-grow: 1; /* Allow title to take remaining space */
+  margin: 0; /* Remove margins since we use gap */
+  text-align: left; /* Left aligned in vertical layout */
+  padding-right: 8px; /* Space before close button */
+}
+
+.toast-subtext {
+  font-size: 14px;
+  color: inherit;
+  opacity: 0.7;
+  line-height: 1.5;
+  margin: 0; /* Remove margins, using gap instead */
+}
+
+.toast.feedback textarea {
+  width: 100%;
+  min-height: 120px; /* Taller textarea */
+  padding: 16px; /* More comfortable padding */
+  border-radius: 12px;
+  border: 1px solid;
+  border-color: inherit;
+  opacity: 0.3;
+  resize: vertical;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+  font-family: inherit; /* Match the rest of the UI */
+}
+
+.toast.feedback textarea:focus {
+  opacity: 0.8;
+  border-width: 1.5px;
+}
+
+.toast.feedback textarea::placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+/* ================= FEEDBACK ACTIONS ================= */
+
+.toast-actions {
+  display: flex;
+  flex-direction: column; /* Vertical button layout */
+  gap: 12px;
+  margin-top: 4px; /* Small top margin */
+}
+
+.toast-btn {
+  padding: 12px 20px; /* Comfortable padding */
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%; /* Full width buttons in vertical layout */
+  text-align: center;
+}
+
+.toast-btn.cancel {
+  background: transparent;
+  color: inherit;
+  opacity: 0.7;
+  border: 1px solid;
+  border-color: inherit;
+  opacity: 0.3;
+}
+
+.toast-btn.cancel:hover {
+  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.toast-btn.submit {
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+}
+
+.toast-btn.submit:hover:not(:disabled) {
+  background: #4338ca;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.toast-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Loading state for submit button */
+.toast-btn.submit.loading {
+  position: relative;
+  color: transparent;
+}
+
+.toast-btn.submit.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: toast-spin 0.8s linear infinite;
+}
+
+@keyframes toast-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ================= TRANSITIONS ================= */
+
+.toast.slide {
+  animation: slide-in 0.2s ease-out forwards;
+}
+
+.toast.bounce {
+  animation: bounce-in 0.3s forwards;
+}
+
+.toast.zoom {
+  animation: zoom-in 0.2s forwards;
+}
+
+.toast.exit {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0.8); opacity: 0; }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes zoom-in {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}

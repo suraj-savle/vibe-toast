@@ -1,0 +1,27 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.venv/
+
+# Log files
+logs/
+*.log
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build artifacts
+dist/
+build/
+*.o
+*.a
+*.exe
+
+# Temporary files and backup files
+*~
+*.tmp
+temp/
