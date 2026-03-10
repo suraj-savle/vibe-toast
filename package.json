@@ -1,5 +1,6 @@
 {
   "name": "vibe-toast",
+  
   "version": "0.1.0",
   "description": "Animation-first, minimal toast library for React.",
   "author": "Your Name",
@@ -28,14 +29,19 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./style": "./dist/index.css"
   },
   "files": [
     "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",

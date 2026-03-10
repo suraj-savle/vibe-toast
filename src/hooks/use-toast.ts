@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react"
-import { subscribe } from "../core/store"
-import type { Toast } from "../types/types"
+import { useState, useEffect } from 'react';
+import { toastStore } from '../core/storeBridge';
+import { Toast } from '../types/types'; 
 
-export function useToasts() {
-  const [toasts, setToasts] = useState<Toast[]>([])
+export function useToast() {
+  const [toasts, setToasts] = useState<Toast[]>([]);
 
   useEffect(() => {
-    const unsub = subscribe(setToasts)
-    return unsub
-  }, [])
+    const unsubscribe = toastStore.subscribe((newToasts) => {
+      setToasts(newToasts);
+    });
 
-  return toasts
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return {
+    toasts,
+    dismiss: (id?: string) => toastStore.dismiss(id),
+  };
 }
