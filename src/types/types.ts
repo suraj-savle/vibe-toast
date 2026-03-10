@@ -38,10 +38,12 @@ export interface ToastState {
   toasts: Toast[];
 }
 
-export interface NotifyProviderProps {
-  children: React.ReactNode;
-  position?: ToastPosition;
+export interface ToasterProps {
+  position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+  theme?: 'light' | 'dark' | 'system'; // Add this line
   expand?: boolean;
   richColors?: boolean;
   closeButton?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }

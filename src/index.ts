@@ -1,4 +1,4 @@
-export { NotifyProvider } from './components/NotifyProvider';
+export { Toaster } from './components/Toaster'; // Update this
 export { useToast } from './hooks/use-toast';
 export { toast } from './core/storeBridge';
 export * from './types/types';
