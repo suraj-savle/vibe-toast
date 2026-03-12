@@ -13,7 +13,20 @@ export const ToastItem = ({
   const [isStarted, setIsStarted] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
   const duration = toast.duration;
+  // Inside ToastItem.tsx
+  useEffect(() => {
+    const toastDuration = toast.duration;
 
+    // Don't auto-dismiss if duration is 0 or Infinity
+    if (!toastDuration || toastDuration === Infinity) return;
+
+    const timer = setTimeout(() => {
+      onDismiss();
+    }, toastDuration);
+
+    return () => clearTimeout(timer);
+  }, [toast.id, toast.duration, onDismiss]);
+  
   useEffect(() => {
     // 1. Reset and start progress bar
     setIsStarted(false);
@@ -113,15 +126,15 @@ export const ToastItem = ({
         </div>
       </div>
 
-      {!toast.hideProgressBar && duration !== Infinity && (
+      {/* Only show if NOT hidden AND duration isn't infinite */}
+      {!toast.hideProgressBar && toast.duration !== Infinity && (
         <div className="vibe-progress-track">
           <div
             className="vibe-progress-fill"
-            onTransitionEnd={onDismiss}
             style={{
               backgroundColor: toast.style?.accent || undefined,
               width: isStarted ? "0%" : "100%",
-              transition: `width ${duration}ms linear`,
+              transition: `width ${toast.duration}ms linear`, // Injected duration
             }}
           />
         </div>

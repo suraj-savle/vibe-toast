@@ -1,5 +1,5 @@
 /* 1. Theme Variables */
-:root, 
+:root,
 .vibe-toaster-container {
   --vibe-bg: #09090b;
   --vibe-border: #27272a;
@@ -19,6 +19,7 @@
 
 /* 2. Container */
 .vibe-toaster-container {
+  font-family: inherit;
   gap: 10px !important;
   z-index: 9999;
   pointer-events: none;
@@ -26,6 +27,8 @@
 
 /* 3. The Toast Card */
 .vibe-toast-card {
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
   pointer-events: auto;
   position: relative;
   width: 320px;
@@ -110,7 +113,7 @@
 
 /* 4. Progress Bar */
 .vibe-progress-track {
-  height: 3px; 
+  height: 3px;
   width: 100%;
   background: var(--vibe-progress-bg);
   position: relative; /* Changed to relative so it sits at the bottom of the column */
@@ -122,15 +125,25 @@
 }
 
 /* 5. Variants */
-.vibe-variant-success { --vibe-accent: #10b981; }
-.vibe-variant-error   { --vibe-accent: #ef4444; }
-.vibe-variant-warning { --vibe-accent: #f59e0b; }
-.vibe-variant-info    { --vibe-accent: #3b82f6; }
+.vibe-variant-success {
+  --vibe-accent: #10b981;
+}
+.vibe-variant-error {
+  --vibe-accent: #ef4444;
+}
+.vibe-variant-warning {
+  --vibe-accent: #f59e0b;
+}
+.vibe-variant-info {
+  --vibe-accent: #3b82f6;
+}
 
 .vibe-icon-spin {
   animation: vibe-spin 0.8s linear infinite;
 }
 
 @keyframes vibe-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }

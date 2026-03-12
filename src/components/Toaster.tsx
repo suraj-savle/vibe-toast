@@ -6,7 +6,9 @@ import { ToastItem } from './ToastItem';
 
 export const Toaster: React.FC<ToasterProps> = ({ 
   position = 'top-right',
-  theme = 'system' // Default to system
+  theme = 'system',
+  duration: globalDuration,           // Added
+  hideProgressBar: globalHideProgress // Added
 }) => {
   const { toasts, dismiss } = useToast();
   const isTop = position.includes('top');
@@ -14,7 +16,7 @@ export const Toaster: React.FC<ToasterProps> = ({
   return (
     <div 
       className={`vibe-toaster-container ${position}`}
-      data-theme={theme} // This allows CSS to target themes
+      data-theme={theme}
       style={{
         position: 'fixed',
         display: 'flex',
@@ -37,7 +39,15 @@ export const Toaster: React.FC<ToasterProps> = ({
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
             style={{ pointerEvents: 'auto' }}
           >
-            <ToastItem toast={toast} onDismiss={() => dismiss(toast.id)} />
+            {/* Merge global props with individual toast props here */}
+            <ToastItem 
+              toast={{
+                ...toast,
+                duration: toast.duration ?? globalDuration,
+                hideProgressBar: toast.hideProgressBar ?? globalHideProgress
+              }} 
+              onDismiss={() => dismiss(toast.id)} 
+            />
           </motion.div>
         ))}
       </AnimatePresence>

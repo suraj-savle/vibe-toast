@@ -61,19 +61,22 @@ class ToastStore {
   }
 
   update(id: string, options: Partial<ToastOptions>) {
-    this.toasts = this.toasts.map((t) => {
-      if (t.id === id) {
-        const newVariant = options.variant || t.variant || "default";
-        const newDuration = options.duration !== undefined 
-          ? options.duration 
-          : DEFAULT_TIMEOUTS[newVariant as ToastVariant];
+  this.toasts = this.toasts.map((t) => {
+    if (t.id === id) {
+      const newVariant = options.variant || t.variant || "default";
+      
+      // If we are updating the variant (e.g., loading -> success), 
+      // we should reset the duration to the new variant's default.
+      const newDuration = options.duration !== undefined 
+        ? options.duration 
+        : DEFAULT_TIMEOUTS[newVariant as ToastVariant];
 
-        return { ...t, ...options, duration: newDuration };
-      }
-      return t;
-    });
-    this.emit();
-  }
+      return { ...t, ...options, variant: newVariant, duration: newDuration };
+    }
+    return t;
+  });
+  this.emit();
+}
 
   dismiss(id?: string) {
     if (id) {
@@ -92,8 +95,11 @@ export const toastStore = new ToastStore();
  */
 // Exported API now includes the fixed methods
 export const toast = (options: ToastOptions) => toastStore.add(options);
-toast.dismiss = (id?: string) => toastStore.dismiss(id);
-toast.setLimit = (n: number) => toastStore.setLimit(n);
+// Individual dismissal
+toast.dismiss = (id: string) => toastStore.dismiss(id);
+
+// NEW: Clear all toasts with a clean method name
+toast.dismissAll = () => toastStore.dismiss();toast.setLimit = (n: number) => toastStore.setLimit(n);
 
 toast.promise = <T>(
   promise: Promise<T>,
