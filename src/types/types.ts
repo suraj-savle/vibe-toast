@@ -11,10 +11,11 @@ export interface ToastAction {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
+// Consolidating all options into the main Toast interface
 export interface Toast {
   id: string;
   variant?: ToastVariant;
-  title?: React.ReactNode;
+  title: React.ReactNode;
   description?: React.ReactNode;
   duration?: number;
   icon?: React.ReactNode;
@@ -22,7 +23,14 @@ export interface Toast {
   dismissible?: boolean;
   onDismiss?: (id: string) => void;
   className?: string;
-  style?: React.CSSProperties;
+  hideProgressBar?: boolean; // Toggle visibility of the bar
+  
+  // Custom theme overrides
+  style?: React.CSSProperties & {
+    background?: string;
+    color?: string;
+    accent?: string;
+  };
   metadata?: Record<string, any>;
 }
 
@@ -34,13 +42,9 @@ export interface PromiseOptions<T = any> {
   error: string | React.ReactNode | ((error: any) => React.ReactNode);
 }
 
-export interface ToastState {
-  toasts: Toast[];
-}
-
 export interface ToasterProps {
-  position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
-  theme?: 'light' | 'dark' | 'system'; // Add this line
+  position?: ToastPosition;
+  theme?: 'light' | 'dark' | 'system';
   expand?: boolean;
   richColors?: boolean;
   closeButton?: boolean;

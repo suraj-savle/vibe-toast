@@ -1,121 +1,15 @@
-.vibe-toast-card {
-  --vibe-accent: #3b82f6; /* Default info blue */
-  position: relative;
-  min-width: 380px;
-  max-width: 450px;
-  background: var(--vibe-bg, #0a0a0a);
-  border: 1px solid var(--vibe-border, #27272a);
-  border-radius: 10px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  cursor: grab;
-  margin-bottom: 10px;
-}
-
-.vibe-toast-inner {
-  display: flex;
-  padding: 14px 16px;
-  gap: 12px;
-}
-
-.vibe-toast-icon-side {
-  display: flex;
-  align-items: center;
-  padding-top: 2px;
-}
-
-.vibe-toast-content-side {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.vibe-toast-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.vibe-toast-title {
-  font-weight: 600;
-  font-size: 15px;
-  color: var(--vibe-text-main, #fff);
-}
-
-.vibe-toast-btns {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.vibe-close, .vibe-toggle {
-  background: none;
-  border: none;
-  color: #52525b;
-  cursor: pointer;
-  padding: 4px;
-  transition: 0.2s;
-  display: flex;
-}
-
-.vibe-close:hover { color: #ef4444; }
-.vibe-toggle.active { transform: rotate(180deg); }
-.vibe-toggle:hover { color: #fff; }
-
-.vibe-description {
-  margin-top: 8px;
-  font-size: 13px;
-  color: var(--vibe-text-muted, #a1a1aa);
-  border-top: 1px solid rgba(255,255,255,0.05);
-  padding-top: 8px;
-}
-
-/* Progress Bar */
-.vibe-progress-track {
-  height: 2px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.vibe-progress-fill {
-  height: 100%;
-  background: var(--vibe-accent);
-}
-
-/* Variants */
-.vibe-variant-success { --vibe-accent: #10b981; }
-.vibe-variant-error { --vibe-accent: #ef4444; }
-.vibe-variant-warning { --vibe-accent: #f59e0b; }
-
-.vibe-icon-success { color: #10b981; }
-.vibe-icon-error { color: #ef4444; }
-.vibe-spin { animation: spin 1s linear infinite; }
-
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* Tighter Container */
+/* 1. Theme Variables */
+:root, 
 .vibe-toaster-container {
-  gap: 8px !important;
-}
-/* Tight spacing for the stack */
-.vibe-toaster-container {
-  gap: 8px !important;
-}
-
-/* Theme Fallback (Default Dark) */
-:root, .vibe-toaster-container {
   --vibe-bg: #09090b;
   --vibe-border: #27272a;
   --vibe-text-main: #ffffff;
   --vibe-text-muted: #a1a1aa;
   --vibe-progress-bg: rgba(255, 255, 255, 0.05);
+  --vibe-accent: #3b82f6;
 }
 
-/* Light Theme Override */
-.vibe-toaster-container[data-theme='light'] {
+.vibe-toaster-container[data-theme="light"] {
   --vibe-bg: #ffffff;
   --vibe-border: #e4e4e7;
   --vibe-text-main: #18181b;
@@ -123,81 +17,113 @@
   --vibe-progress-bg: rgba(0, 0, 0, 0.05);
 }
 
+/* 2. Container */
+.vibe-toaster-container {
+  gap: 10px !important;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* 3. The Toast Card */
 .vibe-toast-card {
+  pointer-events: auto;
   position: relative;
-  width: 300px; /* Even tighter width */
+  width: 320px;
   background: var(--vibe-bg);
   border: 1px solid var(--vibe-border);
   color: var(--vibe-text-main);
-  border-radius: 8px;
-  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  touch-action: none; /* Crucial for dragging on mobile */
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  transition: none !important; /* Prevents CSS from breaking Framer Motion */
 }
 
 .vibe-toast-inner {
   display: flex;
-  padding: 12px 14px;
+  padding: 14px;
   gap: 12px;
+  align-items: flex-start; /* Aligns icon with title top */
 }
 
 .vibe-toast-icon-side {
   flex-shrink: 0;
   display: flex;
-  align-items: flex-start;
-  padding-top: 1px;
+  align-items: center;
+  justify-content: center;
+  min-height: 20px; /* Matches title line height */
+}
+
+.vibe-toast-content-side {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .vibe-toast-top-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2px;
+  align-items: flex-start;
+  min-height: 20px;
 }
 
 .vibe-toast-title {
-  font-weight: 700;
-  font-size: 14.5px;
-  color: var(--vibe-text-main) !important; /* Force visible */
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-right: 8px;
 }
 
-/* Simplified Close Button */
 .vibe-close-btn {
   background: none;
   border: none;
   color: var(--vibe-text-muted);
   cursor: pointer;
-  padding: 2px;
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
+  opacity: 0.4;
+  padding: 0;
+  display: flex;
+  transition: opacity 0.2s;
 }
 
 .vibe-close-btn:hover {
-  opacity: 1; /* Just change opacity as requested */
+  opacity: 1;
 }
 
 .vibe-description-text {
-  margin: 4px 0 0 0;
+  margin: 6px 0 0 0;
   font-size: 13px;
   color: var(--vibe-text-muted);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-/* Smooth Progress Bar */
+/* 4. Progress Bar */
 .vibe-progress-track {
-  height: 2px;
+  height: 3px; 
   width: 100%;
   background: var(--vibe-progress-bg);
-  position: absolute;
-  bottom: 0;
+  position: relative; /* Changed to relative so it sits at the bottom of the column */
 }
 
 .vibe-progress-fill {
   height: 100%;
-  background: var(--vibe-accent, #3b82f6);
+  background: var(--vibe-accent);
 }
 
-.vibe-icon-error { color: #ef4444; }
-.vibe-variant-error { --vibe-accent: #ef4444; }
-.vibe-icon-success { color: #10b981; }
+/* 5. Variants */
 .vibe-variant-success { --vibe-accent: #10b981; }
+.vibe-variant-error   { --vibe-accent: #ef4444; }
+.vibe-variant-warning { --vibe-accent: #f59e0b; }
+.vibe-variant-info    { --vibe-accent: #3b82f6; }
+
+.vibe-icon-spin {
+  animation: vibe-spin 0.8s linear infinite;
+}
+
+@keyframes vibe-spin {
+  to { transform: rotate(360deg); }
+}

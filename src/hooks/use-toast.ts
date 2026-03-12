@@ -5,6 +5,8 @@ import { Toast } from '../types/types';
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
+  
+
   useEffect(() => {
     const unsubscribe = toastStore.subscribe((newToasts) => {
       setToasts(newToasts);

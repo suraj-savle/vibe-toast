@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { Toast as ToastType } from '../types/types'; // Import the new Type
 import { toastStore } from '../core/storeBridge';
-import { resolveIcon } from '../internal/resolveIcon';
+import { resolveIcon } from '../utils/resolveIcon';
 
 export const Toast: React.FC<ToastType> = ({ 
   id, 
