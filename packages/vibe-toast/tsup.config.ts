@@ -4,8 +4,10 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['cjs', 'esm'],
   dts: true,
+  splitting: false,
+  sourcemap: true,
   clean: true,
   minify: true,
-  injectStyle: true, // This is key!
-  external: ['react', 'framer-motion', 'lucide-react'],
+  external: ['react', 'framer-motion'],
+  injectStyle: true,
 });

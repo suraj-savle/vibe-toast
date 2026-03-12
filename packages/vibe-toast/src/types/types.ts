@@ -11,6 +11,8 @@ export interface ToastAction {
   label: string;
   /** Callback function triggered when the button is clicked */
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  // For different button styles
+  variant?: 'primary' | 'secondary' | 'ghost';
 }
 
 export interface Toast {
@@ -27,7 +29,8 @@ export interface Toast {
   /** Custom icon to override the variant default */
   icon?: React.ReactNode;
   /** Optional button for user interaction (e.g., Undo) */
-  action?: ToastAction;
+  actions?: ToastAction[]; // Make sure this is plural and an array!
+  action?: ToastAction;    // Keep this as optional if you want to support both
   /** Whether the user can manually close the toast */
   dismissible?: boolean;
   /** Callback fired when the toast is removed */

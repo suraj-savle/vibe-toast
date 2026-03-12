@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { resolveIcon } from "../utils/resolveIcon";
+import { Toast, ToastAction } from '../types/types';
 
 export const ToastItem = ({
   toast,
   onDismiss,
 }: {
-  toast: any;
+  toast: Toast;
   onDismiss: () => void;
 }) => {
   const [isStarted, setIsStarted] = useState(false);
@@ -26,7 +27,7 @@ export const ToastItem = ({
 
     return () => clearTimeout(timer);
   }, [toast.id, toast.duration, onDismiss]);
-  
+
   useEffect(() => {
     // 1. Reset and start progress bar
     setIsStarted(false);
@@ -56,7 +57,7 @@ export const ToastItem = ({
       return toast.icon;
     }
 
-    const iconElement = resolveIcon(toast.variant);
+    const iconElement = resolveIcon(toast.variant || "default");
     if (React.isValidElement(iconElement)) {
       return React.cloneElement(iconElement as React.ReactElement<any>, {
         size: 20,
@@ -105,7 +106,6 @@ export const ToastItem = ({
               <MdClose size={18} />
             </button>
           </div>
-
           <AnimatePresence>
             {showDesc && toast.description && (
               <motion.div
@@ -120,6 +120,35 @@ export const ToastItem = ({
                 style={{ overflow: "hidden" }}
               >
                 <p className="vibe-description-text">{toast.description}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {showDesc && toast.actions && toast.actions.length > 0 && (
+              <motion.div
+                key="actions"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{
+                  height: { duration: 0.4 },
+                  opacity: { duration: 0.2, delay: 0.1 },
+                }}
+              >
+                <div className="vibe-action-stack">
+                  {toast.actions?.map((action: ToastAction, idx: number) => (
+        <button
+          key={idx}
+          className={`vibe-action-btn vibe-btn-${action.variant || "secondary"}`}
+          onClick={(e) => {
+            action.onClick(e);
+            if (!toast.duration || toast.duration !== Infinity) onDismiss();
+          }}
+        >
+          {action.label}
+        </button>
+      ))}
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
