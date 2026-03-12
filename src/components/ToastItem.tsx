@@ -18,7 +18,7 @@ export const ToastItem = ({
     // 1. Reset and start progress bar
     setIsStarted(false);
     const progressTimer = setTimeout(() => setIsStarted(true), 50);
-    
+
     // 2. DELAYED EXPANSION: Show description 300ms after the toast appears
     const expansionTimer = setTimeout(() => setShowDesc(true), 300);
 
@@ -30,11 +30,14 @@ export const ToastItem = ({
 
   // --- Icon Logic ---
   const renderIcon = () => {
+    // Determine the color based on priority
+    const iconColor = toast.style?.accent || `var(--vibe-accent)`;
+
     if (toast.icon) {
       if (React.isValidElement(toast.icon)) {
         return React.cloneElement(toast.icon as React.ReactElement<any>, {
           size: 20,
-          style: { color: toast.style?.accent || undefined, flexShrink: 0 },
+          style: { color: iconColor, flexShrink: 0 },
         });
       }
       return toast.icon;
@@ -43,7 +46,8 @@ export const ToastItem = ({
     const iconElement = resolveIcon(toast.variant);
     if (React.isValidElement(iconElement)) {
       return React.cloneElement(iconElement as React.ReactElement<any>, {
-        style: { color: toast.style?.accent || undefined, flexShrink: 0 },
+        size: 20,
+        style: { color: iconColor, flexShrink: 0 },
       });
     }
     return iconElement;
@@ -53,7 +57,9 @@ export const ToastItem = ({
     ...toast.style,
     backgroundColor: toast.style?.background || "var(--vibe-bg)",
     color: toast.style?.color || "var(--vibe-text-main)",
-    borderColor: !!toast.style?.background ? "transparent" : "var(--vibe-border)",
+    borderColor: !!toast.style?.background
+      ? "transparent"
+      : "var(--vibe-border)",
   };
 
   const textStyle = { color: toast.style?.color || "inherit" };
@@ -71,16 +77,18 @@ export const ToastItem = ({
       style={containerStyle}
     >
       <div className="vibe-toast-inner">
-        <div className="vibe-toast-icon-side">
-          {renderIcon()}
-        </div>
+        <div className="vibe-toast-icon-side">{renderIcon()}</div>
 
         <div className="vibe-toast-content-side">
           <div className="vibe-toast-top-row">
             <span className="vibe-toast-title" style={textStyle}>
               {toast.title}
             </span>
-            <button className="vibe-close-btn" onClick={onDismiss} style={textStyle}>
+            <button
+              className="vibe-close-btn"
+              onClick={onDismiss}
+              style={textStyle}
+            >
               <MdClose size={18} />
             </button>
           </div>
@@ -92,15 +100,13 @@ export const ToastItem = ({
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ 
+                transition={{
                   height: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
-                  opacity: { duration: 0.2, delay: 0.1 } 
+                  opacity: { duration: 0.2, delay: 0.1 },
                 }}
                 style={{ overflow: "hidden" }}
               >
-                <p className="vibe-description-text">
-                  {toast.description}
-                </p>
+                <p className="vibe-description-text">{toast.description}</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -109,14 +115,14 @@ export const ToastItem = ({
 
       {!toast.hideProgressBar && duration !== Infinity && (
         <div className="vibe-progress-track">
-          <div 
-            className="vibe-progress-fill" 
+          <div
+            className="vibe-progress-fill"
             onTransitionEnd={onDismiss}
-            style={{ 
+            style={{
               backgroundColor: toast.style?.accent || undefined,
-              width: isStarted ? '0%' : '100%', 
-              transition: `width ${duration}ms linear` 
-            }} 
+              width: isStarted ? "0%" : "100%",
+              transition: `width ${duration}ms linear`,
+            }}
           />
         </div>
       )}

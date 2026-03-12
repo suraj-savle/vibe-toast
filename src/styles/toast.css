@@ -55,7 +55,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 20px; /* Matches title line height */
+  min-height: 20px;
+  color: var(--vibe-accent); /* Added this line */
+  font-size: 20px; /* Standard size for icon fonts */
+}
+
+/* Optional: Add a subtle glow to the icon to make it pop */
+.vibe-toast-icon-side svg {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
 }
 
 .vibe-toast-content-side {
