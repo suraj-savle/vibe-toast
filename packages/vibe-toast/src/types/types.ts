@@ -15,6 +15,19 @@ export interface ToastAction {
   variant?: 'primary' | 'secondary' | 'ghost';
 }
 
+export interface ToastFunction {
+  (options: ToastOptions | string): string;
+  success: (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => string;
+  error: (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => string;
+  warning: (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => string;
+  info: (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => string;
+  loading: (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => string;
+  dismiss: (id?: string) => void;
+  dismissAll: () => void;
+  setLimit: (n: number) => void;
+  promise: <T>(promise: Promise<T>, options: PromiseOptions<T>) => Promise<T>;
+}
+
 export interface Toast {
   /** Unique identifier for the toast */
   id: string;

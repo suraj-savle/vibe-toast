@@ -1,6 +1,6 @@
 {
   "name": "vibe-toast",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Animation-first, minimal toast library for React.",
   "author": "Suraj Savle",
   "license": "MIT",

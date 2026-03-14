@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { resolveIcon } from "../utils/resolveIcon";
-import { Toast, ToastAction } from '../types/types';
+import { Toast, ToastAction } from "../types/types";
 
 export const ToastItem = ({
   toast,
   onDismiss,
 }: {
   toast: Toast;
-  onDismiss: () => void;
+  onDismiss: (id?: string) => void;
 }) => {
   const [isStarted, setIsStarted] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
@@ -17,12 +17,10 @@ export const ToastItem = ({
   // Inside ToastItem.tsx
   useEffect(() => {
     const toastDuration = toast.duration;
-
-    // Don't auto-dismiss if duration is 0 or Infinity
     if (!toastDuration || toastDuration === Infinity) return;
 
     const timer = setTimeout(() => {
-      onDismiss();
+      onDismiss(toast.id); // This will now work correctly with the stable function
     }, toastDuration);
 
     return () => clearTimeout(timer);
@@ -100,7 +98,7 @@ export const ToastItem = ({
             </span>
             <button
               className="vibe-close-btn"
-              onClick={onDismiss}
+              onClick={() => onDismiss(toast.id)}
               style={textStyle}
             >
               <MdClose size={18} />
@@ -137,17 +135,18 @@ export const ToastItem = ({
               >
                 <div className="vibe-action-stack">
                   {toast.actions?.map((action: ToastAction, idx: number) => (
-        <button
-          key={idx}
-          className={`vibe-action-btn vibe-btn-${action.variant || "secondary"}`}
-          onClick={(e) => {
-            action.onClick(e);
-            if (!toast.duration || toast.duration !== Infinity) onDismiss();
-          }}
-        >
-          {action.label}
-        </button>
-      ))}
+                    <button
+                      key={idx}
+                      className={`vibe-action-btn vibe-btn-${action.variant || "secondary"}`}
+                      onClick={(e) => {
+                        action.onClick(e);
+                        if (!toast.duration || toast.duration !== Infinity)
+                          onDismiss();
+                      }}
+                    >
+                      {action.label}
+                    </button>
+                  ))}
                 </div>
               </motion.div>
             )}

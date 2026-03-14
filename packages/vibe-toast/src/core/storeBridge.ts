@@ -1,4 +1,12 @@
-import { Toast, ToastOptions, PromiseOptions, ToastVariant } from "../types/types";
+// packages/vibe-toast/src/core/storeBridge.ts
+import React from 'react';
+import { 
+  Toast, 
+  ToastOptions, 
+  PromiseOptions, 
+  ToastVariant, 
+  ToastFunction 
+} from "../types/types";
 import { generateId } from "../utils/generateId";
 
 export const DEFAULT_TIMEOUTS: Record<ToastVariant, number> = {
@@ -19,8 +27,7 @@ type Listener = (toasts: Toast[]) => void;
 class ToastStore {
   private toasts: Toast[] = [];
   private listeners: Set<Listener> = new Set();
-  // 1. Initialize the settings property here
-  private settings: StoreSettings = { limit: 5 }; 
+  private settings: StoreSettings = { limit: 5 };
 
   subscribe(listener: Listener) {
     this.listeners.add(listener);
@@ -48,12 +55,12 @@ class ToastStore {
 
     const newToast: Toast = {
       id,
-      ...options, // 2. Spread options FIRST so variant is respected
+      ...options,
       variant,    
       duration,
     };
 
-    // 3. limit check now works because this.settings exists
+    // Add new toast to the front and enforce limit
     this.toasts = [newToast, ...this.toasts].slice(0, this.settings.limit);
 
     this.emit();
@@ -61,22 +68,19 @@ class ToastStore {
   }
 
   update(id: string, options: Partial<ToastOptions>) {
-  this.toasts = this.toasts.map((t) => {
-    if (t.id === id) {
-      const newVariant = options.variant || t.variant || "default";
-      
-      // If we are updating the variant (e.g., loading -> success), 
-      // we should reset the duration to the new variant's default.
-      const newDuration = options.duration !== undefined 
-        ? options.duration 
-        : DEFAULT_TIMEOUTS[newVariant as ToastVariant];
+    this.toasts = this.toasts.map((t) => {
+      if (t.id === id) {
+        const newVariant = options.variant || t.variant || "default";
+        const newDuration = options.duration !== undefined 
+          ? options.duration 
+          : DEFAULT_TIMEOUTS[newVariant as ToastVariant];
 
-      return { ...t, ...options, variant: newVariant, duration: newDuration };
-    }
-    return t;
-  });
-  this.emit();
-}
+        return { ...t, ...options, variant: newVariant, duration: newDuration };
+      }
+      return t;
+    });
+    this.emit();
+  }
 
   dismiss(id?: string) {
     if (id) {
@@ -91,17 +95,44 @@ class ToastStore {
 export const toastStore = new ToastStore();
 
 /**
- * API Logic
+ * Internal base function to handle the logic
  */
-// Exported API now includes the fixed methods
-export const toast = (options: ToastOptions) => toastStore.add(options);
-// Individual dismissal
-toast.dismiss = (id: string) => toastStore.dismiss(id);
+const baseToast = (options: ToastOptions | string): string => {
+  if (typeof options === "string") {
+    return toastStore.add({ title: options, variant: "default" });
+  }
+  return toastStore.add(options);
+};
 
-// NEW: Clear all toasts with a clean method name
-toast.dismissAll = () => toastStore.dismiss();toast.setLimit = (n: number) => toastStore.setLimit(n);
+/**
+ * Helper to create variant-specific methods (success, error, etc.)
+ */
+const createHandler = (variant: ToastVariant) => {
+  return (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => {
+    return toastStore.add({
+      ...options,
+      title,
+      variant,
+    });
+  };
+};
 
-toast.promise = <T>(
+// Assign Shorthand Methods
+baseToast.success = createHandler("success");
+baseToast.error = createHandler("error");
+baseToast.warning = createHandler("warning");
+baseToast.info = createHandler("info");
+baseToast.loading = createHandler("loading");
+
+// Assign Utility Methods
+baseToast.dismiss = (id?: string) => toastStore.dismiss(id);
+baseToast.dismissAll = () => toastStore.dismiss();
+baseToast.setLimit = (n: number) => toastStore.setLimit(n);
+
+/**
+ * Promise Handler Logic
+ */
+baseToast.promise = <T>(
   promise: Promise<T>,
   { loading, success, error }: PromiseOptions<T>
 ) => {
@@ -112,20 +143,27 @@ toast.promise = <T>(
   });
   
   promise
-  .then((data) => {
-    const successTitle = typeof success === 'function' ? success(data) : success;
-    toastStore.update(id, {
-      variant: 'success',
-      title: successTitle,
+    .then((data) => {
+      const successTitle = typeof success === 'function' ? (success as Function)(data) : success;
+      toastStore.update(id, {
+        variant: 'success',
+        title: successTitle,
+        duration: DEFAULT_TIMEOUTS.success
+      });
+    })
+    .catch((err) => {
+      const errorTitle = typeof error === 'function' ? (error as Function)(err) : error;
+      toastStore.update(id, {
+        variant: 'error',
+        title: errorTitle,
+        duration: DEFAULT_TIMEOUTS.error
+      });
     });
-  })
-  .catch((err) => {
-    const errorTitle = typeof error === 'function' ? error(err) : error;
-    toastStore.update(id, {
-      variant: 'error',
-      title: errorTitle,
-    });
-  });
   
   return promise;
 };
+
+/**
+ * Final Export: Cast to ToastFunction for full TypeScript support
+ */
+export const toast = (baseToast as unknown) as ToastFunction;

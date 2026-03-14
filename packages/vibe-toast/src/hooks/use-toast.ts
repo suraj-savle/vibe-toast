@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react'; // Added useCallback
 import { toastStore } from '../core/storeBridge';
 import { Toast } from '../types/types'; 
 
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>([]);
-
-  
 
   useEffect(() => {
     const unsubscribe = toastStore.subscribe((newToasts) => {
@@ -17,8 +15,13 @@ export function useToast() {
     };
   }, []);
 
+  // Use useCallback so this function reference never changes
+  const dismiss = useCallback((id?: string) => {
+    toastStore.dismiss(id);
+  }, []);
+
   return {
     toasts,
-    dismiss: (id?: string) => toastStore.dismiss(id),
+    dismiss,
   };
 }
