@@ -380,7 +380,7 @@ export default function VibeLab() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(activeCode);
-    toast.success("✨ Code copied to clipboard");
+    toast.success("Code copied");
   };
 
   const showRandomToast = () => {
@@ -395,21 +395,10 @@ export default function VibeLab() {
   };
 
   return (
-    <div className="p-6 md:p-12 min-h-screen font-sans antialiased" 
+    <div className="p-4 md:p-4 min-h-screen font-sans antialiased" 
          style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <header className="mb-12 text-center">
-          <div className="inline-block px-4 py-2 bg-[var(--card)] rounded-full border border-[var(--border)]/10 mb-4">
-            <span className="text-sm font-medium">⚡ beta v1.0.0</span>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4" style={{ color: 'var(--text-main)' }}>
-            VibeLab Playground
-          </h1>
-          <p className="text-lg opacity-70 max-w-2xl mx-auto">
-            Experiment with 50+ toast variations • Shorthand • Actions • Promises • Custom Styles
-          </p>
-        </header>
+        
 
         {/* Control Bar */}
         <div className="flex flex-wrap gap-4 justify-between items-center mb-12 p-4 bg-[var(--card)] rounded-2xl border border-[var(--border)]/10">
@@ -653,21 +642,6 @@ export default function VibeLab() {
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="mt-6 grid grid-cols-3 gap-4 text-center">
-              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10">
-                <div className="text-2xl font-bold" style={{ color: 'var(--text-main)' }}>50+</div>
-                <div className="text-xs opacity-50">Examples</div>
-              </div>
-              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10">
-                <div className="text-2xl font-bold" style={{ color: 'var(--text-main)' }}>6</div>
-                <div className="text-xs opacity-50">Positions</div>
-              </div>
-              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10">
-                <div className="text-2xl font-bold" style={{ color: 'var(--text-main)' }}>4</div>
-                <div className="text-xs opacity-50">Variants</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

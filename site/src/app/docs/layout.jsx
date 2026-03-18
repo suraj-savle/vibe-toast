@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation"; // Import this
 import Sidebar from "./components/Sidebar";
 import RightPanel from "./components/RightPanel";
 import { FiMenu, FiX, FiMoreVertical } from "react-icons/fi";
@@ -10,11 +11,21 @@ export default function DocsLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname(); // Get current path
+
+  // Auto-close sidebars on navigation (Mobile only)
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarOpen(false);
+      setRightPanelOpen(false);
+    }
+  }, [pathname, isMobile]);
 
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
+      // On desktop, keep them open. On mobile, keep them closed by default.
       setSidebarOpen(!mobile);
       setRightPanelOpen(!mobile);
     };
@@ -30,7 +41,6 @@ export default function DocsLayout({ children }) {
   };
 
   return (
-    /* Change 1: Set height to h-screen and overflow-hidden on the wrapper */
     <div className="flex h-screen bg-[#FDFCF7] relative overflow-hidden text-[#2A1A10]">
       
       {/* 1. MOBILE HEADER */}
@@ -59,7 +69,7 @@ export default function DocsLayout({ children }) {
       {/* 2. OVERLAY */}
       {isMobile && (sidebarOpen || rightPanelOpen) && (
         <div
-          className="fixed inset-0 bg-[#2A1A10]/20 z-40 transition-opacity"
+          className="fixed inset-0 bg-[#2A1A10]/40 z-40 backdrop-blur-[2px] transition-opacity animate-in fade-in duration-300"
           onClick={closeAll}
         />
       )}
@@ -70,7 +80,7 @@ export default function DocsLayout({ children }) {
           fixed lg:sticky top-0 left-0 h-screen z-50 bg-[#FDFCF7]
           transition-transform duration-300 ease-in-out border-r border-[#EEEADF]/50
           ${isMobile 
-            ? sidebarOpen ? 'translate-x-0 w-[280px] pt-16' : '-translate-x-full w-[280px]'
+            ? sidebarOpen ? 'translate-x-0 w-[280px] pt-16 shadow-2xl' : '-translate-x-full w-[280px]'
             : 'translate-x-0 w-72 flex-shrink-0'
           }
         `}
@@ -78,14 +88,14 @@ export default function DocsLayout({ children }) {
         <Sidebar onClose={closeAll} />
       </div>
 
-      {/* 4. MAIN CONTENT - Change 2: flex-1 + overflow-y-auto enables central scrolling */}
+      {/* 4. MAIN CONTENT */}
       <main 
         className={`
           flex-1 h-full overflow-y-auto scroll-smooth custom-scrollbar
           ${isMobile ? 'pt-16' : ''}
         `}
       >
-        <div className=" mx-auto px-6 lg:px-12 py-8 lg:py-16">
+        <div className="max-w-4xl mx-auto px-6 lg:px-12 py-8 lg:py-16">
           {children}
         </div>
       </main>
@@ -96,14 +106,15 @@ export default function DocsLayout({ children }) {
           fixed lg:sticky top-0 right-0 h-screen z-50 bg-[#FDFCF7]
           transition-transform duration-300 ease-in-out border-l border-[#EEEADF]/50
           ${isMobile 
-            ? rightPanelOpen ? 'translate-x-0 w-[280px] pt-16' : 'translate-x-full w-[280px]'
+            ? rightPanelOpen ? 'translate-x-0 w-[280px] pt-16 shadow-2xl' : 'translate-x-full w-[280px]'
             : 'translate-x-0 w-80 flex-shrink-0'
           }
         `}
       >
         <RightPanel onClose={closeAll} />
       </div>
-       <Toaster 
+
+      <Toaster 
         position="top-right"
         theme="light"
         duration={4000}

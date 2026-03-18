@@ -8,7 +8,7 @@ import VibeFeatures from "@/components/VibeFeatures";
 
 export default function VibeLanding() {
   return (
-    <div className="min-h-screen max-w-5xl mx-auto text-[#1a1a1a] font-sans selection:bg-(--text)">
+    <div className="min-h-screen max-w-6xl mx-auto text-[#1a1a1a] font-sans selection:bg-(--text)">
 
       <Navbar />
 
