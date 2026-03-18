@@ -1,12 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Slab:wght@100..900&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #F9F7EF; /* Off-white SaaS background */
+  --background: #f9f7ef; /* Off-white SaaS background */
   --foreground: #1a1a1a; /* Dark charcoal text */
+  --text-main: #2A1A10;
+  --code-panel: #1E110A;
   --card: #ffffff;
-  --border: #eeeeee;
+  --border: #1a1a1a;
 }
 
+
+@theme {
+  /* This overwrites the default 'font-sans' to use Inter */
+  --font-sans: var(--font-inter);
+  
+  /* This creates a new 'font-pacifico' utility class */
+  --font-pacifico: var(--font-pacifico);
+}
 /* Optional: Smooth scrolling for the landing page */
 html {
   scroll-behavior: smooth;
@@ -15,5 +26,9 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto Slab", serif;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }

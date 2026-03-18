@@ -1,0 +1,61 @@
+## What is vibe-toast?
+
+**vibe-toast** is a premium, lightweight notification library for React & Next.js. It’s designed to provide beautiful, non-intrusive feedback with a focus on speed and ease of use.
+
+<InfoBox type="tip" title="Zero Dependencies">
+  vibe-toast is built from the ground up with pure  logic. No extra weight, just clean notifications.
+</InfoBox>
+
+## Installation
+
+Getting started is as simple as installing the package via your preferred manager:
+
+```bash
+npm install vibe-toast
+```
+
+## Quick Start
+
+To use vibe-toast, you need to add the `Toaster` component to your app and then call the `toast` function from anywhere.
+
+### 1. Setup the Toaster
+
+Add this to your root layout or main application file.
+
+```jsx
+import { Toaster } from 'vibe-toast';
+
+export default function App() {
+  return (
+    <>
+      <Toaster position="top-right" />
+      {/* Your app content */}
+    </>
+  );
+}
+```
+
+### 2. Trigger a Toast
+
+Call the `toast` function inside your components or event handlers.
+
+```jsx
+import { toast } from 'vibe-toast';
+
+function MyComponent() {
+  const notify = () => toast.success('Vibe check passed! 🚀');
+
+  return <button onClick={notify}>Click Me</button>;
+}
+```
+
+<InfoBox type="info">
+You can call `toast` inside or outside of React components. It works perfectly in Redux actions, API interceptors, and regular utility functions.
+</InfoBox>
+
+## Why choose vibe-toast?
+
+* **Featherweight**: Only 1.4kb gzipped.
+* **Simple API**: No complex configuration or context providers required.
+* **Tailwind Ready**: Easily customizable to match your brand's vibe.
+* **Smart Stacking**: Notifications stack elegantly without layout shifts.

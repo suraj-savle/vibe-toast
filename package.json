@@ -8,9 +8,18 @@
   "scripts": {
     "dev": "npm run dev --workspaces --if-present",
     "build": "npm run build --workspaces",
-    "publish-lib": "npm publish --workspace=vibe-toast"
+    "publish-lib": "npm publish --workspace=vibe-toast",
+    "clean": "rm -rf node_modules packages/*/node_modules site/node_modules"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "resolutions": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "overrides": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   }
 }

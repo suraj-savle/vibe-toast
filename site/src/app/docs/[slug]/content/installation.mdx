@@ -1,0 +1,114 @@
+To start using **vibe-toast**, install the package via your preferred package manager. It’s a single dependency with no extra setup required.
+
+```bash
+npm install vibe-toast
+```
+
+<InfoBox type="tip" title="Peer Dependencies">
+vibe-toast requires **React 18** or higher and **React DOM 18** or higher to function correctly with modern root APIs.
+</InfoBox>
+
+---
+
+## Basic Setup
+
+For the toasts to render, you must include the `<Toaster />` component at the root of your application. This component acts as the portal where all your notifications will appear.
+
+### For Next.js (App Router)
+
+Add the toaster to your `app/layout.js` file:
+
+```jsx
+import { Toaster } from 'vibe-toast';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Toaster position="bottom-right" />
+      </body>
+    </html>
+  );
+}
+```
+
+### For Vite / Create React App
+
+Add it to your `App.jsx`:
+
+```jsx
+import { Toaster } from 'vibe-toast';
+
+function App() {
+  return (
+    <div>
+      <Toaster position="top-center" />
+      <nav>...</nav>
+      <main>...</main>
+    </div>
+  );
+}
+```
+
+---
+
+## Usage Guide
+
+Once the toaster is in place, you can trigger a "vibe" from anywhere—inside or outside of React components.
+
+### 1. Success Toast
+
+Best for confirming positive actions like saving settings or successfully sending an email.
+
+```jsx
+import { toast } from 'vibe-toast';
+
+const handleSuccess = () => {
+  toast.success('Profile updated successfully!');
+};
+```
+
+### 2. Error Toast
+
+Use this for API failures or validation errors.
+
+```jsx
+toast.error('Could not connect to the server.');
+```
+
+### 3. Loading (Promises)
+
+You can handle async states automatically. The toast will update its state once the promise resolves or rejects.
+
+```jsx
+const promise = fetchData();
+
+toast.promise(promise, {
+  loading: 'Fetching data...',
+  success: 'Data received!',
+  error: 'Error loading data.',
+});
+```
+
+<InfoBox type="warning" title="Global Scope">
+Because `toast` is an imperative API, you can even call it inside your **Redux slices**, **Axios interceptors**, or **utility functions**. No hooks needed!
+</InfoBox>
+
+---
+
+## TypeScript Support
+
+**vibe-toast** is written in TypeScript and provides full type safety out of the box. You don't need to install any additional `@types` packages.
+
+```tsx
+import { toast, ToastOptions } from 'vibe-toast';
+
+const options: ToastOptions = {
+  duration: 4000,
+  style: { background: '#2A1A10', color: '#fff' }
+};
+
+toast.success('Type-safe vibe!', options);
+```
+---

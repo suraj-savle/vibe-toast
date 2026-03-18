@@ -1,21 +1,55 @@
 import React from "react";
-import { FaGithub } from 'react-icons/fa';
+import { BsGithub } from "react-icons/bs";
+import { CgNpm } from "react-icons/cg";
 
 export const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center px-6 py-6 md:px-20 border-b border-gray-100">
-      <div className="flex items-center gap-2">
-        <span className="font-bold text-xl tracking-tight text-[#2d7a5f]">vibe-toast ☁️</span>
+    <nav className="flex justify-between items-center px-6 py-4 border-b border-(--border)/30 bg-[var(--background)] sticky top-0 z-50">
+      {/* Logo using Pacifico Font and Charcoal Color */}
+      <div className="flex items-center">
+        <span className="font-pacifico text-3xl tracking-tighter text-[var(--foreground)]">
+          vibe-toast
+        </span>
       </div>
-      
-      <div className="hidden md:flex items-center gap-6">
-        <div className="flex items-center gap-6 bg-gray-50 px-6 py-2 rounded-full border border-gray-200">
-          <a href="#" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">Examples</a>
-          <a href="#" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">Builder</a>
-          <a href="#" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">Docs</a>
+
+      <div className="hidden md:flex items-center gap-8">
+        {/* Navigation Links */}
+        <div className="flex items-center gap-6">
+          <a
+            href="/playground"
+            className="text-sm font-semibold text-gray-500 hover:text-[var(--foreground)] transition-colors"
+          >
+            playground
+          </a>
+          <a
+            href="/docs"
+            className="text-sm font-semibold text-gray-500 hover:text-[var(--foreground)] transition-colors"
+          >
+            Docs
+          </a>
         </div>
-        <div className="flex gap-4 text-gray-400">
-          <FaGithub size={20} className="hover:text-black cursor-pointer" />
+
+        {/* Vertical Divider */}
+        <div className="w-[1px] h-5 bg-[var(--border)]" />
+
+        {/* Social Icons */}
+        <div className="flex items-center gap-5 text-[var(--foreground)]/70">
+          <a 
+            href="https://github.com/suraj-savle/vibe-toast" 
+            target="_blank" 
+            rel="noreferrer"
+            className="hover:text-[var(--foreground)] transition-transform hover:scale-110"
+          >
+            <BsGithub size={22} />
+          </a>
+          <a 
+            href="https://www.npmjs.com/package/vibe-toast" 
+            target="_blank" 
+            rel="noreferrer"
+            className="hover:text-[#CB3837] transition-transform hover:scale-110"
+          >
+            <CgNpm size={28} />
+          </a>
         </div>
       </div>
     </nav>

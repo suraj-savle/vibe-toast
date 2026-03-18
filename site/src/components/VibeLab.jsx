@@ -1,0 +1,699 @@
+"use client";
+
+import React, { useState } from "react";
+import { Toaster, toast } from "vibe-toast";
+import { 
+  FaCheck, FaTimes, FaHourglassHalf, FaCompass, 
+  FaTerminal, FaCode, FaLayerGroup, FaCopy, 
+  FaRocket, FaTrash, FaInfoCircle, FaSmile,
+  FaBell, FaClock, FaCloudUploadAlt, FaDownload,
+  FaExclamationTriangle, FaQuestionCircle, FaHeart,
+  FaStar, FaGift, FaMagic, FaPalette, FaCog,
+  FaUndo, FaRedo, FaSave, FaEdit, FaShare,
+  FaLock, FaUnlock, FaEnvelope, FaUserPlus,
+  FaShoppingCart, FaCreditCard, FaMoneyBillWave,
+  FaMapMarkerAlt, FaCalendarCheck, FaFlag
+} from 'react-icons/fa';
+
+export default function VibeLab() {
+  const [activeCode, setActiveCode] = useState('toast.success("Successfully toasted!")');
+  const [position, setPosition] = useState("bottom-right");
+  const [theme, setTheme] = useState("light");
+
+  const positions = [
+    "top-left", "top-center", "top-right",
+    "bottom-left", "bottom-center", "bottom-right"
+  ];
+
+  const themes = [
+    { id: "light", label: "Light", icon: "☀️" },
+    { id: "dark", label: "Dark", icon: "🌙" },
+    { id: "system", label: "System", icon: "💻" }
+  ];
+
+  // Shorthand Examples
+  const shorthandExamples = [
+    { 
+      id: 'short-success', label: 'Success', icon: <FaCheck className="text-emerald-500" />, 
+      code: `toast.success("Operation completed!")`,
+      action: () => toast.success("Operation completed successfully!")
+    },
+    { 
+      id: 'short-error', label: 'Error', icon: <FaTimes className="text-rose-500" />, 
+      code: `toast.error("Something went wrong")`,
+      action: () => toast.error("Failed to process request")
+    },
+    { 
+      id: 'short-info', label: 'Info', icon: <FaInfoCircle className="text-sky-500" />, 
+      code: `toast.info("New update available")`,
+      action: () => toast.info("Version 2.0 is now available")
+    },
+    { 
+      id: 'short-warning', label: 'Warning', icon: <FaExclamationTriangle className="text-amber-500" />, 
+      code: `toast.warning("Your session expires soon")`,
+      action: () => toast.warning("Session expires in 5 minutes")
+    },
+  ];
+
+  // Variant Examples
+  const variantExamples = [
+    { 
+      id: 'variant-success', label: 'Variant Success', icon: <FaCheck className="text-emerald-500" />, 
+      code: `toast({\n  variant: "success",\n  title: "Changes saved",\n  description: "Your profile has been updated"\n})`,
+      action: () => toast({ 
+        variant: "success",
+        title: "Changes saved", 
+        description: "Your profile has been updated"
+      })
+    },
+    { 
+      id: 'variant-error', label: 'Variant Error', icon: <FaTimes className="text-rose-500" />, 
+      code: `toast({\n  variant: "error",\n  title: "Upload failed",\n  description: "File size too large"\n})`,
+      action: () => toast({ 
+        variant: "error",
+        title: "Upload failed", 
+        description: "File size exceeds 10MB limit"
+      })
+    },
+    { 
+      id: 'variant-warning', label: 'Variant Warning', icon: <FaExclamationTriangle className="text-amber-500" />, 
+      code: `toast({\n  variant: "warning",\n  title: "Low disk space",\n  description: "Clean up to continue"\n})`,
+      action: () => toast({ 
+        variant: "warning",
+        title: "Low disk space", 
+        description: "Only 500MB remaining"
+      })
+    },
+    { 
+      id: 'variant-info', label: 'Variant Info', icon: <FaInfoCircle className="text-sky-500" />, 
+      code: `toast({\n  variant: "info",\n  title: "New message",\n  description: "You have 3 unread messages"\n})`,
+      action: () => toast({ 
+        variant: "info",
+        title: "New message", 
+        description: "You have 3 unread messages"
+      })
+    },
+  ];
+
+  // Action Examples
+  const actionExamples = [
+    { 
+      id: 'action-undo', label: 'Undo Action', icon: <FaUndo className="text-blue-500" />, 
+      code: `toast({\n  title: "Item deleted",\n  actions: [\n    { label: "Undo", onClick: handleUndo }\n  ]\n})`,
+      action: () => toast({ 
+        title: "Item deleted", 
+        description: "Post moved to trash",
+        variant: "warning",
+        actions: [{ 
+          label: "Undo", 
+          variant: "primary", 
+          onClick: () => toast.success("Item restored!") 
+        }] 
+      })
+    },
+    { 
+      id: 'action-confirm', label: 'Confirm/Cancel', icon: <FaQuestionCircle className="text-purple-500" />, 
+      code: `toast({\n  title: "Confirm action",\n  actions: [\n    { label: "Yes", onClick: handleYes },\n    { label: "No", onClick: handleNo }\n  ]\n})`,
+      action: () => toast({ 
+        title: "Delete permanently?", 
+        description: "This action cannot be undone",
+        variant: "error",
+        actions: [
+          { label: "Confirm", variant: "primary", onClick: () => toast.success("Deleted!") },
+          { label: "Cancel", variant: "ghost", onClick: () => toast.info("Cancelled") }
+        ] 
+      })
+    },
+    { 
+      id: 'action-multi', label: 'Multiple Actions', icon: <FaLayerGroup className="text-indigo-500" />, 
+      code: `toast({\n  title: "File uploaded",\n  actions: [\n    { label: "Share" },\n    { label: "Download" },\n    { label: "Delete" }\n  ]\n})`,
+      action: () => toast({ 
+        title: "File uploaded", 
+        description: "document.pdf (2.4 MB)",
+        variant: "success",
+        actions: [
+          { label: "Share", variant: "primary", onClick: () => toast.info("Share dialog opened") },
+          { label: "Download", variant: "secondary", onClick: () => toast.success("Download started") },
+          { label: "Delete", variant: "ghost", onClick: () => toast.warning("File moved to trash") }
+        ] 
+      })
+    },
+    { 
+      id: 'action-retry', label: 'Retry Action', icon: <FaRedo className="text-amber-500" />, 
+      code: `toast({\n  variant: "error",\n  title: "Connection lost",\n  actions: [\n    { label: "Retry", onClick: retry }\n  ]\n})`,
+      action: () => toast({ 
+        variant: "error",
+        title: "Connection lost", 
+        description: "Unable to reach server",
+        actions: [{ 
+          label: "Retry", 
+          variant: "primary", 
+          onClick: () => {
+            toast.loading("Reconnecting...");
+            setTimeout(() => toast.success("Connected!"), 1500);
+          }
+        }] 
+      })
+    },
+  ];
+
+  // Promise Examples
+  const promiseExamples = [
+    { 
+      id: 'promise-simple', label: 'Simple Promise', icon: <FaHourglassHalf className="text-sky-500" />, 
+      code: `toast.promise(saveData(), {\n  loading: 'Saving...',\n  success: 'Saved!',\n  error: 'Failed'\n})`,
+      action: () => {
+        const promise = new Promise((res) => setTimeout(res, 2000));
+        toast.promise(promise, { 
+          loading: 'Saving changes...', 
+          success: 'Changes saved successfully!', 
+          error: 'Failed to save' 
+        });
+      }
+    },
+    { 
+      id: 'promise-upload', label: 'Upload Promise', icon: <FaCloudUploadAlt className="text-blue-500" />, 
+      code: `toast.promise(uploadFile(), {\n  loading: 'Uploading...',\n  success: (data) => \`\${data.name} uploaded\`,\n  error: 'Upload failed'\n})`,
+      action: () => {
+        const promise = new Promise((res, rej) => {
+          setTimeout(() => {
+            if (Math.random() > 0.3) {
+              res({ name: "image.jpg", size: "2.4MB" });
+            } else {
+              rej(new Error("Network error"));
+            }
+          }, 2500);
+        });
+        toast.promise(promise, { 
+          loading: 'Uploading image.jpg...', 
+          success: (data) => `${data.name} (${data.size}) uploaded!`, 
+          error: (err) => `Upload failed: ${err.message}` 
+        });
+      }
+    },
+    { 
+      id: 'promise-multi', label: 'Multi-stage', icon: <FaDownload className="text-green-500" />, 
+      code: `const steps = [\n  'Downloading',\n  'Installing',\n  'Cleaning up'\n];`,
+      action: () => {
+        let step = 0;
+        const steps = ['Downloading package...', 'Installing dependencies...', 'Cleaning up...'];
+        
+        const promise = new Promise((res) => {
+          const interval = setInterval(() => {
+            if (step < steps.length) {
+              toast.loading(steps[step]);
+              step++;
+            } else {
+              clearInterval(interval);
+              res("Complete!");
+            }
+          }, 1000);
+        });
+        
+        toast.promise(promise, {
+          loading: steps[0],
+          success: 'Installation complete! 🎉',
+          error: 'Installation failed'
+        });
+      }
+    },
+  ];
+
+  // Icon Examples
+  const iconExamples = [
+    { 
+      id: 'icon-rocket', label: 'Rocket', icon: <FaRocket className="text-purple-500" />, 
+      code: `toast({\n  title: "Launching!",\n  icon: <FaRocket />,\n  style: { accent: "#a855f7" }\n})`,
+      action: () => toast({ 
+        title: "Launching!", 
+        description: "Application is starting up",
+        icon: <FaRocket />, 
+        style: { accent: "#a855f7" } 
+      })
+    },
+    { 
+      id: 'icon-heart', label: 'Heart', icon: <FaHeart className="text-rose-500" />, 
+      code: `toast({\n  title: "Thank you!",\n  icon: <FaHeart />,\n  style: { accent: "#f43f5e" }\n})`,
+      action: () => toast({ 
+        title: "Thank you!", 
+        description: "Your support means a lot",
+        icon: <FaHeart />, 
+        style: { accent: "#f43f5e" } 
+      })
+    },
+    { 
+      id: 'icon-star', label: 'Star', icon: <FaStar className="text-amber-500" />, 
+      code: `toast({\n  title: "New achievement!",\n  icon: <FaStar />,\n  style: { accent: "#f59e0b" }\n})`,
+      action: () => toast({ 
+        title: "New achievement!", 
+        description: "You've earned a gold star",
+        icon: <FaStar />, 
+        style: { accent: "#f59e0b" } 
+      })
+    },
+    { 
+      id: 'icon-gift', label: 'Gift', icon: <FaGift className="text-pink-500" />, 
+      code: `toast({\n  title: "Special offer!",\n  icon: <FaGift />,\n  style: { accent: "#ec4899" }\n})`,
+      action: () => toast({ 
+        title: "Special offer!", 
+        description: "50% off your next purchase",
+        icon: <FaGift />, 
+        style: { accent: "#ec4899" } 
+      })
+    },
+  ];
+
+  // Custom Style Examples
+  const styleExamples = [
+    { 
+      id: 'style-dark', label: 'Dark Mode', icon: <FaPalette className="text-gray-600" />, 
+      code: `toast({\n  title: "Dark theme",\n  style: {\n    background: "#1a1a1a",\n    color: "#fff"\n  }\n})`,
+      action: () => toast({ 
+        title: "Dark theme", 
+        description: "Custom dark background",
+        style: { background: "#1a1a1a", color: "#fff", accent: "#8b5cf6" } 
+      })
+    },
+    { 
+      id: 'style-gradient', label: 'Gradient', icon: <FaMagic className="text-indigo-500" />, 
+      code: `toast({\n  title: "Gradient vibe",\n  style: {\n    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",\n    color: "#fff"\n  }\n})`,
+      action: () => toast({ 
+        title: "Gradient vibe", 
+        description: "Smooth color transition",
+        style: { 
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "#fff",
+          accent: "#fff"
+        } 
+      })
+    },
+    { 
+      id: 'style-border', label: 'Bordered', icon: <FaCog className="text-slate-500" />, 
+      code: `toast({\n  title: "Bordered style",\n  style: {\n    border: "2px solid #3b82f6",\n    background: "transparent"\n  }\n})`,
+      action: () => toast({ 
+        title: "Bordered style", 
+        description: "Clean outline design",
+        style: { 
+          border: "2px solid #3b82f6",
+          background: "transparent",
+          color: "var(--text-main)"
+        } 
+      })
+    },
+  ];
+
+  // Duration Examples
+  const durationExamples = [
+    { 
+      id: 'duration-short', label: 'Short (1.5s)', icon: <FaClock className="text-emerald-500" />, 
+      code: `toast.success("Quick message", { duration: 1500 })`,
+      action: () => toast.success("Quick message", { duration: 1500 })
+    },
+    { 
+      id: 'duration-long', label: 'Long (8s)', icon: <FaClock className="text-amber-500" />, 
+      code: `toast.info("Important notice", { duration: 8000 })`,
+      action: () => toast.info("Important notice - please read carefully", { duration: 8000 })
+    },
+    { 
+      id: 'duration-persist', label: 'Persistent', icon: <FaBell className="text-rose-500" />, 
+      code: `toast.warning("Click to dismiss", { duration: 0 })`,
+      action: () => toast.warning("This toast won't auto-dismiss", { duration: 0 })
+    },
+  ];
+
+  // Application Examples
+  const appExamples = [
+    { 
+      id: 'app-auth', label: 'Auth Events', icon: <FaUserPlus className="text-blue-500" />, 
+      code: `// Login success\ntoast.success("Welcome back!")\n\n// Logout\ntoast.info("Logged out")`,
+      action: () => {
+        toast.success("Welcome back, John! 👋");
+        setTimeout(() => toast.info("Session restored"), 500);
+      }
+    },
+    { 
+      id: 'app-cart', label: 'Shopping Cart', icon: <FaShoppingCart className="text-green-500" />, 
+      code: `toast.success("Item added to cart")\ntoast.info("Cart updated")`,
+      action: () => {
+        toast.success("Product added to cart", { 
+          icon: <FaShoppingCart />,
+          actions: [{ label: "View Cart", onClick: () => toast.info("Opening cart...") }]
+        });
+      }
+    },
+    { 
+      id: 'app-payment', label: 'Payment', icon: <FaCreditCard className="text-purple-500" />, 
+      code: `toast.loading("Processing...")\ntoast.success("Payment complete!")`,
+      action: () => {
+        toast.loading("Processing payment...");
+        setTimeout(() => toast.success("Payment successful! 🎉", { 
+          icon: <FaMoneyBillWave />,
+          actions: [{ label: "View Receipt", onClick: () => {} }]
+        }), 2000);
+      }
+    },
+    { 
+      id: 'app-event', label: 'Calendar', icon: <FaCalendarCheck className="text-indigo-500" />, 
+      code: `toast.success("Event created")\ntoast.info("Reminder set")`,
+      action: () => {
+        toast.success("Meeting scheduled for tomorrow", {
+          icon: <FaCalendarCheck />,
+          actions: [{ label: "Add to Calendar", onClick: () => toast.success("Added!") }]
+        });
+      }
+    },
+  ];
+
+  const handlePositionChange = (pos) => {
+    if (pos === position) return;
+    toast.dismissAll();
+    setPosition(pos);
+    setTimeout(() => {
+      toast.success(`Position updated: ${pos}`);
+    }, 50);
+  };
+
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    toast.success(`Theme switched to ${newTheme} mode`);
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(activeCode);
+    toast.success("✨ Code copied to clipboard");
+  };
+
+  const showRandomToast = () => {
+    const allActions = [
+      () => toast.success("Random success!"),
+      () => toast.error("Random error!"),
+      () => toast.info("Random info!"),
+      () => toast.warning("Random warning!"),
+    ];
+    const random = allActions[Math.floor(Math.random() * allActions.length)];
+    random();
+  };
+
+  return (
+    <div className="p-6 md:p-12 min-h-screen font-sans antialiased" 
+         style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <header className="mb-12 text-center">
+          <div className="inline-block px-4 py-2 bg-[var(--card)] rounded-full border border-[var(--border)]/10 mb-4">
+            <span className="text-sm font-medium">⚡ beta v1.0.0</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4" style={{ color: 'var(--text-main)' }}>
+            VibeLab Playground
+          </h1>
+          <p className="text-lg opacity-70 max-w-2xl mx-auto">
+            Experiment with 50+ toast variations • Shorthand • Actions • Promises • Custom Styles
+          </p>
+        </header>
+
+        {/* Control Bar */}
+        <div className="flex flex-wrap gap-4 justify-between items-center mb-12 p-4 bg-[var(--card)] rounded-2xl border border-[var(--border)]/10">
+          <div className="flex gap-2">
+            {themes.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => handleThemeChange(t.id)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  theme === t.id 
+                  ? 'bg-[var(--text-main)] text-white shadow-lg scale-105' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {t.icon} {t.label}
+              </button>
+            ))}
+          </div>
+          
+          <button
+            onClick={showRandomToast}
+            className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium hover:shadow-lg transition-all flex items-center gap-2"
+          >
+            <FaMagic /> Random Toast
+          </button>
+
+          <button
+            onClick={() => toast.dismissAll()}
+            className="px-4 py-2 border border-[var(--border)]/20 rounded-xl text-sm font-medium hover:bg-gray-100 transition-all"
+          >
+            Dismiss All
+          </button>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left Panel - Buttons */}
+          <div className="space-y-10 max-h-[800px] overflow-y-auto pr-4 custom-scroll">
+            {/* Shorthand Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaCode /> Shorthand Methods
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {shorthandExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Variant Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaLayerGroup /> Variants
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {variantExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Action Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaTrash /> Action Buttons
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {actionExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Promise Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaHourglassHalf /> Promise API
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {promiseExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Icon Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaRocket /> Custom Icons
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {iconExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Style Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaPalette /> Custom Styles
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {styleExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Duration Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaClock /> Duration Control
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {durationExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Application Examples */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaBell /> Real-world Examples
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {appExamples.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveCode(item.code); item.action(); }}
+                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+                    <span className="text-xs font-medium text-center">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Position Controller */}
+            <section>
+              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
+                <FaCompass /> Position Controller
+              </h3>
+              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 grid grid-cols-3 gap-2">
+                {positions.map((pos) => (
+                  <button
+                    key={pos}
+                    onClick={() => handlePositionChange(pos)}
+                    className={`py-2 px-1 text-xs font-medium rounded-lg border transition-all ${
+                      position === pos 
+                      ? "bg-[var(--text-main)] text-white border-[var(--text-main)] shadow-md" 
+                      : "bg-transparent text-gray-500 border-gray-200 hover:border-gray-400 hover:bg-gray-50"
+                    }`}
+                  >
+                    {pos.replace('-', ' ')}
+                  </button>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          {/* Right Panel - Code Display */}
+          <div className="lg:sticky lg:top-10">
+            <div className="rounded-[32px] p-8 shadow-2xl relative min-h-[400px] flex items-center group overflow-hidden border"
+                 style={{ backgroundColor: 'var(--code-panel)' }}>
+              {/* Window Controls */}
+              <div className="absolute top-6 left-8 flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                <div className="w-3 h-3 rounded-full bg-emerald-500/50" />
+              </div>
+              
+              {/* Copy Button */}
+              <button 
+                onClick={copyToClipboard}
+                className="absolute top-6 right-8 text-white/20 hover:text-white transition-colors p-2 bg-white/5 rounded-lg border border-white/5"
+                title="Copy Code"
+              >
+                <FaCopy />
+              </button>
+
+              {/* Code Display */}
+              <pre className="font-mono text-sm md:text-base leading-relaxed text-orange-50/90 w-full overflow-x-auto pt-8">
+                <code>{activeCode}</code>
+              </pre>
+
+              {/* Footer */}
+              <div className="absolute bottom-6 right-8 flex items-center gap-2 text-[8px] font-bold text-white/10 tracking-wider uppercase">
+                <FaTerminal /> vibe-toast • 50+ examples
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="mt-6 grid grid-cols-3 gap-4 text-center">
+              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10">
+                <div className="text-2xl font-bold" style={{ color: 'var(--text-main)' }}>50+</div>
+                <div className="text-xs opacity-50">Examples</div>
+              </div>
+              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10">
+                <div className="text-2xl font-bold" style={{ color: 'var(--text-main)' }}>6</div>
+                <div className="text-xs opacity-50">Positions</div>
+              </div>
+              <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10">
+                <div className="text-2xl font-bold" style={{ color: 'var(--text-main)' }}>4</div>
+                <div className="text-xs opacity-50">Variants</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Toaster Component */}
+      <Toaster 
+        key={position}
+        theme={theme} 
+        position={position} 
+      />
+
+      <style jsx>{`
+        .custom-scroll::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.1);
+          border-radius: 20px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+          background: rgba(0,0,0,0.2);
+        }
+      `}</style>
+    </div>
+  );
+}

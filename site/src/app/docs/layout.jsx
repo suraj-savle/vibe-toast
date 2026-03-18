@@ -1,103 +1,113 @@
-import DocsClient from "./DocsClient";
+"use client";
+
+import { useState, useEffect } from "react";
+import Sidebar from "./components/Sidebar";
+import RightPanel from "./components/RightPanel";
+import { FiMenu, FiX, FiMoreVertical } from "react-icons/fi";
+import { Toaster } from "vibe-toast";
 
 export default function DocsLayout({ children }) {
-  const navigation = [
-    { 
-      section: "Getting Started",
-      items: [
-        { slug: "introduction", title: "Introduction", icon: "🎯" },
-        { slug: "installation", title: "Installation", icon: "📦" },
-        { slug: "quick-start", title: "Quick Start", icon: "⚡" },
-      ]
-    },
-    {
-      section: "Core Concepts",
-      items: [
-        { slug: "basic-usage", title: "Basic Usage", icon: "🚀" },
-        { slug: "variants", title: "Toast Variants", icon: "🎨" },
-        { slug: "actions", title: "Actions & Buttons", icon: "🔘" },
-        { slug: "promises", title: "Promise Toasts", icon: "🤝" },
-      ]
-    },
-    {
-      section: "Customization",
-      items: [
-        { slug: "theming", title: "Theming", icon: "🎭" },
-        { slug: "positions", title: "Positions", icon: "📍" },
-        { slug: "animations", title: "Animations", icon: "✨" },
-        { slug: "styling", title: "Custom Styling", icon: "🎨" },
-      ]
-    },
-    {
-      section: "API Reference",
-      items: [
-        { slug: "toast-api", title: "Toast API", icon: "⚙️" },
-        { slug: "toaster-api", title: "Toaster API", icon: "🔧" },
-        { slug: "types", title: "TypeScript Types", icon: "📘" },
-      ]
-    }
-  ];
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [rightPanelOpen, setRightPanelOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      setSidebarOpen(!mobile);
+      setRightPanelOpen(!mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const closeAll = () => {
+    setSidebarOpen(false);
+    setRightPanelOpen(false);
+  };
 
   return (
-    <div className="flex min-h-screen bg-[var(--background)]">
-      {/* Desktop Sidebar - Server Component */}
-      <aside className="hidden lg:block w-80 bg-white border-r border-[var(--border)] overflow-y-auto h-screen sticky top-0">
-        <div className="p-6">
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-2 mb-8">
-            <span className="text-2xl">🎯</span>
-            <span className="font-bold text-xl">notiflow</span>
-            <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">v1.0.0</span>
-          </a>
+    /* Change 1: Set height to h-screen and overflow-hidden on the wrapper */
+    <div className="flex h-screen bg-[#FDFCF7] relative overflow-hidden text-[#2A1A10]">
+      
+      {/* 1. MOBILE HEADER */}
+      {isMobile && (
+        <header className="fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-[#EEEADF] z-[60] flex items-center justify-between px-4">
+          <button
+            onClick={() => { setSidebarOpen(!sidebarOpen); setRightPanelOpen(false); }}
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+          >
+            {sidebarOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+          </button>
+          
+          <h2 className="font-black text-sm uppercase tracking-widest">
+            vibe-toast <span className="text-gray-400 font-medium ml-1">docs</span>
+          </h2>
+          
+          <button
+            onClick={() => { setRightPanelOpen(!rightPanelOpen); setSidebarOpen(false); }}
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+          >
+            {rightPanelOpen ? <FiX size={20} /> : <FiMoreVertical size={20} />}
+          </button>
+        </header>
+      )}
 
-          {/* GitHub stats */}
-          <div className="flex items-center gap-4 mb-8 text-sm">
-            <a href="https://github.com" className="flex items-center gap-1 text-gray-600 hover:text-black">
-              <span>GitHub</span>
-            </a>
-            <a href="https://github.com/stars" className="flex items-center gap-1 text-gray-600 hover:text-black">
-              <span>⭐ 1.2k</span>
-            </a>
-          </div>
+      {/* 2. OVERLAY */}
+      {isMobile && (sidebarOpen || rightPanelOpen) && (
+        <div
+          className="fixed inset-0 bg-[#2A1A10]/20 z-40 transition-opacity"
+          onClick={closeAll}
+        />
+      )}
 
-          {/* Desktop Navigation */}
-          <nav className="space-y-6">
-            {navigation.map((section, idx) => (
-              <div key={idx}>
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-                  {section.section}
-                </h3>
-                <ul className="space-y-1">
-                  {section.items.map((item) => {
-                    const href = `/docs/${item.slug}`;
-                    
-                    return (
-                      <li key={item.slug}>
-                        <a
-                          href={href}
-                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 hover:text-black transition-colors duration-200"
-                        >
-                          <span>{item.icon}</span>
-                          <span className="flex-1">{item.title}</span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </nav>
+      {/* 3. LEFT SIDEBAR */}
+      <div
+        className={`
+          fixed lg:sticky top-0 left-0 h-screen z-50 bg-[#FDFCF7]
+          transition-transform duration-300 ease-in-out border-r border-[#EEEADF]/50
+          ${isMobile 
+            ? sidebarOpen ? 'translate-x-0 w-[280px] pt-16' : '-translate-x-full w-[280px]'
+            : 'translate-x-0 w-72 flex-shrink-0'
+          }
+        `}
+      >
+        <Sidebar onClose={closeAll} />
+      </div>
+
+      {/* 4. MAIN CONTENT - Change 2: flex-1 + overflow-y-auto enables central scrolling */}
+      <main 
+        className={`
+          flex-1 h-full overflow-y-auto scroll-smooth custom-scrollbar
+          ${isMobile ? 'pt-16' : ''}
+        `}
+      >
+        <div className=" mx-auto px-6 lg:px-12 py-8 lg:py-16">
+          {children}
         </div>
-      </aside>
+      </main>
 
-      {/* Client Component for mobile and interactive features */}
-      <DocsClient navigation={navigation}>
-        <main className="flex-1 min-w-0">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            {children}
-          </div>
-        </main>
-      </DocsClient>
+      {/* 5. RIGHT PANEL */}
+      <div
+        className={`
+          fixed lg:sticky top-0 right-0 h-screen z-50 bg-[#FDFCF7]
+          transition-transform duration-300 ease-in-out border-l border-[#EEEADF]/50
+          ${isMobile 
+            ? rightPanelOpen ? 'translate-x-0 w-[280px] pt-16' : 'translate-x-full w-[280px]'
+            : 'translate-x-0 w-80 flex-shrink-0'
+          }
+        `}
+      >
+        <RightPanel onClose={closeAll} />
+      </div>
+       <Toaster 
+        position="top-right"
+        theme="light"
+        duration={4000}
+      />
     </div>
   );
 }

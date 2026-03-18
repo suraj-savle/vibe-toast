@@ -1,0 +1,193 @@
+
+
+Get up and running with vibe-toast in just a few minutes. This guide will walk you through the essential setup and basic usage.
+
+## Installation
+
+First, install the package using your preferred package manager:
+
+```bash
+npm install vibe-toast
+```
+
+<InfoBox type="info" title="Requirements">
+  vibe-toast requires React 16.8 or higher (for Hooks support). It works with Next.js, Vite, Create React App, and all modern React frameworks.
+</InfoBox>
+
+## Basic Setup
+
+### 1. Add the Toaster Component
+
+The `Toaster` component needs to be added once at the root of your application. It renders the toast container and manages all notifications.
+
+**Next.js App Router (app/layout.js):**
+```jsx
+import { Toaster } from 'vibe-toast';
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Toaster 
+          position="top-right"
+          theme="light"
+          duration={4000}
+        />
+      </body>
+    </html>
+  );
+}
+```
+
+**React (index.js or App.js):**
+```jsx
+import { Toaster } from 'vibe-toast';
+
+function App() {
+  return (
+    <div>
+      <Toaster position="top-right" />
+      <YourAppContent />
+    </div>
+  );
+}
+```
+
+### 2. Trigger Your First Toast
+
+Now you can use the `toast` function anywhere in your components:
+
+```jsx
+import { toast } from 'vibe-toast';
+
+function WelcomeButton() {
+  const showToast = () => {
+    toast.success('Welcome to vibe-toast! 🚀');
+  };
+
+  return (
+    <button onClick={showToast}>
+      Say Hello
+    </button>
+  );
+}
+```
+
+##  Toast Variants
+
+vibe-toast comes with four built-in variants that you can use right away:
+
+### Success Toast
+```jsx
+toast.success('Operation completed successfully!');
+```
+
+### Error Toast
+```jsx
+toast.error('Something went wrong. Please try again.');
+```
+
+### Warning Toast
+```jsx
+toast.warning('Your session will expire in 5 minutes.');
+```
+
+### Info Toast
+```jsx
+toast.info('A new version is available.');
+```
+
+<InfoBox type="tip" title="Try it out">
+  Click the buttons below to see each variant in action!
+</InfoBox>
+
+##  Configuration Options
+
+### Position
+Control where toasts appear on screen:
+
+```jsx
+<Toaster position="top-right" />    // Default
+<Toaster position="top-left" />      // Top left
+<Toaster position="top-center" />    // Top center
+<Toaster position="bottom-right" />  // Bottom right
+<Toaster position="bottom-left" />   // Bottom left
+<Toaster position="bottom-center" /> // Bottom center
+```
+
+### Duration
+Set how long toasts stay visible (in milliseconds):
+
+```jsx
+// Global default (all toasts)
+<Toaster duration={5000} />
+
+// Per toast override
+toast.success('Quick message', { duration: 2000 });
+toast.info('Important notice', { duration: 8000 });
+toast.warning('Persistent toast', { duration: 0 }); // Won't auto-dismiss
+```
+
+### Theme
+Choose between light and dark themes:
+
+```jsx
+<Toaster theme="light" />  // Default
+<Toaster theme="dark" />    // Dark mode
+```
+
+##  Complete Example
+
+Here's a fully functional component demonstrating multiple toast patterns:
+
+```jsx
+import { toast } from 'vibe-toast';
+
+export default function ToastDemo() {
+  const showSuccess = () => {
+    toast.success('Profile updated!', {
+      description: 'Your changes have been saved.',
+    });
+  };
+
+  const showError = () => {
+    toast.error('Upload failed', {
+      description: 'File size exceeds 10MB limit.',
+    });
+  };
+
+  const showPromise = () => {
+    const saveData = new Promise((resolve) => 
+      setTimeout(resolve, 2000)
+    );
+    
+    toast.promise(saveData, {
+      loading: 'Saving...',
+      success: 'Data saved!',
+      error: 'Save failed',
+    });
+  };
+
+  const showAction = () => {
+    toast.warning('File deleted', {
+      description: 'This action can be undone.',
+      actions: [
+        {
+          label: 'Undo',
+          onClick: () => toast.success('File restored!'),
+        },
+      ],
+    });
+  };
+
+  return (
+    <div className="flex gap-4 p-4">
+      <button onClick={showSuccess}>Success</button>
+      <button onClick={showError}>Error</button>
+      <button onClick={showPromise}>Promise</button>
+      <button onClick={showAction}>With Action</button>
+    </div>
+  );
+}
+```
