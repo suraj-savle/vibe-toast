@@ -423,7 +423,7 @@ export default function Playground() {
                     className="p-1.5 sm:p-2 rounded-lg transition-colors text-sm"
                     style={{
                       backgroundColor:
-                        theme === "light" ? "var(--border)" : "transparent",
+                        theme === "light" ? "var(--background)" : "transparent",
                       color: "var(--text-main)",
                       border: "1px solid var(--border)",
                     }}
@@ -919,7 +919,7 @@ export default function Playground() {
                         className="p-2 rounded-lg transition-colors"
                         style={{
                           backgroundColor:
-                            theme === "light" ? "var(--border)" : "transparent",
+                            theme === "light" ? "var(--background)" : "transparent",
                           color: "var(--text-main)",
                           border: "1px solid var(--border)",
                         }}

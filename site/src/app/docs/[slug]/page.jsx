@@ -9,6 +9,9 @@ const pageMetadata = {
   installation: { title: "Installation", description: "Install notiflow" },
   "quick-start": { title: "Quick Start", description: "Get started" },
   "basic-usage": { title: "Basic Usage", description: "Learn how to use notiflow" },
+  "variants": { title: "Variants", description: "Explore different toast styles" },
+  "customization": { title: "Customization", description: "Learn how to customize your toasts" },
+  "api-reference": { title: "API Reference", description: "Detailed API documentation" },
 };
 
 export default async function DocsPage({ params }) {

@@ -1,0 +1,83 @@
+import { 
+  BasicToast,
+  SuccessToasts,
+  ErrorToasts,
+  WarningToasts,
+  InfoToasts,
+  StructuredToast,
+  IconToasts,
+  DurationToasts,
+  UpdateToast,
+  DismissToasts,
+  Playground 
+} from '../../components/ToastButtons';
+
+Learn the fundamental patterns for using vibe-toast in your React applications. All examples below are interactive – click the buttons to see real toasts in action!
+
+## 📋 Basic Toast
+
+The simplest way to display a toast is with the default `toast()` function:
+
+```jsx
+import { toast } from 'vibe-toast';
+
+toast('Hello, world!');
+```
+<BasicToast />
+
+### ✅ Success Toasts
+
+Use toast.success() for positive feedback and completion messages:
+
+```jsx
+toast.success('Operation completed successfully!');
+toast.success('Profile updated', {
+  description: 'Your changes have been saved.',
+});
+```
+<SuccessToasts />
+### ❌ Error Toasts
+
+Use toast.error() for failures and critical issues:
+
+```jsx
+toast.error('Something went wrong!');
+toast.error('Upload failed', {
+  description: 'File size exceeds 10MB limit.',
+});
+```
+<ErrorToasts />
+### ⚠️ Warning Toasts
+
+Use toast.warning() for cautions and approaching limits:
+
+```jsx
+toast.warning('Your session will expire soon');
+toast.warning('Low disk space', {
+  description: 'Only 500MB remaining.',
+});
+```
+<WarningToasts />
+
+### ℹ️ Info Toasts
+Use toast.info() for general information and updates:
+
+```jsx
+toast.info('New update available');
+toast.info('Weekly report ready', {
+  description: 'Click to download.',
+});
+```
+<InfoToasts />
+
+### 📝 Toast with Title and Description
+Use the object API for more structured notifications:
+
+```jsx
+toast({
+  title: 'Welcome back!',
+  description: 'You have 3 new messages.',
+  variant: 'success',
+});
+```
+<StructuredToast />
