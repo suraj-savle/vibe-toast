@@ -1,18 +1,22 @@
-# Vibe Toast
+# Vibe Toast 🎯
 
-A high-vibe, lightweight, and beautifully animated toast library for React. Built with **Framer Motion** for silky-smooth physics and **TypeScript** for a flawless developer experience.
+A lightweight, zero-dependency toast notification library for React. Beautiful, customizable, and easy to use.
 
-[![npm version](https://img.shields.io/npm/v/vibe-toast.svg)](https://www.npmjs.com/package/vibe-toast)
-[![license](https://img.shields.io/npm/l/vibe-toast.svg)](https://github.com/yourusername/vibe-toast/blob/main/LICENSE)
+![npm version](https://img.shields.io/npm/v/vibe-toast.svg)
+![npm downloads](https://img.shields.io/npm/dm/vibe-toast.svg)
+![license](https://img.shields.io/npm/l/vibe-toast.svg)
+![bundle size](https://img.shields.io/bundlephobia/minzip/vibe-toast)
 
-## ✨ Key Features
+## ✨ Features
 
-- **⚡ Shorthand API**: Clean methods like `toast.success()`, `toast.error()`, and `toast.loading()`.
-- **⏳ Promise Handling**: Manage async states (loading → success/error) automatically.
-- **👆 Interactive Gestures**: Native swipe-to-dismiss support using Framer Motion gestures.
-- **🎨 Highly Customizable**: Custom icons, action buttons, and individual styling.
-- **📏 Smart Limits**: Prevent notification spam with a configurable toast limit.
-- **🌓 Theme Support**: Built-in `light`, `dark`, and `system` themes.
+- 🚀 **Lightweight** - Only 1.4kb gzipped, zero dependencies
+- 🎨 **Customizable** - Themes, positions, icons, and actions
+- 📱 **Responsive** - Works perfectly on all screen sizes
+- ⌨️ **Accessible** - Built with ARIA labels and keyboard navigation
+- 🔧 **TypeScript Ready** - Full type definitions included
+- ⚡ **Smart Stacking** - Notifications stack without layout shifts
+- 🎯 **Simple API** - Intuitive and easy to learn
+- 🔄 **Promise Support** - Built-in promise toast handling
 
 ## 📦 Installation
 
@@ -20,111 +24,288 @@ A high-vibe, lightweight, and beautifully animated toast library for React. Buil
 npm install vibe-toast
 ```
 
-## 🛠️ Quick Start
+## 🚀 Quick Start
 
-### 1. Setup the Provider
-
-Add the `Toaster` component at the root of your application (usually in `main.tsx` or `App.tsx`). This component manages the portal and animations.
+### 1. Add the Toaster to your app
 
 ```jsx
 import { Toaster } from 'vibe-toast';
-import 'vibe-toast/dist/style.css'; // Essential for layout and animations
 
 function App() {
   return (
-    <main>
+    <div>
       <Toaster 
-        position="top-right" 
-        theme="dark" 
-        duration={4000} 
+        position="top-right"
+        theme="light"
+        duration={4000}
       />
-      <YourAppContent />
-    </main>
+      {/* Your app content */}
+    </div>
   );
 }
-
 ```
 
-### 2. Trigger Toasts
-
-Import the `toast` function anywhere in your logic—no hooks required for the basic API!
+### 2. Trigger toasts from anywhere
 
 ```jsx
 import { toast } from 'vibe-toast';
 
-// Simple Strings
-toast("Hello World!");
+function MyComponent() {
+  const showToast = () => {
+    toast.success('Welcome to Vibe Toast! 🚀');
+  };
 
-// Shorthand Variants
-toast.success("Profile updated!");
-toast.error("Something went wrong");
-toast.warning("Storage is almost full");
-toast.info("New update available");
-
+  return (
+    <button onClick={showToast}>
+      Show Toast
+    </button>
+  );
+}
 ```
 
-## 🚀 Advanced Usage
+## 📚 API Reference
 
-### Custom Actions & Descriptions
-
-Perfect for "Undo" functionality or complex notifications with multiple interaction points.
+### Toast Variants
 
 ```jsx
-toast.error("File Deleted", {
-  description: "index.ts was moved to the trash.",
+// Success
+toast.success('Operation completed successfully!');
+
+// Error
+toast.error('Something went wrong');
+
+// Warning
+toast.warning('Your session will expire soon');
+
+// Info
+toast.info('New update available');
+
+// Default
+toast('Basic toast message');
+```
+
+### Toast with Title and Description
+
+```jsx
+toast({
+  title: 'Welcome back!',
+  description: 'You have 3 new messages',
+  variant: 'success',
+});
+```
+
+### Custom Duration
+
+```jsx
+// Short duration (1.5 seconds)
+toast.success('Quick message', { duration: 1500 });
+
+// Long duration (8 seconds)
+toast.info('Important notice', { duration: 8000 });
+
+// Persistent (won't auto-dismiss)
+toast.warning('Click to dismiss', { duration: 0 });
+```
+
+### Custom Icons
+
+```jsx
+import { FaRocket, FaHeart } from 'react-icons/fa';
+
+toast({
+  title: 'Blast off!',
+  description: 'Your app is ready',
+  icon: <FaRocket className="text-purple-500" />,
+});
+```
+
+### Action Buttons
+
+```jsx
+toast.warning('File deleted', {
+  description: 'This action can be undone',
   actions: [
-    { 
-      label: "Undo", 
-      variant: "primary", 
-      onClick: () => console.log("Restored!") 
+    {
+      label: 'Undo',
+      variant: 'primary',
+      onClick: () => toast.success('File restored!'),
     },
-    { 
-      label: "View Trash", 
-      variant: "ghost", 
-      onClick: () => openTrash() 
-    }
-  ]
+    {
+      label: 'Dismiss',
+      variant: 'ghost',
+      onClick: () => console.log('Dismissed'),
+    },
+  ],
 });
-
 ```
 
-### Handling Promises
-
-The `toast.promise` method automatically tracks a promise state and updates the UI from loading to success or error.
+### Promise Toasts
 
 ```jsx
-const uploadFile = new Promise((resolve) => setTimeout(resolve, 2000));
+const saveData = async () => {
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  return { id: 123 };
+};
 
-toast.promise(uploadFile, {
-  loading: 'Uploading image...',
-  success: 'Image uploaded successfully!',
-  error: (err) => `Upload failed: ${err.message}`,
+toast.promise(saveData(), {
+  loading: 'Saving...',
+  success: (data) => `Data saved with ID: ${data.id}`,
+  error: (err) => `Error: ${err.message}`,
 });
-
 ```
 
-### Setting Global Limits
-
-Control the maximum number of toasts visible on screen. When the limit is reached, the oldest toast is automatically removed.
+### Updating Toasts
 
 ```jsx
-toast.setLimit(3); // Maintains a clean UI by capping at 3 notifications
+const id = toast.loading('Downloading...');
 
+setTimeout(() => {
+  toast.update(id, {
+    variant: 'success',
+    title: 'Download complete!',
+    description: 'Your file is ready',
+  });
+}, 2000);
 ```
 
-## ⚙️ Configuration (Toaster Props)
+### Dismissing Toasts
+
+```jsx
+// Dismiss a specific toast
+const id = toast('Hello');
+toast.dismiss(id);
+
+// Dismiss all toasts
+toast.dismissAll();
+```
+
+## ⚙️ Configuration
+
+### Toaster Props
 
 | Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `position` | `string` | `'top-right'` | Placement: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right`. |
-| `theme` | `string` | `'system'` | Appearance: `'light'`, `'dark'`, or `'system'`. |
-| `duration` | `number` | `4000` | Global auto-dismiss time in milliseconds. |
-| `expand` | `boolean` | `false` | Whether multiple toasts should expand or stack behind each other. |
-| `richColors` | `boolean` | `false` | If true, applies variant colors (green, red, etc.) to the toast background. |
+|------|------|---------|-------------|
+| `position` | `string` | `'top-right'` | Toast position (`top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right`) |
+| `theme` | `string` | `'light'` | Theme (`light` or `dark`) |
+| `duration` | `number` | `4000` | Default toast duration in milliseconds |
+| `maxToasts` | `number` | `5` | Maximum number of toasts shown at once |
 
+### Toast Options
 
-## 📝 License
+| Option | Type | Description |
+|--------|------|-------------|
+| `title` | `string` | Toast title |
+| `description` | `string` | Toast description |
+| `variant` | `string` | `'success'`, `'error'`, `'warning'`, `'info'` |
+| `duration` | `number` | Duration in milliseconds |
+| `icon` | `ReactNode` | Custom icon |
+| `actions` | `array` | Array of action buttons |
+| `hideProgressBar` | `boolean` | Hide progress bar |
+| `style` | `object` | Custom styles (background, color, accent) |
 
-MIT © [suraj-savle](https://github.com/suraj-savle)
+## 🎨 Custom Styling
 
+### Using CSS Variables
+
+```css
+:root {
+  --toast-background: #ffffff;
+  --toast-text: #1a1a1a;
+  --toast-accent: #3b82f6;
+  --toast-success: #10b981;
+  --toast-error: #ef4444;
+  --toast-warning: #f59e0b;
+  --toast-info: #3b82f6;
+}
 ```
+
+### Inline Styles
+
+```jsx
+toast({
+  title: 'Custom Styled Toast',
+  description: 'With custom colors',
+  style: {
+    background: '#4c1d95',
+    color: '#ede9fe',
+    accent: '#a78bfa',
+  },
+});
+```
+
+## 📱 Examples
+
+### Next.js App Router
+
+```jsx
+// app/layout.js
+import { Toaster } from 'vibe-toast';
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Toaster position="top-right" />
+      </body>
+    </html>
+  );
+}
+```
+
+### React with TypeScript
+
+```tsx
+import { toast, ToastOptions } from 'vibe-toast';
+
+interface UserData {
+  id: number;
+  name: string;
+}
+
+const handleSave = async (data: UserData) => {
+  try {
+    await saveUser(data);
+    toast.success('User saved!');
+  } catch (error) {
+    toast.error('Failed to save user');
+  }
+};
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/suraj-savle/vibe-toast.git
+
+# Install dependencies
+npm install
+
+# Run development playground
+npm run dev
+
+# Build the library
+npm run build
+
+# Run tests
+npm test
+```
+
+## 📄 License
+
+MIT © [Your Name]
+
+## ⭐ Support
+
+If you find this library useful, please consider giving it a star on GitHub!
