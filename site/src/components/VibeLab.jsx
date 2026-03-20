@@ -3,17 +3,17 @@
 import React, { useState } from "react";
 import { Toaster, toast } from "vibe-toast";
 import { 
-  FaCheck, FaTimes, FaHourglassHalf, FaCompass, 
-  FaTerminal, FaCode, FaLayerGroup, FaCopy, 
-  FaRocket, FaTrash, FaInfoCircle, FaSmile,
-  FaBell, FaClock, FaCloudUploadAlt, FaDownload,
-  FaExclamationTriangle, FaQuestionCircle, FaHeart,
-  FaStar, FaGift, FaMagic, FaPalette, FaCog,
-  FaUndo, FaRedo, FaSave, FaEdit, FaShare,
-  FaLock, FaUnlock, FaEnvelope, FaUserPlus,
-  FaShoppingCart, FaCreditCard, FaMoneyBillWave,
-  FaMapMarkerAlt, FaCalendarCheck, FaFlag
-} from 'react-icons/fa';
+  IconCheck, IconX, IconHourglassHigh, IconCompass, 
+  IconTerminal2, IconCode, IconLayersIntersect, IconCopy, 
+  IconRocket, IconTrash, IconInfoCircle, 
+  IconBell, IconClock, IconCloudUpload, IconDownload,
+  IconAlertTriangle, IconHelp, IconHeart,
+  IconStar, IconGift, IconWand, IconPalette, IconSettings,
+  IconArrowBackUp, IconRefresh,
+  IconUserPlus, IconShoppingCart, IconCreditCard, IconCash,
+  IconCalendarEvent, IconSun, IconMoon, IconDeviceDesktop,
+  IconTerminal
+} from '@tabler/icons-react';
 
 export default function VibeLab() {
   const [activeCode, setActiveCode] = useState('toast.success("Successfully toasted!")');
@@ -26,30 +26,30 @@ export default function VibeLab() {
   ];
 
   const themes = [
-    { id: "light", label: "Light", icon: "☀️" },
-    { id: "dark", label: "Dark", icon: "🌙" },
-    { id: "system", label: "System", icon: "💻" }
+    { id: "light", label: "Light", icon: <IconSun size={16} /> },
+    { id: "dark", label: "Dark", icon: <IconMoon size={16} /> },
+    { id: "system", label: "System", icon: <IconDeviceDesktop size={16} /> }
   ];
 
   // Shorthand Examples
   const shorthandExamples = [
     { 
-      id: 'short-success', label: 'Success', icon: <FaCheck className="text-emerald-500" />, 
+      id: 'short-success', label: 'Success', icon: <IconCheck className="text-emerald-500" />, 
       code: `toast.success("Operation completed!")`,
       action: () => toast.success("Operation completed successfully!")
     },
     { 
-      id: 'short-error', label: 'Error', icon: <FaTimes className="text-rose-500" />, 
+      id: 'short-error', label: 'Error', icon: <IconX className="text-rose-500" />, 
       code: `toast.error("Something went wrong")`,
       action: () => toast.error("Failed to process request")
     },
     { 
-      id: 'short-info', label: 'Info', icon: <FaInfoCircle className="text-sky-500" />, 
+      id: 'short-info', label: 'Info', icon: <IconInfoCircle className="text-sky-500" />, 
       code: `toast.info("New update available")`,
       action: () => toast.info("Version 2.0 is now available")
     },
     { 
-      id: 'short-warning', label: 'Warning', icon: <FaExclamationTriangle className="text-amber-500" />, 
+      id: 'short-warning', label: 'Warning', icon: <IconAlertTriangle className="text-amber-500" />, 
       code: `toast.warning("Your session expires soon")`,
       action: () => toast.warning("Session expires in 5 minutes")
     },
@@ -58,7 +58,7 @@ export default function VibeLab() {
   // Variant Examples
   const variantExamples = [
     { 
-      id: 'variant-success', label: 'Variant Success', icon: <FaCheck className="text-emerald-500" />, 
+      id: 'variant-success', label: 'Variant Success', icon: <IconCheck className="text-emerald-500" />, 
       code: `toast({\n  variant: "success",\n  title: "Changes saved",\n  description: "Your profile has been updated"\n})`,
       action: () => toast({ 
         variant: "success",
@@ -67,7 +67,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'variant-error', label: 'Variant Error', icon: <FaTimes className="text-rose-500" />, 
+      id: 'variant-error', label: 'Variant Error', icon: <IconX className="text-rose-500" />, 
       code: `toast({\n  variant: "error",\n  title: "Upload failed",\n  description: "File size too large"\n})`,
       action: () => toast({ 
         variant: "error",
@@ -76,7 +76,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'variant-warning', label: 'Variant Warning', icon: <FaExclamationTriangle className="text-amber-500" />, 
+      id: 'variant-warning', label: 'Variant Warning', icon: <IconAlertTriangle className="text-amber-500" />, 
       code: `toast({\n  variant: "warning",\n  title: "Low disk space",\n  description: "Clean up to continue"\n})`,
       action: () => toast({ 
         variant: "warning",
@@ -85,7 +85,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'variant-info', label: 'Variant Info', icon: <FaInfoCircle className="text-sky-500" />, 
+      id: 'variant-info', label: 'Variant Info', icon: <IconInfoCircle className="text-sky-500" />, 
       code: `toast({\n  variant: "info",\n  title: "New message",\n  description: "You have 3 unread messages"\n})`,
       action: () => toast({ 
         variant: "info",
@@ -98,7 +98,7 @@ export default function VibeLab() {
   // Action Examples
   const actionExamples = [
     { 
-      id: 'action-undo', label: 'Undo Action', icon: <FaUndo className="text-blue-500" />, 
+      id: 'action-undo', label: 'Undo Action', icon: <IconArrowBackUp className="text-blue-500" />, 
       code: `toast({\n  title: "Item deleted",\n  actions: [\n    { label: "Undo", onClick: handleUndo }\n  ]\n})`,
       action: () => toast({ 
         title: "Item deleted", 
@@ -112,7 +112,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'action-confirm', label: 'Confirm/Cancel', icon: <FaQuestionCircle className="text-purple-500" />, 
+      id: 'action-confirm', label: 'Confirm/Cancel', icon: <IconHelp className="text-purple-500" />, 
       code: `toast({\n  title: "Confirm action",\n  actions: [\n    { label: "Yes", onClick: handleYes },\n    { label: "No", onClick: handleNo }\n  ]\n})`,
       action: () => toast({ 
         title: "Delete permanently?", 
@@ -125,7 +125,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'action-multi', label: 'Multiple Actions', icon: <FaLayerGroup className="text-indigo-500" />, 
+      id: 'action-multi', label: 'Multiple Actions', icon: <IconLayersIntersect className="text-indigo-500" />, 
       code: `toast({\n  title: "File uploaded",\n  actions: [\n    { label: "Share" },\n    { label: "Download" },\n    { label: "Delete" }\n  ]\n})`,
       action: () => toast({ 
         title: "File uploaded", 
@@ -139,7 +139,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'action-retry', label: 'Retry Action', icon: <FaRedo className="text-amber-500" />, 
+      id: 'action-retry', label: 'Retry Action', icon: <IconRefresh className="text-amber-500" />, 
       code: `toast({\n  variant: "error",\n  title: "Connection lost",\n  actions: [\n    { label: "Retry", onClick: retry }\n  ]\n})`,
       action: () => toast({ 
         variant: "error",
@@ -160,7 +160,7 @@ export default function VibeLab() {
   // Promise Examples
   const promiseExamples = [
     { 
-      id: 'promise-simple', label: 'Simple Promise', icon: <FaHourglassHalf className="text-sky-500" />, 
+      id: 'promise-simple', label: 'Simple Promise', icon: <IconHourglassHigh className="text-sky-500" />, 
       code: `toast.promise(saveData(), {\n  loading: 'Saving...',\n  success: 'Saved!',\n  error: 'Failed'\n})`,
       action: () => {
         const promise = new Promise((res) => setTimeout(res, 2000));
@@ -172,7 +172,7 @@ export default function VibeLab() {
       }
     },
     { 
-      id: 'promise-upload', label: 'Upload Promise', icon: <FaCloudUploadAlt className="text-blue-500" />, 
+      id: 'promise-upload', label: 'Upload Promise', icon: <IconCloudUpload className="text-blue-500" />, 
       code: `toast.promise(uploadFile(), {\n  loading: 'Uploading...',\n  success: (data) => \`\${data.name} uploaded\`,\n  error: 'Upload failed'\n})`,
       action: () => {
         const promise = new Promise((res, rej) => {
@@ -192,7 +192,7 @@ export default function VibeLab() {
       }
     },
     { 
-      id: 'promise-multi', label: 'Multi-stage', icon: <FaDownload className="text-green-500" />, 
+      id: 'promise-multi', label: 'Multi-stage', icon: <IconDownload className="text-green-500" />, 
       code: `const steps = [\n  'Downloading',\n  'Installing',\n  'Cleaning up'\n];`,
       action: () => {
         let step = 0;
@@ -222,42 +222,42 @@ export default function VibeLab() {
   // Icon Examples
   const iconExamples = [
     { 
-      id: 'icon-rocket', label: 'Rocket', icon: <FaRocket className="text-purple-500" />, 
-      code: `toast({\n  title: "Launching!",\n  icon: <FaRocket />,\n  style: { accent: "#a855f7" }\n})`,
+      id: 'icon-rocket', label: 'Rocket', icon: <IconRocket className="text-purple-500" />, 
+      code: `toast({\n  title: "Launching!",\n  icon: <IconRocket />,\n  style: { accent: "#a855f7" }\n})`,
       action: () => toast({ 
         title: "Launching!", 
         description: "Application is starting up",
-        icon: <FaRocket />, 
+        icon: <IconRocket />, 
         style: { accent: "#a855f7" } 
       })
     },
     { 
-      id: 'icon-heart', label: 'Heart', icon: <FaHeart className="text-rose-500" />, 
-      code: `toast({\n  title: "Thank you!",\n  icon: <FaHeart />,\n  style: { accent: "#f43f5e" }\n})`,
+      id: 'icon-heart', label: 'Heart', icon: <IconHeart className="text-rose-500" />, 
+      code: `toast({\n  title: "Thank you!",\n  icon: <IconHeart />,\n  style: { accent: "#f43f5e" }\n})`,
       action: () => toast({ 
         title: "Thank you!", 
         description: "Your support means a lot",
-        icon: <FaHeart />, 
+        icon: <IconHeart />, 
         style: { accent: "#f43f5e" } 
       })
     },
     { 
-      id: 'icon-star', label: 'Star', icon: <FaStar className="text-amber-500" />, 
-      code: `toast({\n  title: "New achievement!",\n  icon: <FaStar />,\n  style: { accent: "#f59e0b" }\n})`,
+      id: 'icon-star', label: 'Star', icon: <IconStar className="text-amber-500" />, 
+      code: `toast({\n  title: "New achievement!",\n  icon: <IconStar />,\n  style: { accent: "#f59e0b" }\n})`,
       action: () => toast({ 
         title: "New achievement!", 
         description: "You've earned a gold star",
-        icon: <FaStar />, 
+        icon: <IconStar />, 
         style: { accent: "#f59e0b" } 
       })
     },
     { 
-      id: 'icon-gift', label: 'Gift', icon: <FaGift className="text-pink-500" />, 
-      code: `toast({\n  title: "Special offer!",\n  icon: <FaGift />,\n  style: { accent: "#ec4899" }\n})`,
+      id: 'icon-gift', label: 'Gift', icon: <IconGift className="text-pink-500" />, 
+      code: `toast({\n  title: "Special offer!",\n  icon: <IconGift />,\n  style: { accent: "#ec4899" }\n})`,
       action: () => toast({ 
         title: "Special offer!", 
         description: "50% off your next purchase",
-        icon: <FaGift />, 
+        icon: <IconGift />, 
         style: { accent: "#ec4899" } 
       })
     },
@@ -266,7 +266,7 @@ export default function VibeLab() {
   // Custom Style Examples
   const styleExamples = [
     { 
-      id: 'style-dark', label: 'Dark Mode', icon: <FaPalette className="text-gray-600" />, 
+      id: 'style-dark', label: 'Dark Mode', icon: <IconPalette className="text-gray-600" />, 
       code: `toast({\n  title: "Dark theme",\n  style: {\n    background: "#1a1a1a",\n    color: "#fff"\n  }\n})`,
       action: () => toast({ 
         title: "Dark theme", 
@@ -275,7 +275,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'style-gradient', label: 'Gradient', icon: <FaMagic className="text-indigo-500" />, 
+      id: 'style-gradient', label: 'Gradient', icon: <IconWand className="text-indigo-500" />, 
       code: `toast({\n  title: "Gradient vibe",\n  style: {\n    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",\n    color: "#fff"\n  }\n})`,
       action: () => toast({ 
         title: "Gradient vibe", 
@@ -288,7 +288,7 @@ export default function VibeLab() {
       })
     },
     { 
-      id: 'style-border', label: 'Bordered', icon: <FaCog className="text-slate-500" />, 
+      id: 'style-border', label: 'Bordered', icon: <IconSettings className="text-slate-500" />, 
       code: `toast({\n  title: "Bordered style",\n  style: {\n    border: "2px solid #3b82f6",\n    background: "transparent"\n  }\n})`,
       action: () => toast({ 
         title: "Bordered style", 
@@ -305,17 +305,17 @@ export default function VibeLab() {
   // Duration Examples
   const durationExamples = [
     { 
-      id: 'duration-short', label: 'Short (1.5s)', icon: <FaClock className="text-emerald-500" />, 
+      id: 'duration-short', label: 'Short (1.5s)', icon: <IconClock className="text-emerald-500" />, 
       code: `toast.success("Quick message", { duration: 1500 })`,
       action: () => toast.success("Quick message", { duration: 1500 })
     },
     { 
-      id: 'duration-long', label: 'Long (8s)', icon: <FaClock className="text-amber-500" />, 
+      id: 'duration-long', label: 'Long (8s)', icon: <IconClock className="text-amber-500" />, 
       code: `toast.info("Important notice", { duration: 8000 })`,
       action: () => toast.info("Important notice - please read carefully", { duration: 8000 })
     },
     { 
-      id: 'duration-persist', label: 'Persistent', icon: <FaBell className="text-rose-500" />, 
+      id: 'duration-persist', label: 'Persistent', icon: <IconBell className="text-rose-500" />, 
       code: `toast.warning("Click to dismiss", { duration: 0 })`,
       action: () => toast.warning("This toast won't auto-dismiss", { duration: 0 })
     },
@@ -324,7 +324,7 @@ export default function VibeLab() {
   // Application Examples
   const appExamples = [
     { 
-      id: 'app-auth', label: 'Auth Events', icon: <FaUserPlus className="text-blue-500" />, 
+      id: 'app-auth', label: 'Auth Events', icon: <IconUserPlus className="text-blue-500" />, 
       code: `// Login success\ntoast.success("Welcome back!")\n\n// Logout\ntoast.info("Logged out")`,
       action: () => {
         toast.success("Welcome back, John! 👋");
@@ -332,32 +332,32 @@ export default function VibeLab() {
       }
     },
     { 
-      id: 'app-cart', label: 'Shopping Cart', icon: <FaShoppingCart className="text-green-500" />, 
+      id: 'app-cart', label: 'Shopping Cart', icon: <IconShoppingCart className="text-green-500" />, 
       code: `toast.success("Item added to cart")\ntoast.info("Cart updated")`,
       action: () => {
         toast.success("Product added to cart", { 
-          icon: <FaShoppingCart />,
+          icon: <IconShoppingCart />,
           actions: [{ label: "View Cart", onClick: () => toast.info("Opening cart...") }]
         });
       }
     },
     { 
-      id: 'app-payment', label: 'Payment', icon: <FaCreditCard className="text-purple-500" />, 
+      id: 'app-payment', label: 'Payment', icon: <IconCreditCard className="text-purple-500" />, 
       code: `toast.loading("Processing...")\ntoast.success("Payment complete!")`,
       action: () => {
         toast.loading("Processing payment...");
         setTimeout(() => toast.success("Payment successful! 🎉", { 
-          icon: <FaMoneyBillWave />,
+          icon: <IconCash />,
           actions: [{ label: "View Receipt", onClick: () => {} }]
         }), 2000);
       }
     },
     { 
-      id: 'app-event', label: 'Calendar', icon: <FaCalendarCheck className="text-indigo-500" />, 
+      id: 'app-event', label: 'Calendar', icon: <IconCalendarEvent className="text-indigo-500" />, 
       code: `toast.success("Event created")\ntoast.info("Reminder set")`,
       action: () => {
         toast.success("Meeting scheduled for tomorrow", {
-          icon: <FaCalendarCheck />,
+          icon: <IconCalendarEvent />,
           actions: [{ label: "Add to Calendar", onClick: () => toast.success("Added!") }]
         });
       }
@@ -401,28 +401,28 @@ export default function VibeLab() {
         
 
         {/* Control Bar */}
-        <div className="flex flex-wrap gap-4 justify-between items-center mb-12 p-4 bg-[var(--card)] rounded-2xl border border-[var(--border)]/10">
+        <div className="flex flex-wrap gap-4 justify-between items-center mb-12 p-4 bg-[var(--card)] rounded-lg shadow-sm ring-1 ring-black/10">
           <div className="flex gap-2">
             {themes.map((t) => (
               <button
                 key={t.id}
                 onClick={() => handleThemeChange(t.id)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   theme === t.id 
                   ? 'bg-[var(--text-main)] text-white shadow-lg scale-105' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                {t.icon} {t.label}
+                {t.icon} 
               </button>
             ))}
           </div>
           
           <button
             onClick={showRandomToast}
-            className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium hover:shadow-lg transition-all flex items-center gap-2"
+            className="px-5 py-2 rounded-lg text-sm font-medium text-neutral-800 shadow-sm ring-1 ring-black/10 transition-all flex items-center gap-2 bg-[radial-gradient(circle_at_top_left,#f3f4f6_0%,transparent_60%),radial-gradient(circle_at_bottom_right,#e5e7eb_0%,transparent_60%)] hover:bg-neutral-50 hover:shadow-md hover:scale-[1.02]"
           >
-            <FaMagic /> Random Toast
+            <IconWand size={16} /> Random Toast 
           </button>
 
           <button
@@ -439,7 +439,7 @@ export default function VibeLab() {
             {/* Shorthand Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaCode /> Shorthand Methods
+                <IconCode /> Shorthand Methods
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {shorthandExamples.map((item) => (
@@ -458,7 +458,7 @@ export default function VibeLab() {
             {/* Variant Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaLayerGroup /> Variants
+                <IconLayersIntersect /> Variants
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {variantExamples.map((item) => (
@@ -477,7 +477,7 @@ export default function VibeLab() {
             {/* Action Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaTrash /> Action Buttons
+                <IconTrash /> Action Buttons
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {actionExamples.map((item) => (
@@ -496,7 +496,7 @@ export default function VibeLab() {
             {/* Promise Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaHourglassHalf /> Promise API
+                <IconHourglassHigh /> Promise API
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {promiseExamples.map((item) => (
@@ -515,7 +515,7 @@ export default function VibeLab() {
             {/* Icon Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaRocket /> Custom Icons
+                <IconRocket /> Custom Icons
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {iconExamples.map((item) => (
@@ -534,7 +534,7 @@ export default function VibeLab() {
             {/* Style Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaPalette /> Custom Styles
+                <IconPalette /> Custom Styles
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {styleExamples.map((item) => (
@@ -553,7 +553,7 @@ export default function VibeLab() {
             {/* Duration Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaClock /> Duration Control
+                <IconClock /> Duration Control
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {durationExamples.map((item) => (
@@ -572,7 +572,7 @@ export default function VibeLab() {
             {/* Application Examples */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaBell /> Real-world Examples
+                <IconBell /> Real-world Examples
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {appExamples.map((item) => (
@@ -591,7 +591,7 @@ export default function VibeLab() {
             {/* Position Controller */}
             <section>
               <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <FaCompass /> Position Controller
+                <IconCompass /> Position Controller
               </h3>
               <div className="bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 grid grid-cols-3 gap-2">
                 {positions.map((pos) => (
@@ -613,7 +613,7 @@ export default function VibeLab() {
 
           {/* Right Panel - Code Display */}
           <div className="lg:sticky lg:top-10">
-            <div className="rounded-[32px] p-8 shadow-2xl relative min-h-[400px] flex items-center group overflow-hidden border"
+            <div className="rounded-lg p-8 shadow-md ring-1 ring-white/90 relative min-h-[400px] flex items-center group overflow-hidden border"
                  style={{ backgroundColor: 'var(--code-panel)' }}>
               {/* Window Controls */}
               <div className="absolute top-6 left-8 flex gap-2">
@@ -628,7 +628,7 @@ export default function VibeLab() {
                 className="absolute top-6 right-8 text-white/20 hover:text-white transition-colors p-2 bg-white/5 rounded-lg border border-white/5"
                 title="Copy Code"
               >
-                <FaCopy />
+                <IconCopy />
               </button>
 
               {/* Code Display */}
@@ -637,8 +637,8 @@ export default function VibeLab() {
               </pre>
 
               {/* Footer */}
-              <div className="absolute bottom-6 right-8 flex items-center gap-2 text-[8px] font-bold text-white/10 tracking-wider uppercase">
-                <FaTerminal /> vibe-toast • 50+ examples
+              <div className="absolute bottom-6 right-8 flex items-center gap-2 text-[8px] font-bold text-white/40 tracking-wider uppercase">
+                <IconTerminal /> vibe-toast • 50+ examples
               </div>
             </div>
 

@@ -10,4 +10,9 @@ export default defineConfig({
   minify: true,
   external: ['react', 'framer-motion'],
   injectStyle: true,
+  esbuildOptions(options) {
+    options.banner = {
+      js: '"use client";',
+    };
+  },
 });
