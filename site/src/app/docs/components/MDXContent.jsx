@@ -1,5 +1,4 @@
 "use client";
-
 import { MDXRemote } from 'next-mdx-remote';
 import CodeBlock from "./CodeBlock";
 import InfoBox from "./InfoBox";
@@ -14,7 +13,7 @@ import {
   DurationToasts,
   UpdateToast,
   DismissToasts,
-  Playground 
+  Playground,
 } from './ToastButtons';
 
 const components = {

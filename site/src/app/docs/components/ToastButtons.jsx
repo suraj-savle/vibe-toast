@@ -271,3 +271,24 @@ export function Playground() {
     </div>
   );
 }
+
+export function PositionButtons() {
+  const positions = [
+    "top-left", "top-center", "top-right",
+    "bottom-left", "bottom-center", "bottom-right"
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-2 my-4">
+      {positions.map((pos) => (
+        <button
+          key={pos}
+          onClick={() => toast.success(`Position: ${pos}`, { position: pos })}
+          className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 text-sm"
+        >
+          {pos.replace('-', ' ')}
+        </button>
+      ))}
+    </div>
+  );
+}

@@ -12,7 +12,6 @@ import {
   Playground 
 } from '../../components/ToastButtons';
 
-Learn the fundamental patterns for using vibe-toast in your React applications. All examples below are interactive – click the buttons to see real toasts in action!
 
 ## 📋 Basic Toast
 
@@ -81,19 +80,6 @@ toast({
 });
 ```
 <StructuredToast />
-### 🎨 Toast with Custom Icon
-Add any React icon to make your toasts more expressive:
-
-```jsx
-import { FaRocket, FaHeart, FaStar } from 'react-icons/fa';
-
-toast({
-  title: 'Blast off!',
-  description: 'Your app is ready.',
-  icon: <FaRocket className="text-purple-500" />,
-});
-```
-<IconToasts />
 ### ⏱️ Custom Duration
 Control how long toasts stay visible:
 

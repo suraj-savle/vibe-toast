@@ -3,13 +3,9 @@ import docs from "../data/docs";
 export default function Sidebar() {
   return (
     <aside className="w-64 border-r p-6 border-border]">
-
-      <h2 className="font-bold text-lg mb-6">
-        notiflow
-      </h2>
+      <h2 className="font-bold text-lg mb-6">vibe-toast</h2>
 
       <div className="flex flex-col gap-3 text-sm">
-
         {docs.map((item) => (
           <a
             key={item.slug}
@@ -19,9 +15,7 @@ export default function Sidebar() {
             {item.title}
           </a>
         ))}
-
       </div>
-
     </aside>
   );
 }

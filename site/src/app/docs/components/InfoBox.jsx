@@ -1,3 +1,4 @@
+"use client";
 export default function InfoBox({ type = "info", title, children }) {
   const styles = {
     info: {

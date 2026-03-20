@@ -31,9 +31,9 @@ export default function Playground() {
   const [position, setPosition] = useState("top-right");
   const [duration, setDuration] = useState(4000);
   const [theme, setTheme] = useState("light");
-  const [bgColor, setBgColor] = useState("#3b82f6");
-  const [textColor, setTextColor] = useState("#ffffff");
-  const [accentColor, setAccentColor] = useState("#10b981");
+  const [bgColor, setBgColor] = useState("#f9f7ef");
+  const [textColor, setTextColor] = useState("#2A1A10");
+  const [accentColor, setAccentColor] = useState("#1a1a1a");
   const [showIcon, setShowIcon] = useState(true);
   const [selectedIcon, setSelectedIcon] = useState("rocket");
   const [showActions, setShowActions] = useState(false);
@@ -151,9 +151,9 @@ export default function Playground() {
     setPosition("top-right");
     setDuration(4000);
     setTheme("light");
-    setBgColor("#3b82f6");
-    setTextColor("#ffffff");
-    setAccentColor("#10b981");
+    setBgColor("#f9f7ef");
+    setTextColor("#2A1A10");
+    setAccentColor("#1a1a1a");
     setShowIcon(true);
     setSelectedIcon("rocket");
     setShowActions(false);
@@ -299,7 +299,7 @@ export default function Playground() {
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 text-sm border rounded-lg "
                   style={{ borderColor: "var(--border)" }}
                   placeholder="Toast title"
                 />
@@ -316,7 +316,7 @@ export default function Playground() {
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 text-sm border rounded-lg "
                   style={{ borderColor: "var(--border)" }}
                   placeholder="Toast description"
                 />
@@ -333,7 +333,7 @@ export default function Playground() {
                   <select
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-sm border rounded-lg "
                     style={{ borderColor: "var(--border)" }}
                   >
                     {positions.map((p) => (
@@ -357,7 +357,7 @@ export default function Playground() {
                     onChange={(e) => setDuration(Number(e.target.value))}
                     min="0"
                     step="500"
-                    className="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 text-sm border rounded-lg "
                     style={{ borderColor: "var(--border)" }}
                   />
                 </div>
@@ -794,7 +794,7 @@ export default function Playground() {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border rounded-lg "
                     style={{ borderColor: "var(--border)" }}
                     placeholder="Toast title"
                   />
@@ -811,7 +811,7 @@ export default function Playground() {
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border rounded-lg "
                     style={{ borderColor: "var(--border)" }}
                     placeholder="Toast description"
                   />
@@ -858,7 +858,7 @@ export default function Playground() {
                   <select
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border rounded-lg "
                     style={{ borderColor: "var(--border)" }}
                   >
                     {positions.map((p) => (
@@ -882,7 +882,7 @@ export default function Playground() {
                     onChange={(e) => setDuration(Number(e.target.value))}
                     min="0"
                     step="500"
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border rounded-lg "
                     style={{ borderColor: "var(--border)" }}
                   />
                 </div>
@@ -919,7 +919,9 @@ export default function Playground() {
                         className="p-2 rounded-lg transition-colors"
                         style={{
                           backgroundColor:
-                            theme === "light" ? "var(--background)" : "transparent",
+                            theme === "light"
+                              ? "var(--background)"
+                              : "transparent",
                           color: "var(--text-main)",
                           border: "1px solid var(--border)",
                         }}

@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/vibe-toast.svg)](https://www.npmjs.com/package/vibe-toast)
 [![npm downloads](https://img.shields.io/npm/dm/vibe-toast.svg)](https://www.npmjs.com/package/vibe-toast)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/vibe-toast)](https://bundlephobia.com/package/vibe-toast)
-[![license](https://img.shields.io/npm/l/vibe-toast.svg)](https://github.com/yourusername/vibe-toast/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/vibe-toast.svg)](https://github.com/suraj-savle/vibe-toast/blob/main/LICENSE)
 
 A lightweight, zero-dependency toast notification library for React. Beautiful, customizable, and easy to use.
 
@@ -82,15 +82,6 @@ toast.promise(save(), {
 })
 ```
 
-## ⚙️ API
-
-### Toaster Props
-| Prop | Type | Default | Options |
-|------|------|---------|---------|
-| `position` | `string` | `'top-right'` | `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right` |
-| `theme` | `string` | `'light'` | `light`, `dark` |
-| `duration` | `number` | `4000` | milliseconds |
-| `maxToasts` | `number` | `5` | max toasts shown at once |
 
 ### Toast Methods
 - `toast.success(message, options?)`
@@ -104,23 +95,9 @@ toast.promise(save(), {
 - `toast.dismissAll()`
 - `toast.update(id, options)`
 
-## 📦 Bundle Size
-
-| Library | Size (gzipped) |
-|---------|---------------|
-| `vibe-toast` | **1.4kb** |
-| `react-hot-toast` | 7.2kb |
-| `sonner` | 4.8kb |
-| `react-toastify` | 15.2kb |
-
-## 📄 License
-
-MIT © [Your Name]
-
----
 
 <div align="center">
-  <a href="https://github.com/yourusername/vibe-toast">GitHub</a> •
-  <a href="https://github.com/yourusername/vibe-toast/issues">Issues</a> •
-  <a href="https://github.com/yourusername/vibe-toast#readme">Documentation</a>
+  <a href="https://github.com/suraj-savle/vibe-toast">GitHub</a> •
+  <a href="https://github.com/suraj-savle/vibe-toast/issues">Issues</a> •
+  <a href="https://github.com/suraj-savle/vibe-toast#readme">Documentation</a>
 </div>

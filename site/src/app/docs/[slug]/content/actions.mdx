@@ -1,0 +1,65 @@
+## Actions & Buttons
+
+Add interactive buttons to your toasts for user actions.
+
+### Single Action
+
+```jsx
+toast.warning('File deleted', {
+  description: 'This can be undone',
+  actions: [
+    {
+      label: 'Undo',
+      variant: 'primary',
+      onClick: () => toast.success('File restored!'),
+    },
+  ],
+});
+```
+Multiple Actions
+
+```jsx
+toast.info('New version available', {
+  description: 'v2.0.0 is ready to install',
+  actions: [
+    {
+      label: 'Update Now',
+      variant: 'primary',
+      onClick: () => startUpdate(),
+    },
+    {
+      label: 'Later',
+      variant: 'ghost',
+      onClick: () => toast.info('Reminder set for later'),
+    },
+  ],
+});
+```
+
+Action Variants
+Actions come in different styles:
+
+```jsx
+toast({
+  title: 'Confirm action',
+  actions: [
+    { 
+      label: 'Primary', 
+      variant: 'primary',     // Solid, high emphasis
+      onClick: handleConfirm 
+    },
+    { 
+      label: 'Secondary', 
+      variant: 'secondary',   // Outlined, medium emphasis
+      onClick: handleSecondary 
+    },
+    { 
+      label: 'Ghost', 
+      variant: 'ghost',       // Subtle, low emphasis
+      onClick: handleCancel 
+    },
+  ],
+});
+```
+
+<InfoBox type="tip"> Use actions to make toasts interactive without disrupting user flow. Perfect for undo, confirm, and quick actions. </InfoBox>

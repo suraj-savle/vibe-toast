@@ -1,0 +1,38 @@
+
+
+### Available Positions
+
+```jsx
+<Toaster position="top-right" />     // Top right (default)
+<Toaster position="top-left" />       // Top left
+<Toaster position="top-center" />     // Top center
+<Toaster position="bottom-right" />   // Bottom right
+<Toaster position="bottom-left" />    // Bottom left
+<Toaster position="bottom-center" />  // Bottom center
+```
+
+### Set Globally
+Set the default position for all toasts in your Toaster component:
+
+```jsx
+import { Toaster } from 'vibe-toast';
+
+function App() {
+  return (
+    <>
+      <Toaster position="bottom-right" />
+      <YourApp />
+    </>
+  );
+}
+```
+Override Per Toast
+Override the position for individual toasts:
+
+```jsx
+// This toast will appear at top-left regardless of global setting
+toast.success('Important message!', { 
+  position: 'top-left' 
+});
+```
+<InfoBox type="tip"> Choose positions strategically based on your UI. Top-right works well for most apps, while bottom positions are great for mobile. </InfoBox>

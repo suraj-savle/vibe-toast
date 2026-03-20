@@ -1,0 +1,70 @@
+
+### Basic Promise
+
+```jsx
+const saveData = async () => {
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  return { id: 123 };
+};
+
+toast.promise(saveData(), {
+  loading: 'Saving...',
+  success: 'Data saved successfully!',
+  error: 'Failed to save data',
+});
+```
+
+Dynamic Messages
+Access the resolved data in your success message:
+
+```jsx
+const fetchUser = async () => {
+  const res = await fetch('/api/user');
+  return res.json();
+};
+
+toast.promise(fetchUser(), {
+  loading: 'Loading user...',
+  success: (user) => `Welcome back, ${user.name}!`,
+  error: (err) => `Error: ${err.message}`,
+});
+```
+
+Multiple Steps
+Chain multiple promises for complex flows:
+
+```jsx
+const uploadAndProcess = async () => {
+  await uploadFile(file);
+  await processFile(file.id);
+  return { url: 'https://...' };
+};
+
+toast.promise(uploadAndProcess(), {
+  loading: 'Uploading and processing...',
+  success: (data) => `File ready at ${data.url}`,
+  error: 'Upload failed',
+});
+```
+Custom Loading Toast
+Create a custom loading toast and update it:
+
+```jsx
+const id = toast.loading('Downloading...');
+
+try {
+  const result = await downloadFile();
+  toast.update(id, {
+    variant: 'success',
+    title: 'Download complete!',
+    description: `${result.size} MB downloaded`,
+  });
+} catch (error) {
+  toast.update(id, {
+    variant: 'error',
+    title: 'Download failed',
+    description: error.message,
+  });
+}
+```
+<InfoBox type="info"> Promise toasts automatically handle loading, success, and error states. Perfect for form submissions, API calls, and file uploads. </InfoBox> 

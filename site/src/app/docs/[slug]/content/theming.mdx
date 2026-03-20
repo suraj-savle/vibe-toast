@@ -1,0 +1,48 @@
+
+```jsx
+<Toaster theme="light" />  // Light theme (default)
+<Toaster theme="dark" />    // Dark theme
+```
+
+### CSS Variables
+Customize themes using CSS variables:
+
+```jsx
+:root {
+  /* Light theme (default) */
+  --toast-bg-light: #ffffff;
+  --toast-text-light: #1a1a1a;
+  --toast-accent-light: #3b82f6;
+  
+  /* Dark theme */
+  --toast-bg-dark: #1a1a1a;
+  --toast-text-dark: #ffffff;
+  --toast-accent-dark: #8b5cf6;
+}
+```
+Custom Theme
+Create your own theme by passing custom styles:
+
+```jsx
+toast({
+  title: 'Custom Theme',
+  description: 'With my own colors',
+  style: {
+    background: '#4c1d95',
+    color: '#ede9fe',
+    accent: '#a78bfa',
+  },
+});
+```
+System Preference
+Automatically match user's system preference:
+
+```jsx
+// In your app, detect system theme
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches 
+  ? 'dark' 
+  : 'light';
+
+<Toaster theme={systemTheme} />
+```
+<InfoBox type="info"> The theme prop on `Toaster` sets the default, but you can override it per toast. </InfoBox>

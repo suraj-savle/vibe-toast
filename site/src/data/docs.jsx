@@ -2,25 +2,24 @@ const docs = [
   {
     slug: "intro",
     title: "Introduction",
-    description: "Notiflow is a lightweight toast notification library.",
+    description: "vibe-toast is a lightweight toast notification library.",
   },
 
   {
     slug: "installation",
     title: "Installation",
-    description: "Install notiflow using npm.",
-    code: `npm install notiflow`
+    description: "Install vibe-toast using npm.",
+    code: `npm install vibe-toast`,
   },
 
   {
     slug: "usage",
     title: "Basic Usage",
     description: "Create your first toast.",
-    code: `import { toast } from "notiflow"
+    code: `import { toast } from "vibe-toast"
 
-toast("Hello world!")`
+toast("Hello world!")`,
   },
-
 ];
 
 export default docs;
