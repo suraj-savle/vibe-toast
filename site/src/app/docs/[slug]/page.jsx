@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
 import fs from "fs/promises";
 import MDXContent from "../components/MDXContent";
@@ -42,11 +41,10 @@ const pageMetadata = {
     title: "Promises",
     description: "Handle async operations with promise-based toasts",
   },
-  actions : {
+  actions: {
     title: "Actions",
     description: "Add buttons and interactivity to your toasts",
   },
-
 };
 
 export default async function DocsPage({ params }) {
@@ -57,24 +55,19 @@ export default async function DocsPage({ params }) {
     notFound();
   }
 
-  // Try/catch only for data fetching
-  let mdxSource;
+  let source;
   try {
     const mdxPath = path.join(
       process.cwd(),
       "src/app/docs/[slug]/content",
       `${slug}.mdx`,
     );
-    const mdxContent = await fs.readFile(mdxPath, "utf-8");
-    mdxSource = await serialize(mdxContent, {
-      parseFrontmatter: true,
-    });
+    source = await fs.readFile(mdxPath, "utf-8");
   } catch (error) {
-    console.error("Error reading MDX file:", error);
+    console.error("Error loading MDX content:", error);
     notFound();
   }
 
-  // JSX rendering outside try/catch
   return (
     <article className="space-y-6">
       <div className="space-y-2 pb-6 border-b border-[var(--border)]/10">
@@ -88,7 +81,7 @@ export default async function DocsPage({ params }) {
       </div>
 
       <div className="prose prose-gray max-w-none">
-        <MDXContent source={mdxSource} />
+        <MDXContent source={source} />
       </div>
     </article>
   );
