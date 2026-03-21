@@ -13,17 +13,7 @@ export const Hero = () => {
   };
 
   const handlePreview = () => {
-    const promise = new Promise((res) => setTimeout(() => res(), 2000));
-    toast.promise(promise, {
-      loading: "Initializing...",
-      success: "Vibe check complete!",
-      error: "Error occurred",
-      style: {
-        background: "var(--card)",
-        color: "var(--foreground)",
-        border: "1px solid var(--border)",
-      }
-    });
+    toast.success("Welcome to vibe-toast!");
   };
 
   return (
@@ -68,7 +58,7 @@ export const Hero = () => {
           className="bg-[var(--foreground)] text-white px-10 py-4 font-bold flex items-center justify-center gap-3 hover:opacity-90 transition-all active:scale-95 border border-[var(--border)]"
         >
           <BiBell size={20} />
-          <span>Preview Toast</span>
+          <span>Vibe Check</span>
         </button>
       </div>
     </header>
