@@ -31,13 +31,6 @@ const navigation = [
       { slug: "icons", title: "Icons", description: "Use custom icons in toasts" },
     ]
   },
-  {
-    section: "API REFERENCE",
-    items: [
-      { slug: "toast-api", title: "Toast API", description: "Complete toast method reference" },
-      { slug: "toaster-api", title: "Toaster API", description: "Toaster component props" },
-    ]
-  }
 ];
 
 export default function Sidebar() {
@@ -54,7 +47,7 @@ export default function Sidebar() {
         const count = data.stargazers_count;
         setStars(count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString());
       })
-      .catch(() => setStars("1.2k"));
+      .catch(() => setStars("0.1.6k"));
 
     // 2. Fetch Dynamic NPM Downloads (Last Month)
     // Replace 'vibe-toast' with your actual package name on npm
@@ -69,7 +62,7 @@ export default function Sidebar() {
 
   const filteredNav = navigation.map(section => ({
     ...section,
-    items: section.items.filter(item => 
+    items: section.items.filter(item =>
       item.title.toLowerCase().includes(search.toLowerCase())
     )
   })).filter(section => section.items.length > 0);
@@ -80,7 +73,7 @@ export default function Sidebar() {
         {/* Logo */}
         <Link href="/ " className="block mb-6">
           <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
-            vibe-toast<span className="text-sm font-normal text-gray-400 ml-2">v.1.2</span>
+            vibe-toast<span className="text-sm font-normal text-gray-400 ml-2">v.0.1.6</span>
           </h2>
           <p className="text-xs text-gray-500 mt-1">Documentation</p>
         </Link>
@@ -88,7 +81,7 @@ export default function Sidebar() {
         {/* Search Bar */}
         <div className="relative mb-8">
           <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-3" />
-          <input 
+          <input
             type="text"
             placeholder="Search documentation..."
             value={search}
@@ -108,18 +101,16 @@ export default function Sidebar() {
                 {section.items.map((item) => {
                   const href = `/docs/${item.slug}`;
                   const isActive = pathname === href;
-                  
+
                   return (
                     <li key={item.slug}>
                       <Link
                         href={href}
-                        className={`block px-3 py-2 rounded-lg transition-colors group ${
-                          isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
-                        }`}
+                        className={`block px-3 py-2 rounded-lg transition-colors group ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
+                          }`}
                       >
-                        <span className={`font-medium text-sm ${
-                          isActive ? 'text-black' : 'text-gray-900'
-                        }`}>
+                        <span className={`font-medium text-sm ${isActive ? 'text-black' : 'text-gray-900'
+                          }`}>
                           {item.title}
                         </span>
                         <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">

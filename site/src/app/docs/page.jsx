@@ -1,98 +1,79 @@
+import { IconArrowRightBar, IconBrandGithub, IconBrandZapier, IconChevronRight, IconPackage, IconPalette } from "@tabler/icons-react";
 import Link from "next/link";
-import { FiArrowRight, FiGithub, FiPackage, FiZap, FiInfo, FiLayers, FiMousePointer } from "react-icons/fi";
 
 export default function DocsHome() {
   return (
-    <div className="space-y-12">
-      {/* Hero */}
-      <div className="space-y-4">
-        <h1 className="text-5xl font-bold tracking-tight text-[#2A1A10]">
-          vibe-toast{" "}
-          <span className="text-gray-400 text-2xl font-normal ml-2">v1.2.0</span>
-        </h1>
-        <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
-          A lightweight, customizable toast notification library for React.
-          Simple API, zero dependencies, and beautiful by default.
-        </p>
+    <div className="py-8 space-y-16">
+      {/* Hero Section */}
+      <section className="space-y-6">
+        <div className="space-y-4">
+          <div className="flex items-baseline gap-3">
+            <h1 className="text-6xl font-bold tracking-tighter text-[#2A1A10]">
+              vibe-toast
+            </h1>
+            
+          </div>
+          <p className="text-xl text-gray-600 max-w-2xl leading-relaxed font-slab">
+            A high-frequency notification engine for React. 
+            Engineered for speed, built for immersive interfaces, and beautiful by default.
+          </p>
+        </div>
         
-        <div className="flex flex-wrap gap-4 pt-4">
+        <div className="flex flex-wrap gap-4 items-center pt-2">
           <Link
             href="/docs/introduction"
-            className="bg-[#1a1a1a] text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors flex items-center gap-2"
+            className="bg-[#2A1A10] text-white px-8 py-4 rounded-xl font-bold hover:opacity-90 transition-all flex items-center gap-2 group"
           >
-            Get Started <FiArrowRight />
+            Get Started 
+            <IconArrowRightBar size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           <a
             href="https://github.com/suraj-savle/vibe-toast"
             target="_blank"
-            className="border border-[var(--border)] px-6 py-3 rounded-lg font-medium hover:bg-white transition-colors flex items-center gap-2"
+            rel="noopener noreferrer"
+            className="border-2 border-[#2A1A10]/10 px-8 py-4 rounded-xl font-bold hover:bg-[#2A1A10]/5 transition-all flex items-center gap-2 text-[#2A1A10]"
           >
-            <FiGithub /> GitHub
+            <IconBrandGithub size={22} /> GitHub
           </a>
         </div>
-      </div>
+      </section>
 
-      {/* Features grid */}
-      <div className="grid md:grid-cols-3 gap-6 pt-8">
-        <div className="bg-white p-6 rounded-xl border border-[var(--border)]">
-          <FiPackage className="text-2xl mb-4 text-gray-700" />
-          <h3 className="font-semibold mb-2">Zero Dependencies</h3>
-          <p className="text-sm text-gray-600">Pure React logic. Optimized for performance and bundle size.</p>
-        </div>
-        <div className="bg-white p-6 rounded-xl border border-[var(--border)]">
-          <FiZap className="text-2xl mb-4 text-gray-700" />
-          <h3 className="font-semibold mb-2">Simple API</h3>
-          <p className="text-sm text-gray-600">No complex Providers. Just one component and a simple function.</p>
-        </div>
-        <div className="bg-white p-6 rounded-xl border border-[var(--border)]">
-          <span className="text-2xl mb-4 block">🎨</span>
-          <h3 className="font-semibold mb-2">Customizable</h3>
-          <p className="text-sm text-gray-600">Tailwind-ready styles. Change themes and positions with ease.</p>
-        </div>
-      </div>
+      {/* Features Grid */}
+      <section className="grid md:grid-cols-3 gap-6">
+        <FeatureCard 
+          icon={<IconPackage size={28} stroke={1.5} />}
+          title="Zero Dependencies"
+          description="Pure React logic. Optimized for sub-millisecond response times and minimal bundle size."
+        />
+        <FeatureCard 
+          icon={<IconBrandZapier size={28} stroke={1.5} />}
+          title="Simple API"
+          description="Forget complex Providers. Just one component and a direct function call to trigger motion."
+        />
+        <FeatureCard 
+          icon={<IconPalette size={28} stroke={1.5} />}
+          title="Elite Styles"
+          description="Tailwind-ready architecture with built-in glassmorphism that adapts to any professional theme."
+        />
+      </section>
+    </div>
+  );
+}
 
-      {/* Pro Tips Section */}
-      <div className="space-y-6 pt-4">
-        <h2 className="text-2xl font-bold text-[#2A1A10] flex items-center gap-2">
-          <FiInfo className="text-orange-500" /> Pro Tips
-        </h2>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="p-5 rounded-xl bg-[#FDFCF7] border border-[#EEEADF] flex gap-4">
-            <div className="mt-1 text-orange-600"><FiLayers size={18} /></div>
-            <div>
-              <h4 className="font-bold text-sm mb-1">Global Toaster</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">Place the <code>&lt;Toaster /&gt;</code> component at the top level of your app (usually in <code>layout.js</code>) so its accessible everywhere.</p>
-            </div>
-          </div>
-          <div className="p-5 rounded-xl bg-[#FDFCF7] border border-[#EEEADF] flex gap-4">
-            <div className="mt-1 text-orange-600"><FiMousePointer size={18} /></div>
-            <div>
-              <h4 className="font-bold text-sm mb-1">Interactive Toasts</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">You can pass JSX as the toast message. This allows you to add buttons or links directly inside your notification.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick example */}
-      <div className="bg-white p-8 rounded-xl border border-[var(--border)]">
-        <h2 className="text-2xl font-bold mb-4 text-[#2A1A10]">Quick Example</h2>
-        <pre className="bg-gray-50 p-6 rounded-lg overflow-x-auto text-sm border border-gray-100">
-          <code className="text-gray-800">{`import { toast, Toaster } from 'vibe-toast'
-
-function App() {
-  const notify = () => toast.success('Vibe check passed! 🚀')
-
+function FeatureCard({ icon, title, description }) {
   return (
-    <>
-      <Toaster position="top-center" />
-      <button onClick={notify}>
-        Show Toast
-      </button>
-    </>
-  )
-}`}</code>
-        </pre>
+    <div className="group p-8 rounded-2xl border border-[#2A1A10]/5 bg-white/50 backdrop-blur-sm hover:border-[#2A1A10]/20 transition-all duration-300">
+      <div className="mb-6 text-[#2A1A10] opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-transform w-fit">
+        {icon}
+      </div>
+      <h3 className="text-lg font-bold mb-3 text-[#2A1A10] uppercase tracking-tight">
+        {title}
+      </h3>
+      <p className="text-sm text-gray-500 leading-relaxed font-slab">
+        {description}
+      </p>
+      <div className="mt-6 flex items-center gap-1 text-[10px] font-bold text-[#2A1A10]/40 uppercase tracking-[0.2em] group-hover:text-[#2A1A10] transition-colors">
+        Learn More <IconChevronRight size={12} stroke={3} />
       </div>
     </div>
   );

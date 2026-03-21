@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { FiZap, FiGithub, FiMessageSquare, FiCoffee, FiStar, FiPackage } from "react-icons/fi";
 
 export default function RightPanel() {
-  const [stats, setStats] = useState({ 
-    stars: "...", 
-    downloads: "...", 
-    version: "1.2.0" 
+  const [stats, setStats] = useState({
+    stars: "...",
+    downloads: "...",
+    version: "0.1.6"
   });
 
   useEffect(() => {
@@ -16,21 +16,21 @@ export default function RightPanel() {
       .then(res => res.json())
       .then(data => {
         const count = data.stargazers_count;
-        setStats(prev => ({ 
-          ...prev, 
-          stars: count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString() 
+        setStats(prev => ({
+          ...prev,
+          stars: count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString()
         }));
       })
-      .catch(() => setStats(prev => ({ ...prev, stars: "1.2k" })));
+      .catch(() => setStats(prev => ({ ...prev, stars: "0.1.6k" })));
 
     // Fetch NPM Downloads
     fetch("https://api.npmjs.org/downloads/point/last-month/vibe-toast")
       .then(res => res.json())
       .then(data => {
         const count = data.downloads || 0;
-        setStats(prev => ({ 
-          ...prev, 
-          downloads: count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString() 
+        setStats(prev => ({
+          ...prev,
+          downloads: count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString()
         }));
       })
       .catch(() => setStats(prev => ({ ...prev, downloads: "12.5k" })));
@@ -89,28 +89,28 @@ export default function RightPanel() {
             QUICK LINKS
           </h3>
           <div className="grid grid-cols-1 gap-1">
-            <a 
-              href="https://github.com/suraj-savle/vibe-toast" 
-              target="_blank" 
+            <a
+              href="https://github.com/suraj-savle/vibe-toast"
+              target="_blank"
               className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#2A1A10] transition-all p-2 hover:bg-[#FDFCF7] rounded-lg border border-transparent hover:border-[#EEEADF]"
             >
-              <FiGithub className="size-4" /> 
+              <FiGithub className="size-4" />
               <span>GitHub Repository</span>
             </a>
-            <a 
-              href="https://www.npmjs.com/package/vibe-toast" 
-              target="_blank" 
+            <a
+              href="https://www.npmjs.com/package/vibe-toast"
+              target="_blank"
               className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#2A1A10] transition-all p-2 hover:bg-[#FDFCF7] rounded-lg border border-transparent hover:border-[#EEEADF]"
             >
-              <FiPackage className="size-4" /> 
+              <FiPackage className="size-4" />
               <span>NPM Package</span>
             </a>
-            <a 
-              href="https://github.com/suraj-savle/vibe-toast/issues" 
-              target="_blank" 
+            <a
+              href="https://github.com/suraj-savle/vibe-toast/issues"
+              target="_blank"
               className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#2A1A10] transition-all p-2 hover:bg-[#FDFCF7] rounded-lg border border-transparent hover:border-[#EEEADF]"
             >
-              <FiStar className="size-4" /> 
+              <FiStar className="size-4" />
               <span>Report a Bug</span>
             </a>
           </div>
@@ -121,7 +121,7 @@ export default function RightPanel() {
           <div className="p-5 rounded-2xl bg-[#FDFCF7] border border-dashed border-[#EEEADF] flex flex-col items-center text-center">
             <FiMessageSquare className="text-gray-300 size-6 mb-2" />
             <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-tight">
-              Join the community <br /> 
+              Join the community <br />
               <span className="text-[#2A1A10] lowercase font-normal italic">@suraj-savle</span>
             </p>
           </div>

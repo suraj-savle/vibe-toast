@@ -27,10 +27,10 @@ export const Hero = () => {
   };
 
   return (
-    <header className="flex flex-col items-center text-center pt-20 pb-15 mx-auto overflow-visible">
+    <header className="flex flex-col items-center text-center pt-25 pb-15 mx-auto overflow-visible">
       {/* 1. Heading - Fixed clipping with extra horizontal padding and leading */}
-      <div className="px-4">
-        <h1 className="text-7xl md:text-9xl font-pacifico bg-gradient-to-b from-[var(--foreground)] to-[var(--foreground)]/60 bg-clip-text text-transparent leading-[1.3] pb-4">
+      <div className="px-6">
+        <h1 className="text-7xl md:text-9xl font-pacifico bg-linear-to-b from-[var(--foreground)] to-[var(--foreground)]/60 bg-clip-text text-transparent leading-[1.3] pb-4 px-4">
           vibe-toast
         </h1>
       </div>
