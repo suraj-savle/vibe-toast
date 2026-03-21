@@ -47,6 +47,12 @@ const pageMetadata = {
   },
 };
 
+export async function generateStaticParams() {
+  return Object.keys(pageMetadata).map((slug) => ({
+    slug: slug,
+  }));
+}
+
 export default async function DocsPage({ params }) {
   const { slug } = await params;
   const metadata = pageMetadata[slug];
@@ -57,21 +63,27 @@ export default async function DocsPage({ params }) {
 
   let source;
   try {
-    // This ensures we look inside the 'site' folder if we are running from the monorepo root
     const root = process.cwd();
-    const isMonorepoRoot = !root.endsWith('site');
     
+    // Check if we are in the 'site' directory or the root
+    const isInSiteFolder = root.endsWith('site');
+    
+    // Construct path: if in root, add 'site'. If not, just use root.
     const mdxPath = path.join(
       root,
-      isMonorepoRoot ? "site" : "", // Add 'site' to path only if we're at the root
-      "src/app/docs/[slug]/content",
+      isInSiteFolder ? "" : "site",
+      "src",
+      "app",
+      "docs",
+      "[slug]",
+      "content",
       `${slug}.mdx`
     );
 
-    console.log("Attempting to read MDX from:", mdxPath); // Check Vercel logs for this!
     source = await fs.readFile(mdxPath, "utf-8");
   } catch (error) {
-    console.error("MDX Read Error:", error);
+    // This log is your best friend. Check Vercel Dashboard > Logs > Functions
+    console.error(`FAILED to read MDX for slug: ${slug}. Path tried: ${error.path}`);
     notFound();
   }
 
