@@ -57,14 +57,21 @@ export default async function DocsPage({ params }) {
 
   let source;
   try {
+    // This ensures we look inside the 'site' folder if we are running from the monorepo root
+    const root = process.cwd();
+    const isMonorepoRoot = !root.endsWith('site');
+    
     const mdxPath = path.join(
-      process.cwd(),
+      root,
+      isMonorepoRoot ? "site" : "", // Add 'site' to path only if we're at the root
       "src/app/docs/[slug]/content",
-      `${slug}.mdx`,
+      `${slug}.mdx`
     );
+
+    console.log("Attempting to read MDX from:", mdxPath); // Check Vercel logs for this!
     source = await fs.readFile(mdxPath, "utf-8");
   } catch (error) {
-    console.error("Error loading MDX content:", error);
+    console.error("MDX Read Error:", error);
     notFound();
   }
 

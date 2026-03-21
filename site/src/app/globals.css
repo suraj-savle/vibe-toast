@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Slab:wght@100..900&display=swap");
+
 @import "tailwindcss";
 
 :root {
@@ -12,11 +12,10 @@
 
 
 @theme {
-  /* This overwrites the default 'font-sans' to use Inter */
   --font-sans: var(--font-inter);
-  
-  /* This creates a new 'font-pacifico' utility class */
   --font-pacifico: var(--font-pacifico);
+  /* Add Roboto Slab variable if you want to use it */
+  --font-slab: var(--font-roboto-slab); 
 }
 /* Optional: Smooth scrolling for the landing page */
 html {
@@ -26,7 +25,6 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Roboto Slab", serif;
 }
 
 ::-webkit-scrollbar {
