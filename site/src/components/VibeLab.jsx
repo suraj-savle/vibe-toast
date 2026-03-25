@@ -822,7 +822,7 @@ export default function VibeLab() {
           </div>
 
           {/* Right Panel - Code Display */}
-          <div className="lg:sticky lg:top-10">
+          <div className="w-full overflow-hidden lg:sticky lg:top-10">
             <div
               className="rounded-lg p-8 shadow-md ring-1 ring-white/90 relative min-h-[400px] flex items-center group overflow-hidden border"
               style={{ backgroundColor: "var(--code-panel)" }}
