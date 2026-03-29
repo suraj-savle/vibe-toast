@@ -66,7 +66,7 @@ export default function VibeLab() {
     {
       id: "shorthandSuccess",
       label: "Success",
-      icon: <IconCheck className="text-emerald-500" />,
+      icon: <IconCheck className="text-emerald-500"/>,
       code: `toast.success("Action Confirmed")`,
       action: () => toast.success("Action Confirmed"),
     },
@@ -450,71 +450,6 @@ export default function VibeLab() {
     },
   ];
 
-  // Application Examples
-  const appExamples = [
-    {
-      id: "app-auth",
-      label: "Auth Events",
-      icon: <IconUserPlus className="text-blue-500" />,
-      code: `// Login success\ntoast.success("Welcome back!")\n\n// Logout\ntoast.info("Logged out")`,
-      action: () => {
-        toast.success("Welcome back, John! 👋");
-        setTimeout(() => toast.info("Session restored"), 500);
-      },
-    },
-    {
-      id: "app-cart",
-      label: "Shopping Cart",
-      icon: <IconShoppingCart className="text-green-500" />,
-      code: `toast.success("Item added to cart")\ntoast.info("Cart updated")`,
-      action: () => {
-        toast.success("Product added to cart", {
-          icon: <IconShoppingCart />,
-          actions: [
-            {
-              label: "View Cart",
-              onClick: () => toast.info("Opening cart..."),
-            },
-          ],
-        });
-      },
-    },
-    {
-      id: "app-payment",
-      label: "Payment",
-      icon: <IconCreditCard className="text-purple-500" />,
-      code: `toast.loading("Processing...")\ntoast.success("Payment complete!")`,
-      action: () => {
-        toast.loading("Processing payment...");
-        setTimeout(
-          () =>
-            toast.success("Payment successful! 🎉", {
-              icon: <IconCash />,
-              actions: [{ label: "View Receipt", onClick: () => {} }],
-            }),
-          2000,
-        );
-      },
-    },
-    {
-      id: "app-event",
-      label: "Calendar",
-      icon: <IconCalendarEvent className="text-indigo-500" />,
-      code: `toast.success("Event created")\ntoast.info("Reminder set")`,
-      action: () => {
-        toast.success("Meeting scheduled for tomorrow", {
-          icon: <IconCalendarEvent />,
-          actions: [
-            {
-              label: "Add to Calendar",
-              onClick: () => toast.success("Added!"),
-            },
-          ],
-        });
-      },
-    },
-  ];
-
   const handlePositionChange = (pos) => {
     if (pos === position) return;
     toast.dismissAll();
@@ -532,17 +467,6 @@ export default function VibeLab() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(activeCode);
     toast.success("Code copied");
-  };
-
-  const showRandomToast = () => {
-    const allActions = [
-      () => toast.success("Random success!"),
-      () => toast.error("Random error!"),
-      () => toast.info("Random info!"),
-      () => toast.warning("Random warning!"),
-    ];
-    const random = allActions[Math.floor(Math.random() * allActions.length)];
-    random();
   };
 
   return (
@@ -573,13 +497,6 @@ export default function VibeLab() {
           </div>
 
           <button
-            onClick={showRandomToast}
-            className="px-5 py-2 rounded-lg text-sm font-medium text-neutral-800 shadow-sm ring-1 ring-black/10 transition-all flex items-center gap-2 bg-[radial-gradient(circle_at_top_left,#f3f4f6_0%,transparent_60%),radial-gradient(circle_at_bottom_right,#e5e7eb_0%,transparent_60%)] hover:bg-neutral-50 hover:shadow-md hover:scale-[1.02]"
-          >
-            <IconWand size={16} /> Random Toast
-          </button>
-
-          <button
             onClick={() => toast.dismissAll()}
             className="px-4 py-2 border border-[var(--border)]/20 rounded-xl text-sm font-medium hover:bg-gray-100 transition-all"
           >
@@ -587,7 +504,7 @@ export default function VibeLab() {
           </button>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-5 items-start">
           {/* Left Panel - Buttons */}
           <div className="space-y-10 max-h-[800px] overflow-y-auto pr-4 custom-scroll">
             {/* Shorthand Examples */}
@@ -603,9 +520,9 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center justify-center gap-2 bg-[var(--card)] p-2 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
-                    <span className="text-xl group-hover:scale-110 transition-transform">
+                    <span className="text-xs transition-transform">
                       {item.icon}
                     </span>
                     <span className="text-xs font-medium text-center">
@@ -629,9 +546,9 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center justify-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
-                    <span className="text-xl group-hover:scale-110 transition-transform">
+                    <span className="text-xl transition-transform">
                       {item.icon}
                     </span>
                     <span className="text-xs font-medium text-center">
@@ -655,7 +572,7 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center justify-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
                     <span className="text-xl group-hover:scale-110 transition-transform">
                       {item.icon}
@@ -681,7 +598,7 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center gap-2 justify-center bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
                     <span className="text-xl group-hover:scale-110 transition-transform">
                       {item.icon}
@@ -707,7 +624,7 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center justify-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
                     <span className="text-xl group-hover:scale-110 transition-transform">
                       {item.icon}
@@ -733,7 +650,7 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center justify-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
                     <span className="text-xl group-hover:scale-110 transition-transform">
                       {item.icon}
@@ -759,33 +676,7 @@ export default function VibeLab() {
                       setActiveCode(item.code);
                       item.action();
                     }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
-                  >
-                    <span className="text-xl group-hover:scale-110 transition-transform">
-                      {item.icon}
-                    </span>
-                    <span className="text-xs font-medium text-center">
-                      {item.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </section>
-
-            {/* Application Examples */}
-            <section>
-              <h3 className="text-xs font-bold uppercase tracking-wider opacity-50 mb-4 flex items-center gap-2">
-                <IconBell /> Real-world Examples
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {appExamples.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setActiveCode(item.code);
-                      item.action();
-                    }}
-                    className="flex flex-col items-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
+                    className="flex items-center justify-center gap-2 bg-[var(--card)] p-4 rounded-xl border border-[var(--border)]/10 hover:border-[var(--border)]/30 hover:shadow-md transition-all group"
                   >
                     <span className="text-xl group-hover:scale-110 transition-transform">
                       {item.icon}

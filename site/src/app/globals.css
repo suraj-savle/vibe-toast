@@ -2,12 +2,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9f7ef; /* Off-white SaaS background */
-  --foreground: #1a1a1a; /* Dark charcoal text */
-  --text-main: #2A1A10;
-  --code-panel: #1E110A;
-  --card: #ffffff;
-  --border: #1a1a1a;
+  --background: #fafafa;     /* clean premium white */
+  --foreground: #111111;     /* rich black text */
+  --text-main: #000000;      /* brand heading black */
+  --code-panel: #0f0f0f;     /* premium dark code panel */
+  --card: #ffffff;           /* pure white card */
+  --border: #1f1f1f;         /* elegant dark border */
 }
 
 

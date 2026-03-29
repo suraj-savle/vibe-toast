@@ -72,7 +72,7 @@ export default function Sidebar() {
       <div className="p-6">
         {/* Logo */}
         <Link href="/ " className="block mb-6">
-          <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text-main)' }}>
+          <h2 className="text-3xl font-pacifico" style={{ color: 'var(--text-main)' }}>
             vibe-toast<span className="text-sm font-normal text-gray-400 ml-2">v.0.1.6</span>
           </h2>
           <p className="text-xs text-gray-500 mt-1">Documentation</p>

@@ -1,7 +1,17 @@
 "use client";
+
 import React, { useState } from "react";
-import { BiBell, BiCopy, BiCheck } from "react-icons/bi";
-import { toast } from "vibe-toast";
+import { IconCopy, IconCheck } from "@tabler/icons-react";
+import { motion } from "framer-motion";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 20 },
+  },
+};
 
 export const Hero = () => {
   const [copied, setCopied] = useState(false);
@@ -12,55 +22,77 @@ export const Hero = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePreview = () => {
-    toast.success("Welcome to vibe-toast!");
-  };
-
   return (
-    <header className="flex flex-col items-center text-center pt-25 pb-15 mx-auto overflow-visible">
-      {/* 1. Heading - Fixed clipping with extra horizontal padding and leading */}
-      <div className="px-6">
-        <h1 className="text-7xl md:text-9xl font-pacifico bg-linear-to-b from-[var(--foreground)] to-[var(--foreground)]/60 bg-clip-text text-transparent leading-[1.3] pb-4 px-4">
-          vibe-toast
+    <section className="relative min-h-[50vh] md:min-h-[90vh] flex items-center justify-center px-4 md:px-6 overflow-hidden bg-(--background)">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+        className="w-full max-w-6xl mx-auto text-center pt-20 md:pt-0"
+      >
+        {/* 1. Responsive Character-by-character Heading */}
+        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] font-pacifico mb-4 md:mb-6 text-(--text-main) tracking-tight leading-tight md:leading-none select-none">
+          {"vibe-toast".split("").map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{ y: -40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                delay: index * 0.05,
+                type: "spring",
+                stiffness: 120,
+                damping: 14,
+              }}
+              className="inline-block"
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          ))}
         </h1>
-      </div>
 
-      {/* 2. Body text using Roboto Slab */}
-      <p className="text-[var(--foreground)] text-lg md:text-2xl max-w-2xl mt-4 mb-14 leading-relaxed font-light opacity-90 px-6">
-        <span className="font-bold underline decoration-1 underline-offset-4">
-          Morphing toast notifications
-        </span> for React. 
-        Organic blob animations, promise tracking, and minimal configuration.
-      </p>
-
-      {/* 3. Square Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 w-full justify-center items-stretch px-6">
-        
-        {/* Copy Button (Square Style) */}
-        <div className="flex items-center bg-white border border-[var(--border)] px-6 py-4 font-mono text-sm text-[var(--foreground)] shadow-sm">
-          <span className="mr-3 font-bold opacity-30">$</span>
-          <span className="pr-10">npm install vibe-toast</span>
-          <button
-            onClick={copyToClipboard}
-            className="p-1 transition-all active:scale-90 text-[var(--foreground)] hover:text-[#2d7a5f]"
-          >
-            {copied ? (
-              <BiCheck size={22} className="text-[#2d7a5f]" />
-            ) : (
-              <BiCopy size={20} className="opacity-50 hover:opacity-100" />
-            )}
-          </button>
-        </div>
-
-        {/* Primary Action Button (Square Charcoal) */}
-        <button
-          onClick={handlePreview}
-          className="bg-[var(--foreground)] text-white px-10 py-4 font-bold flex items-center justify-center gap-3 hover:opacity-90 transition-all active:scale-95 border border-[var(--border)]"
+        {/* 2. Subtitle: Optimized font sizes for readability */}
+        <motion.p
+          variants={itemVariants}
+          className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-(--foreground)/80 leading-relaxed mb-8 md:mb-12 font-medium px-2"
         >
-          <BiBell size={20} />
-          <span>Vibe Check</span>
-        </button>
-      </div>
-    </header>
+          Beautiful toast notifications built for modern React apps.
+          <br className="hidden sm:block" />
+          <span className="text-(--foreground) font-bold sm:inline-block sm:mt-1">
+            Smooth animations. Zero config. Premium DX.
+          </span>
+        </motion.p>
+
+        {/* 3. Action Dock: Responsive sizing */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col items-center justify-center px-2"
+        >
+          <div className="w-full max-w-[280px] sm:max-w-sm group">
+            <div className="flex items-center justify-between rounded-xl md:rounded-2xl px-4 md:px-5 py-2 md:py-2.5 bg-(--card) border border-(--border) shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
+                <span className="text-(--foreground)/30 font-mono font-bold select-none text-xs md:text-sm">
+                  $
+                </span>
+                <code className="text-xs md:text-base font-mono text-(--foreground) font-semibold tracking-tight truncate">
+                  npm i vibe-toast
+                </code>
+              </div>
+
+              <button
+                onClick={copyToClipboard}
+                className="p-2 md:p-3 text-(--text-main) hover:scale-110 active:scale-90 transition-all"
+                aria-label="Copy command"
+              >
+                {copied ? (
+                  <IconCheck size={18} className="text-green-600" />
+                ) : (
+                  <IconCopy size={18} />
+                )}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
   );
 };

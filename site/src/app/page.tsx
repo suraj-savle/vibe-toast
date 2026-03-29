@@ -5,6 +5,7 @@ import { Hero } from "../components/Hero";
 import { Footer } from "../components/Footer";
 import VibeLab from "@/components/VibeLab";
 import VibeFeatures from "@/components/VibeFeatures";
+import VibeFAQ from "@/components/VibeFAQ";
 
 export default function VibeLanding() {
   return (
@@ -16,6 +17,7 @@ export default function VibeLanding() {
         <Hero />
         <VibeLab />
         <VibeFeatures />
+        <VibeFAQ />
       </main>
 
       <Footer />

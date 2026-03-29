@@ -1,89 +1,77 @@
 "use client";
 
+import {
+  IconBrandGithub,
+  IconStarFilled,
+} from "@tabler/icons-react";
 import Link from "next/link";
-import React, { useState } from "react";
-import { BsGithub } from "react-icons/bs";
-import { CgNpm } from "react-icons/cg";
-import { FiMenu, FiX } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [stars, setStars] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Fetch GitHub Stars & Handle Scroll
+  useEffect(() => {
+    // Fetching from your vibe-toast repo
+    fetch("https://api.github.com/repos/suraj-savle/vibe-toast")
+      .then((res) => res.json())
+      .then((data) => setStars(data.stargazers_count))
+      .catch(() => setStars(null));
+
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="border-b border-[var(--border)]/10 bg-[var(--background)] sticky top-0 z-[100]">
-      <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-        {/* Logo */}
-        <div className="flex items-center">
+    <nav
+      className={`sticky top-0 z-[100] py-4 transition-all duration-300 bg-(--background)`}
+    >
+      <div className="flex justify-between items-center px-2 max-w-7xl mx-auto gap-8">
+        
+        {/* Left Side: Main Nav Links */}
+        <div className="flex items-center gap-1 bg-muted/50 rounded-full">
+          <NavLink href="/playground">Playground</NavLink>
+          <NavLink href="/docs/introduction">Docs</NavLink>
+        </div>
+
+        {/* Right Side: FAQ, GitHub Stars, and CTA */}
+        <div className="flex items-center gap-6 ml-auto">
           <Link
-            href="/"
-            className="font-pacifico text-3xl tracking-tighter text-[var(--foreground)]"
+            href="#faq"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
-            vibe-toast
+            Faq
           </Link>
+
+          <Link
+            href="https://github.com/suraj-savle/vibe-toast"
+            target="_blank"
+            className="group flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {stars !== null && (
+              <span className="flex items-center gap-1 bg-muted group-hover:bg-muted/80 px-2 py-0.5 rounded-full text-[10px] border border-border/50 transition-colors">
+                <IconStarFilled size={10} className="" />
+                {stars.toLocaleString()}
+                <IconBrandGithub size={18} />
+              </span>
+            )}
+          </Link>
+
+          
         </div>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <div className="flex items-center gap-6 text-sm font-semibold">
-            <Link href="/playground" className="text-gray-500 hover:text-[var(--foreground)] transition-colors">
-              playground
-            </Link>
-            <Link href="/docs" className="text-gray-500 hover:text-[var(--foreground)] transition-colors">
-              Docs
-            </Link>
-          </div>
-
-          <div className="w-[1px] h-5 bg-[var(--border)]/20" />
-
-          <div className="flex items-center gap-5 text-[var(--foreground)]/70">
-            <a href="https://github.com/suraj-savle/vibe-toast" target="_blank" rel="noreferrer" className="hover:text-[var(--foreground)] transition-transform hover:scale-110">
-              <BsGithub size={22} />
-            </a>
-            <a href="https://www.npmjs.com/package/vibe-toast" target="_blank" rel="noreferrer" className="hover:text-[#CB3837] transition-transform hover:scale-110">
-              <CgNpm size={28} />
-            </a>
-          </div>
-        </div>
-
-        {/* Mobile Toggle Button */}
-        <button 
-          className="md:hidden p-2 text-[var(--foreground)]"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-        </button>
       </div>
-
-      {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-[var(--background)] border-b border-[var(--border)]/10 px-6 py-8 flex flex-col gap-6 shadow-xl animate-in slide-in-from-top-2 duration-200">
-          <Link 
-            href="/playground" 
-            onClick={() => setIsOpen(false)}
-            className="text-lg font-bold text-[var(--text-main)]"
-          >
-            playground
-          </Link>
-          <Link 
-            href="/docs" 
-            onClick={() => setIsOpen(false)}
-            className="text-lg font-bold text-[var(--text-main)]"
-          >
-            Docs
-          </Link>
-          
-          <div className="h-[1px] bg-[var(--border)]/10 w-full" />
-          
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/suraj-savle/vibe-toast" className="flex items-center gap-2 text-[var(--foreground)]/70 font-medium">
-              <BsGithub size={20} /> GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/vibe-toast" className="flex items-center gap-2 text-[var(--foreground)]/70 font-medium">
-              <CgNpm size={24} /> NPM
-            </a>
-          </div>
-        </div>
-      )}
+      
     </nav>
   );
 };
+
+const NavLink = ({ href, children }) => (
+  <Link
+    href={href}
+    className="px-2 py-1.5 text-sm font-medium text-foreground/60 hover:text-foreground hover:bg-background rounded-full transition-all duration-200"
+  >
+    {children}
+  </Link>
+);
