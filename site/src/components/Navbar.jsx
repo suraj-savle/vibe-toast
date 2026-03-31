@@ -16,21 +16,23 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   const scrollToSection = (id) => {
-    setIsOpen(false); // Close mobile menu on click
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+  setIsOpen(false);
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+  setTimeout(() => {
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    const offset = 80;
+    const top =
+      element.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top,
+      behavior: "smooth",
+    });
+  }, 200);
+};
 
   useEffect(() => {
     fetch("https://api.github.com/repos/suraj-savle/vibe-toast")
@@ -45,7 +47,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-[100] py-4 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-md border-b border-slate-100" : "bg-transparent"}`}
+      className={`sticky top-0 z-[100] py-4 transition-all duration-300`}
     >
       <div className="flex justify-between items-center px-6 max-w-7xl mx-auto">
         {/* --- MOBILE ONLY: LOGO --- */}

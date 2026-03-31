@@ -26,7 +26,7 @@ export default function SocialLinks() {
     {
       name: "X (Twitter)",
       icon: <IconBrandX size={18} />,
-      url: "https://twitter.com/suraj_savle",
+      url: "https://x.com/SurajSavle",
       hoverColor: "#000",
     },
   ];

@@ -9,6 +9,7 @@ import VibeFAQ from "@/components/VibeFAQ";
 import Playground from "@/components/PlaygroundCom";
 import QuickStart from "@/components/QuickStart";
 import SocialLinks from "@/components/SocialLinks/SocialLinks";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function VibeLanding() {
   return (
@@ -24,7 +25,8 @@ export default function VibeLanding() {
         <VibeFeatures />
         <QuickStart />
         <VibeFAQ />
-        <SocialLinks  />
+        <SocialLinks />
+        <ScrollToTop />
       </main>
 
       <Footer />
