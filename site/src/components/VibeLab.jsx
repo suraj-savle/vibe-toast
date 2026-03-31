@@ -239,9 +239,7 @@ export default function ToastExamples() {
         color: "var(--foreground)",
       }}
     >
-      <Toaster position="top-right" theme="light" />
-
-      <div className="max-w-fit px-4 py-6 sm:px-6 sm:py-8">
+      <div className="overflow-hidden w-full px-4 py-6 sm:px-6 sm:py-8">
         <header className="text-left mb-8">
           <h1
             className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight"
@@ -298,7 +296,7 @@ export default function ToastExamples() {
         </div>
 
         {/* With Description */}
-        <div className="py-4 md-2" >
+        <div className="py-4 md-2">
           <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
             <IconCopy size={14} /> With Description
           </h3>
@@ -331,7 +329,7 @@ export default function ToastExamples() {
         </div>
 
         {/* Action Buttons */}
-        <div className=" py-4 md-2" >
+        <div className=" py-4 md-2">
           <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
             <IconRefresh size={14} /> Action Buttons
           </h3>
@@ -355,7 +353,7 @@ export default function ToastExamples() {
         </div>
 
         {/* Promise API */}
-        <div className=" py-4 md-2" >
+        <div className=" py-4 md-2">
           <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
             <IconLoader2 size={14} /> Promise API
           </h3>
@@ -374,7 +372,7 @@ export default function ToastExamples() {
         </div>
 
         {/* Custom Icons */}
-        <div className=" py-4 md-2" >
+        <div className=" py-4 md-2">
           <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
             <IconRocket size={14} /> Custom Icons
           </h3>
@@ -404,7 +402,7 @@ export default function ToastExamples() {
           </div>
         </div>
         {/* Dismiss All */}
-        <div className=" py-4" >
+        <div className=" py-4">
           <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center gap-2">
             <IconTrash size={14} /> Utilities
           </h3>
@@ -417,6 +415,7 @@ export default function ToastExamples() {
           </div>
         </div>
       </div>
+      <Toaster position="top-right" theme="light" />
     </div>
   );
 }
