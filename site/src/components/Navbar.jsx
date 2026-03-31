@@ -10,6 +10,21 @@ import React, { useState, useEffect } from "react";
 export const Navbar = () => {
   const [stars, setStars] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // Account for your fixed navbar height
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   // Fetch GitHub Stars & Handle Scroll
   useEffect(() => {
@@ -38,12 +53,12 @@ export const Navbar = () => {
 
         {/* Right Side: FAQ, GitHub Stars, and CTA */}
         <div className="flex items-center gap-6 ml-auto">
-          <Link
-            href="#faq"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          <button
+            onClick={() => scrollToSection("faq")}
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
-            Faq
-          </Link>
+            Got Questions?
+          </button>
 
           <Link
             href="https://github.com/suraj-savle/vibe-toast"

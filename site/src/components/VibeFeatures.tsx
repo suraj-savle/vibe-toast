@@ -57,24 +57,36 @@ export default function VibeFeatures() {
   ];
 
   return (
-    <section className="py-24 bg-[var(--background)] border-t border-[var(--border)]/10">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-6 bg-(--background)">
+      <div className=" px-6">
+
+        <header className="text-left mb-8">
+        <h1
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight"
+          style={{ color: "var(--text-main)" }}
+        >
+          Why Choose Vibe Toast?
+        </h1>
+        <p className="text-sm sm:text-base text-gray-500 mt-2">
+          Everything you need to know about Vibe Toast.
+        </p>
+      </header>
         {/* Feature Grid - Utilizing the --border and --card variables */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-[var(--border)]/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-l border-t border-(--border)/20">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="p-10 border-r border-b border-[var(--border)]/10 bg-[var(--background)] group hover:bg-[var(--card)] transition-all duration-300"
+              className="p-10 border-r border-b border-(--border)/10 bg-(--background) group hover:bg-(--card) transition-all duration-300"
             >
-              <div className="text-2xl text-[var(--foreground)] opacity-20 mb-6 group-hover:opacity-100 transition-opacity">
+              <div className="text-2xl text-(--foreground) opacity-20 mb-6 group-hover:opacity-100 transition-opacity">
                 {feature.icon}
               </div>
 
-              <h3 className="text-lg font-bold text-[var(--text-main)] mb-2">
+              <h3 className="text-lg font-bold text-(--text-main) mb-2">
                 {feature.title}
               </h3>
 
-              <p className="text-sm text-[var(--foreground)] opacity-60 leading-relaxed font-medium">
+              <p className="text-sm text-(--foreground) opacity-60 leading-relaxed font-medium">
                 {feature.desc}
               </p>
             </div>

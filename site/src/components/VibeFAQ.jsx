@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiHelpCircle } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function VibeFAQ() {
@@ -12,45 +12,122 @@ export default function VibeFAQ() {
     },
     {
       q: "Why choose this over other libraries?",
-      a: "It’s built for the 2026 web—tiny bundle size, zero external dependencies, and a unique 'vibe' system that ensures your toasts look premium out of the box.",
+      a: "It's built for the modern web—tiny bundle size, zero dependencies, and a unique 'vibe' system that ensures your toasts look premium out of the box.",
     },
     {
       q: "Which positions are supported?",
-      a: "Total flexibility with 6 core positions: top-left, top-right, top-center, bottom-left, bottom-right, and bottom-center.",
+      a: "6 flexible positions: top-left, top-right, top-center, bottom-left, bottom-right, and bottom-center.",
     },
     {
       q: "Is it fully customizable?",
-      a: "Yes. Every aspect from spring physics and colors to rendering your own custom React components is supported through a simple config object.",
+      a: "Yes. Control animations, colors, layout, and even render custom React components.",
     },
     {
       q: "How beginner-friendly is it?",
-      a: "Extremely. Just wrap your app in the Provider and call toast.success() from anywhere. No complex state management required.",
+      a: "Extremely. Just add the Toaster and call toast.success() anywhere.",
     },
     {
-      q: "How does it handle high-frequency toasts?",
-      a: "It features an intelligent stacking engine and queue management that prevents layout thrashing even when firing multiple notifications simultaneously.",
+      q: "How does it handle multiple toasts?",
+      a: "Smart stacking + queue system ensures smooth performance even with high-frequency events.",
     },
   ];
 
   const [openIndex, setOpenIndex] = useState(null);
 
+  // Split FAQs into two columns
+  const midIndex = Math.ceil(faqs.length / 2);
+  const leftColumn = faqs.slice(0, midIndex);
+  const rightColumn = faqs.slice(midIndex);
+
   return (
-    <section id="faq" className="bg-[var(--background)] px-6 relative overflow-hidden">
-      {/* Background Subtle Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--text-main)]/5 rounded-full blur-[120px] -z-10" />
+    <section
+      className="py-6 px-4 md:px-6 relative overflow-hidden"
+      style={{ backgroundColor: "var(--background)" }}
+    >
+      {/* Background texture */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, var(--border) 1px, transparent 1px),
+              linear-gradient(to bottom, var(--border) 1px, transparent 1px)
+            `,
+            backgroundSize: "48px 48px",
+          }}
+        />
+      </div>
 
-      <div className=" mx-auto">
-       
+      <div className="max-w-full mx-auto relative z-10">
+        {/* Header */}
+        <header className="text-left mb-8">
+        <h1
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight"
+          style={{ color: "var(--text-main)" }}
+        >
+          Got questions? We’ve got answers.
+        </h1>
+        <p className="text-sm sm:text-base text-gray-500 mt-2">
+          Everything you need to know about vibe-toast, all in one place.
+        </p>
+      </header>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <FAQItem
-              key={index}
-              faq={faq}
-              isOpen={openIndex === index}
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-            />
-          ))}
+        {/* 2-Column FAQ Grid */}
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+          {/* Left Column */}
+          <div className="space-y-4">
+            {leftColumn.map((faq, index) => (
+              <FAQItem
+                key={index}
+                faq={faq}
+                isOpen={openIndex === index}
+                onClick={() =>
+                  setOpenIndex(openIndex === index ? null : index)
+                }
+              />
+            ))}
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-4">
+            {rightColumn.map((faq, index) => {
+              const actualIndex = midIndex + index;
+              return (
+                <FAQItem
+                  key={actualIndex}
+                  faq={faq}
+                  isOpen={openIndex === actualIndex}
+                  onClick={() =>
+                    setOpenIndex(openIndex === actualIndex ? null : actualIndex)
+                  }
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-10 pt-6 border-t border-gray-200/20">
+          <p className="text-sm text-gray-500">
+            Still have questions?{" "}
+            <a 
+              href="https://github.com/suraj-savle/vibe-toast/discussions" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-(--text-main) font-medium transition-colors"
+            >
+              Join github cummunity
+            </a>
+            {" "}or{" "}
+            <a 
+              href="https://github.com/suraj-savle/vibe-toast/issues" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-(--text-main) font-medium transition-colors"
+            >
+              Open an issue
+            </a>
+          </p>
         </div>
       </div>
     </section>
@@ -60,40 +137,62 @@ export default function VibeFAQ() {
 function FAQItem({ faq, isOpen, onClick }) {
   return (
     <motion.div
-      initial={false}
-      className={`group w-full rounded border transition-all duration-300 ${
-        isOpen 
-          ? "border-[var(--text-main)] shadow-xl shadow-[var(--text-main)]/5" 
-          : "border-[var(--border)]/20 bg-transparent hover:border-[var(--border)]/30"
-      }`}
+      layout
+      className="group transition-all duration-300 border border-(--border)/20"
+      style={{
+        backgroundColor: isOpen ? "var(--card)" : "transparent",
+      }}
     >
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between p-6 md:p-8 text-left outline-none"
+        className="w-full flex items-center justify-between px-6 py-5 text-left"
       >
-        <span className={`text-lg font-bold w-full transition-colors duration-300 ${
-          isOpen ? "text-[var(--text-main)]" : "text-[var(--text-main)]/80"
-        }`}>
+        <span
+          className="text-base md:text-lg font-semibold transition pr-4"
+          style={{
+            color: isOpen ? "var(--text-main)" : "var(--foreground)",
+            opacity: isOpen ? 1 : 0.8,
+          }}
+        >
           {faq.q}
         </span>
 
-        <div className={`p-2 rounded-full transition-all duration-300 ${
-          isOpen ? " rotate-180" : ""
-        }`}>
-          <FiChevronDown size={18} />
-        </div>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="p-2 flex-shrink-0"
+        >
+          <FiChevronDown
+            size={16}
+            style={{
+              color: isOpen
+                ? "var(--background)"
+                : "var(--foreground)",
+            }}
+          />
+        </motion.div>
       </button>
 
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            key="content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            transition={{
+              duration: 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
-            <div className="px-6 md:px-8 pb-8">
-              <p className="text-[var(--foreground)]/70 leading-relaxed font-medium">
+            <div className="px-6 pb-6">
+              <p
+                className="text-sm md:text-base leading-relaxed"
+                style={{
+                  color: "var(--foreground)",
+                  opacity: 0.7,
+                }}
+              >
                 {faq.a}
               </p>
             </div>

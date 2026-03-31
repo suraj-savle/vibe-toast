@@ -13,7 +13,7 @@ const itemVariants = {
   },
 };
 
-export const Hero = () => {
+export default function Hero() {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -23,14 +23,48 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[50vh] md:min-h-[90vh] flex items-center justify-center px-4 md:px-6 overflow-hidden bg-(--background)">
+    <section className="relative min-h-[50vh] md:min-h-[90vh] flex items-center justify-center px-4 md:px-6 overflow-hidden">
+      {/* Clean Background Grid */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Main grid lines */}
+        <div 
+          className="absolute inset-0 opacity-[0.15]" 
+          style={{
+            backgroundImage: `linear-gradient(to right, #8b5cf6 1px, transparent 1px), linear-gradient(to bottom, #8b5cf6 1px, transparent 1px)`,
+            backgroundSize: '64px 64px'
+          }}
+        />
+        
+        {/* Secondary grid - thinner lines */}
+        <div 
+          className="absolute inset-0 opacity-[0.08]" 
+          style={{
+            backgroundImage: `linear-gradient(to right, #a855f7 1px, transparent 1px), linear-gradient(to bottom, #a855f7 1px, transparent 1px)`,
+            backgroundSize: '16px 16px'
+          }}
+        />
+        
+        {/* Dot grid overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.12]" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, #8b5cf6 1px, transparent 1px)`,
+            backgroundSize: '32px 32px'
+          }}
+        />
+        
+        {/* Subtle gradient to blend edges */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-transparent to-[var(--background)]" />
+      </div>
+
       <motion.div
         initial="hidden"
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-        className="w-full max-w-6xl mx-auto text-center pt-20 md:pt-0"
+        className="w-full max-w-6xl mx-auto text-center pt-20 md:pt-0 z-10"
       >
-        {/* 1. Responsive Character-by-character Heading */}
+        {/* Character-by-character Heading */}
         <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] font-pacifico mb-4 md:mb-6 text-(--text-main) tracking-tight leading-tight md:leading-none select-none">
           {"vibe-toast".split("").map((char, index) => (
             <motion.span
@@ -50,7 +84,7 @@ export const Hero = () => {
           ))}
         </h1>
 
-        {/* 2. Subtitle: Optimized font sizes for readability */}
+        {/* Subtitle */}
         <motion.p
           variants={itemVariants}
           className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-(--foreground)/80 leading-relaxed mb-8 md:mb-12 font-medium px-2"
@@ -62,19 +96,19 @@ export const Hero = () => {
           </span>
         </motion.p>
 
-        {/* 3. Action Dock: Responsive sizing */}
+        {/* Action Dock */}
         <motion.div
           variants={itemVariants}
           className="flex flex-col items-center justify-center px-2"
         >
-          <div className="w-full max-w-[280px] sm:max-w-sm group">
+          <div className="w-full max-w-[280px] sm:max-w-sm">
             <div className="flex items-center justify-between rounded-xl md:rounded-2xl px-4 md:px-5 py-2 md:py-2.5 bg-(--card) border border-(--border) shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
                 <span className="text-(--foreground)/30 font-mono font-bold select-none text-xs md:text-sm">
                   $
                 </span>
                 <code className="text-xs md:text-base font-mono text-(--foreground) font-semibold tracking-tight truncate">
-                  npm i vibe-toast
+                  npm install vibe-toast
                 </code>
               </div>
 
@@ -84,7 +118,7 @@ export const Hero = () => {
                 aria-label="Copy command"
               >
                 {copied ? (
-                  <IconCheck size={18} className="text-green-600" />
+                  <IconCheck size={18} className="text-green-500" />
                 ) : (
                   <IconCopy size={18} />
                 )}
@@ -95,4 +129,4 @@ export const Hero = () => {
       </motion.div>
     </section>
   );
-};
+}
