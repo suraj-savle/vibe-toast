@@ -1,34 +1,78 @@
-import React from "react";
+import Link from "next/link";
+import React, { useState } from "react";
 import { BsGithub, BsTwitterX } from "react-icons/bs";
 import { CgNpm } from "react-icons/cg";
 
 export const Footer = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const scrollToSection = (id) => {
+    setIsOpen(false); // Close mobile menu on click
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--background)] mt-24">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
-          
           {/* Brand Section */}
           <div className="space-y-4">
             <h2 className="font-pacifico text-2xl text-[var(--foreground)]">
               vibe-toast
             </h2>
             <p className="text-sm max-w-xs opacity-60 leading-relaxed">
-              An open-source notification system for React focused on organic motion and developer experience.
+              An open-source notification system for React focused on organic
+              motion and developer experience.
             </p>
           </div>
 
           {/* Links Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
-            <div className="flex flex-col gap-3">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Library</span>
-              <a href="/docs" className="text-sm hover:underline underline-offset-4">Documentation</a>
-              <a href="/playground" className="text-sm hover:underline underline-offset-4">Playground</a>
+            <div className="flex flex-col items-start gap-3">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">
+                Library
+              </span>
+              <Link
+                href="/docs/introduction"
+                className="text-sm hover:underline underline-offset-4"
+              >
+                Documentation
+              </Link>
+              <button
+                onClick={() => scrollToSection("playground")}
+                className="text-sm hover:underline underline-offset-4 cursor-pointer"
+              >
+                Playground
+              </button>
             </div>
             <div className="flex flex-col gap-3">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Community</span>
-              <a href="https://github.com" className="text-sm hover:underline underline-offset-4">GitHub</a>
-              <a href="https://npmjs.com" className="text-sm hover:underline underline-offset-4">NPM Registry</a>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">
+                Community
+              </span>
+              <Link
+                href="https://github.com/suraj-savle/vibe-toast"
+                className="text-sm hover:underline underline-offset-4"
+              >
+                GitHub
+              </Link>
+              <Link
+                href="https://npmjs.com/package/vibe-toast"
+                className="text-sm hover:underline underline-offset-4"
+              >
+                NPM Registry
+              </Link>
             </div>
           </div>
         </div>
@@ -47,9 +91,24 @@ export const Footer = () => {
 
           {/* Social Icons */}
           <div className="flex items-center gap-6 text-[var(--foreground)]">
-            <a href="#" className="hover:opacity-60 transition-opacity"><BsGithub size={20} /></a>
-            <a href="#" className="hover:opacity-60 transition-opacity"><CgNpm size={24} /></a>
-            <a href="#" className="hover:opacity-60 transition-opacity"><BsTwitterX size={18} /></a>
+            <Link
+              href="https://github.com/suraj-savle/vibe-toast"
+              className="hover:opacity-60 transition-opacity"
+            >
+              <BsGithub size={20} />
+            </Link>
+            <Link
+              href="https://npmjs.com/package/vibe-toast"
+              className="hover:opacity-60 transition-opacity"
+            >
+              <CgNpm size={24} />
+            </Link>
+            <Link
+              href="https://twitter.com"
+              className="hover:opacity-60 transition-opacity"
+            >
+              <BsTwitterX size={18} />
+            </Link>
           </div>
         </div>
       </div>

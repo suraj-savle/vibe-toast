@@ -19,10 +19,6 @@ const pageMetadata = {
     title: "Variants",
     description: "Explore different toast styles",
   },
-  customization: {
-    title: "Customization",
-    description: "Learn how to customize your toasts",
-  },
   icons: {
     title: "Icons",
     description: "Available icons for use in your application",
