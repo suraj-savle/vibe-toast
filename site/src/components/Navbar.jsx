@@ -3,17 +3,23 @@
 import {
   IconBrandGithub,
   IconStarFilled,
+  IconMenu2,
+  IconX,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [stars, setStars] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
   const scrollToSection = (id) => {
+    setIsOpen(false); // Close mobile menu on click
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Account for your fixed navbar height
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -26,9 +32,7 @@ export const Navbar = () => {
     }
   };
 
-  // Fetch GitHub Stars & Handle Scroll
   useEffect(() => {
-    // Fetching from your vibe-toast repo
     fetch("https://api.github.com/repos/suraj-savle/vibe-toast")
       .then((res) => res.json())
       .then((data) => setStars(data.stargazers_count))
@@ -41,52 +45,107 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-[100] py-4 transition-all duration-300 bg-(--background)`}
+      className={`sticky top-0 z-[100] py-4 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-md border-b border-slate-100" : "bg-transparent"}`}
     >
-      <div className="flex justify-between items-center px-2 max-w-7xl mx-auto gap-8">
-        
-        {/* Left Side: Main Nav Links */}
-        <div className="flex items-center gap-1 bg-muted/50 rounded-full">
-          <NavLink href="/playground">Playground</NavLink>
-          <NavLink href="/docs/introduction">Docs</NavLink>
+      <div className="flex justify-between items-center px-6 max-w-7xl mx-auto">
+        {/* --- MOBILE ONLY: LOGO --- */}
+        <div className="flex md:hidden items-center gap-2">
+          <span className="font-pacifico text-xl text-(--text-main)">
+            vibe-toast
+          </span>
         </div>
 
-        {/* Right Side: FAQ, GitHub Stars, and CTA */}
-        <div className="flex items-center gap-6 ml-auto">
+        {/* --- DESKTOP VIEW: ORIGINAL LAYOUT (Hidden on Mobile) --- */}
+        <div className="hidden md:flex items-center gap-6">
+          <button
+            onClick={() => scrollToSection("playground")}
+            className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            Playground
+          </button>
+          <button
+            onClick={() => scrollToSection("quick-start")}
+            className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            Quick Start
+          </button>
+          <Link
+            href="/docs/introduction"
+            className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
+          >
+            Docs
+          </Link>
+        </div>
+
+        {/* --- RIGHT SIDE: GITHUB & MOBILE TOGGLE --- */}
+        <div className="flex items-center gap-4">
+          {/* Desktop Only Extra Link */}
           <button
             onClick={() => scrollToSection("faq")}
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            className="hidden md:block text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
           >
             Got Questions?
           </button>
-
+          {/* GitHub Stars (Visible on all screens) */}
           <Link
             href="https://github.com/suraj-savle/vibe-toast"
             target="_blank"
-            className="group flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="hidden md:block group"
           >
             {stars !== null && (
-              <span className="flex items-center gap-1 bg-muted group-hover:bg-muted/80 px-2 py-0.5 rounded-full text-[10px] border border-border/50 transition-colors">
-                <IconStarFilled size={10} className="" />
+              <span className="flex items-center gap-2 bg-slate-100 group-hover:bg-slate-200 px-3 py-1.5 rounded-full text-xs font-bold transition-all">
+                <IconStarFilled size={12} />
                 {stars.toLocaleString()}
-                <IconBrandGithub size={18} />
+                <IconBrandGithub size={18} className="text-slate-700" />
               </span>
             )}
           </Link>
 
-          
+          {/* MOBILE MENU BUTTON */}
+          <button
+            className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
+          </button>
         </div>
       </div>
-      
+
+      {/* --- MOBILE DROPDOWN MENU --- */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-(--background) border-b border-slate-100 overflow-hidden"
+          >
+            <div className="flex flex-col items-center p-5 gap-6">
+              <button
+                onClick={() => scrollToSection("playground")}
+                className=""
+              >
+                Playground
+              </button>
+              <button
+                onClick={() => scrollToSection("quick-start")}
+                className=""
+              >
+                Quick Start
+              </button>
+              <Link href="/docs/introduction" className="">
+                Docs
+              </Link>
+              <button
+                onClick={() => scrollToSection("faq")}
+                className=""
+              >
+                FAQ
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
-
-const NavLink = ({ href, children }) => (
-  <Link
-    href={href}
-    className="px-2 py-1.5 text-sm font-medium text-foreground/60 hover:text-foreground hover:bg-background rounded-full transition-all duration-200"
-  >
-    {children}
-  </Link>
-);

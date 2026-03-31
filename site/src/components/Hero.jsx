@@ -27,32 +27,32 @@ export default function Hero() {
       {/* Clean Background Grid */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Main grid lines */}
-        <div 
-          className="absolute inset-0 opacity-[0.15]" 
+        <div
+          className="absolute inset-0 opacity-[0.15]"
           style={{
             backgroundImage: `linear-gradient(to right, #8b5cf6 1px, transparent 1px), linear-gradient(to bottom, #8b5cf6 1px, transparent 1px)`,
-            backgroundSize: '64px 64px'
+            backgroundSize: "64px 64px",
           }}
         />
-        
+
         {/* Secondary grid - thinner lines */}
-        <div 
-          className="absolute inset-0 opacity-[0.08]" 
+        <div
+          className="absolute inset-0 opacity-[0.08]"
           style={{
             backgroundImage: `linear-gradient(to right, #a855f7 1px, transparent 1px), linear-gradient(to bottom, #a855f7 1px, transparent 1px)`,
-            backgroundSize: '16px 16px'
+            backgroundSize: "16px 16px",
           }}
         />
-        
+
         {/* Dot grid overlay */}
-        <div 
-          className="absolute inset-0 opacity-[0.12]" 
+        <div
+          className="absolute inset-0 opacity-[0.12]"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, #8b5cf6 1px, transparent 1px)`,
-            backgroundSize: '32px 32px'
+            backgroundSize: "32px 32px",
           }}
         />
-        
+
         {/* Subtle gradient to blend edges */}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-[var(--background)]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-transparent to-[var(--background)]" />
@@ -89,10 +89,10 @@ export default function Hero() {
           variants={itemVariants}
           className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto text-(--foreground)/80 leading-relaxed mb-8 md:mb-12 font-medium px-2"
         >
-          Beautiful toast notifications built for modern React apps.
+          Not just toasts — it’s a vibe.
           <br className="hidden sm:block" />
           <span className="text-(--foreground) font-bold sm:inline-block sm:mt-1">
-            Smooth animations. Zero config. Premium DX.
+            Fluid animations. Zero config. Built to feel right.
           </span>
         </motion.p>
 
@@ -102,9 +102,9 @@ export default function Hero() {
           className="flex flex-col items-center justify-center px-2"
         >
           <div className="w-full max-w-[280px] sm:max-w-sm">
-            <div className="flex items-center justify-between rounded-xl md:rounded-2xl px-4 md:px-5 py-2 md:py-2.5 bg-(--card) border border-(--border) shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between rounded-sm md:rounded-2xl px-4 md:px-5 py-2 md:py-2.5 bg-(--card) border border-(--border) shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
-                <span className="text-(--foreground)/30 font-mono font-bold select-none text-xs md:text-sm">
+                <span className="text-(--foreground) font-mono font-bold select-none text-xs md:text-sm">
                   $
                 </span>
                 <code className="text-xs md:text-base font-mono text-(--foreground) font-semibold tracking-tight truncate">
@@ -118,7 +118,7 @@ export default function Hero() {
                 aria-label="Copy command"
               >
                 {copied ? (
-                  <IconCheck size={18} className="text-green-500" />
+                  <IconCheck size={18} />
                 ) : (
                   <IconCopy size={18} />
                 )}

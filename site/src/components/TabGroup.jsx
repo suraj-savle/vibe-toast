@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FiCopy, FiCheck } from "react-icons/fi";
 
-export default function CodeBlock({ code, language = "jsx" }) {
+export default function CodeBlock({ code }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {

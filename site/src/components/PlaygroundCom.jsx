@@ -189,7 +189,7 @@ export default function Playground() {
   };
 
   return (
-    <div className="min-h-screen max-w-xl px-4 py-6 sm:px-6 sm:py-8">
+    <div id="playground" className="min-h-screen max-w-xl px-4 py-6 sm:px-6 sm:py-8">
       <Toaster position={position} theme={theme} duration={duration} />
       <header className="text-left mb-8">
         <h1

@@ -41,8 +41,8 @@ export default function VibeFAQ() {
 
   return (
     <section
-      className="py-6 px-4 md:px-6 relative overflow-hidden"
-      style={{ backgroundColor: "var(--background)" }}
+      id="faq"
+      className="py-6 px-4 md:px-6 relative overflow-hidden bg-(--background)"
     >
       {/* Background texture */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">

@@ -7,6 +7,8 @@ import VibeLab from "@/components/VibeLab";
 import VibeFeatures from "@/components/VibeFeatures";
 import VibeFAQ from "@/components/VibeFAQ";
 import Playground from "@/components/PlaygroundCom";
+import QuickStart from "@/components/QuickStart";
+import SocialLinks from "@/components/SocialLinks/SocialLinks";
 
 export default function VibeLanding() {
   return (
@@ -15,12 +17,14 @@ export default function VibeLanding() {
 
       <main>
         <Hero />
-        <div className="flex flex-col mt-2 md:flex-row">
+        <div className="flex flex-col justify-between mt-2 md:flex-row">
           <VibeLab />
           <Playground />
         </div>
         <VibeFeatures />
+        <QuickStart />
         <VibeFAQ />
+        <SocialLinks  />
       </main>
 
       <Footer />
