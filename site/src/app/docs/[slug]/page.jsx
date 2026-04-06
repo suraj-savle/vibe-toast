@@ -41,6 +41,10 @@ const pageMetadata = {
     title: "Actions",
     description: "Add buttons and interactivity to your toasts",
   },
+  contributing: {
+    title: "Contributing",
+    description: "Learn how to contribute to vibe-toast",
+  },
 };
 
 export async function generateStaticParams() {

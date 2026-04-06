@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaGithub, FaSearch, FaStar, FaDownload, FaTimes } from "react-icons/fa";
-import { FiPackage } from "react-icons/fi";
+import {  FaSearch, FaTimes } from "react-icons/fa";
 
 const navigation = [
   {
@@ -32,6 +31,12 @@ const navigation = [
       { slug: "icons", title: "Icons", description: "Use custom icons in toasts" },
     ]
   },
+  {
+    section: "Contributing",
+    items: [
+      { slug: "contributing", title: "Contributing", description: "How to contribute to the project" },
+    ]
+  }
 ];
 
 export default function DocsSidebar() {

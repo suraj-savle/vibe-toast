@@ -1,0 +1,297 @@
+import InfoBox from "../../components/docs/InfoBox";
+import CodeBlock from "../../components/docs/CodeBlock";
+
+# Contributing to Vibe Toast
+
+First of all, thank you for considering contributing to **Vibe Toast**.
+
+Whether you're fixing bugs, improving documentation, enhancing the UI, or adding new features, every contribution helps make the project better.
+
+This repository is structured as a **monorepo** with a clear separation between the **core package** and the **documentation website**.
+
+<InfoBox type="success">
+  **Welcome!** New to open source? Check out our [GitHub Discussions](https://github.com/suraj-savle/vibe-toast/discussions) for guidance on your first contribution.
+</InfoBox>
+
+## Choose Where to Contribute
+
+Please choose the correct workspace before starting.
+
+```bash
+vibe-toast/
+├── packages/
+│   └── vibe-toast/     # Core npm package
+│
+├── site/               # Documentation + marketing website
+│
+├── README.md
+└── CONTRIBUTING.md
+```
+
+## Contribution Workflow
+
+### 1. Fork Repository
+
+Fork this repository to your GitHub account.
+
+### 2. Clone Repo
+
+```bash
+git clone https://github.com/suraj-savle/vibe-toast.git
+cd vibe-toast
+npm install
+```
+
+### 3. Create Branch
+
+Use meaningful branch names.
+
+Examples:
+
+```bash
+git checkout -b feat/new-toast-variant
+git checkout -b fix/mobile-navbar-scroll
+git checkout -b docs/improve-installation-guide
+```
+
+## 📦 Package Contributions
+
+**Path:** `packages/vibe-toast/`
+
+Contribute here if you want to work on the **core toast library**.
+
+### Best Areas to Contribute
+
+- Bug fixes
+- Toast animations
+- Stacking logic
+- Queue management
+- Promise API
+- Toast variants
+- TypeScript types
+- Performance optimization
+- Accessibility improvements
+
+### Source Structure
+
+```bash
+packages/vibe-toast/src/
+├── components/     # ToastItem.tsx, Toaster.tsx
+├── core/          # animations.ts, storeBridge.ts
+├── hooks/         # use-toast.ts
+├── styles/        # toast.css
+├── types/         # TypeScript definitions
+└── utils/         # generateId.ts, resolveIcon.tsx
+```
+
+### Run Locally
+
+```bash
+cd packages/vibe-toast
+npm install
+npm run dev or npm start
+```
+
+<InfoBox type="tip">
+  **Pro tip:** Use `npm run dev` to watch for changes and rebuild automatically as you work.
+</InfoBox>
+
+### Build Package
+
+Before PR, run build to check everything is working:
+
+```bash
+npm run build
+```
+
+### Package Standards
+
+Please follow these rules:
+
+- Use **TypeScript**
+- Avoid `any`
+- Keep bundle size minimal
+- Maintain tree-shaking support
+- Support React 18+
+- Avoid unnecessary dependencies
+- Update package README when adding features
+
+## 🌐 Site Contributions
+
+**Path:** `site/`
+
+Contribute here if you want to improve the **website and documentation**.
+
+### Best Areas to Contribute
+
+- Landing page UI
+- Hero section
+- Docs pages
+- MDX documentation
+- Responsive fixes
+- Mobile navigation
+- Accessibility
+- SEO improvements
+- Animations
+- Playground examples
+
+### Site Structure
+
+```bash
+site/src/
+├── app/           # Next.js app router pages
+├── components/    # React components
+│   ├── docs/      # Documentation components
+│   ├── layout/    # Navbar, Footer
+│   ├── marketing/ # Landing page sections
+│   └── shared/    # Reusable components
+├── content/       # MDX documentation files
+└── public/        # Static assets
+```
+
+### Run Locally
+
+```bash
+cd site
+npm install
+npm run dev
+```
+
+### Build Production
+
+Before PR, run build to check everything is working:
+
+```bash
+npm run build
+```
+
+### Site Standards
+
+Please follow:
+
+- Existing design system variables
+- Responsive-first design
+- Clean component separation
+- Reusable components
+- App Router best practices
+- Dark mode compatibility
+
+## Make Changes
+
+Keep changes focused to one feature or fix.
+
+Avoid mixing unrelated updates in one PR.
+
+## Commit Properly
+
+Use clear commit messages.
+
+Examples:
+
+```bash
+feat(package): add progress toast support
+fix(site): resolve mobile menu scroll issue
+docs(site): improve quick start guide
+```
+
+## Open Pull Request
+
+Include:
+
+- What changed
+- Why it changed
+- Screenshots (UI changes)
+- Related issue number
+
+## 🏷️ Pull Request Title Format
+
+Please use this format:
+
+```bash
+feat(package):  # New feature for package
+fix(package):   # Bug fix for package
+docs(site):     # Documentation changes
+style(site):    # UI/styling changes
+perf(package):  # Performance improvements
+chore:          # Maintenance tasks
+```
+
+Examples:
+
+```bash
+feat(package): add dismiss callback
+fix(site): improve footer responsiveness
+docs(site): update promise examples
+```
+
+## ✅ Code Quality Standards
+
+### Package
+
+- TypeScript only
+- No `any`
+- Reusable utilities
+- Optimized bundle size
+- No dead code
+
+### Site
+
+- Responsive UI
+- Reusable sections
+- Accessible interactions
+- No console errors
+- Semantic HTML
+
+## 🐛 Reporting Issues
+
+When opening issues, include:
+
+```markdown
+Issue Type: Package / Site
+Version:
+Browser:
+Device:
+
+Description:
+Steps to reproduce:
+Expected behavior:
+Actual behavior:
+Screenshots:
+```
+
+## 📋 Pull Request Checklist
+
+Before submitting your PR, verify:
+
+- [ ] I've read the contributing guidelines
+- [ ] My code follows the project's style guidelines
+- [ ] I've tested my changes locally
+- [ ] I've updated documentation as needed
+- [ ] My PR has a clear title and description
+
+
+## 💬 Need Help?
+
+For discussions, ideas, or questions:
+
+- **GitHub Discussions** - For questions and ideas
+- **Issues tab** - For bug reports
+- **Pull Requests** - For code contributions
+
+<InfoBox type="success">
+  **Ready to contribute?** Check out our **[good first issues](https://github.com/suraj-savle/vibe-toast/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** on GitHub to get started!
+</InfoBox>
+
+## 🎁 Recognition
+
+Contributors will be:
+
+- Added to the **README** contributors list
+- Mentioned in **release notes**
+- Featured on the **website** (opt-in)
+
+## Thank You
+
+Thank you for helping improve **Vibe Toast**. 🚀
+
+**Questions?** Open a [GitHub Discussion](https://github.com/suraj-savle/vibe-toast/discussions) or DM on [Twitter](https://twitter.com/surajsavle)
