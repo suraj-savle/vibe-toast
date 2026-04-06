@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import path from "path";
 import fs from "fs/promises";
-import MDXContent from "../components/MDXContent";
+import MDXContent from "@/components/docs/MDXContent";
 
 const pageMetadata = {
   introduction: {
@@ -60,26 +60,25 @@ export default async function DocsPage({ params }) {
   let source;
   try {
     const root = process.cwd();
-    
+
     // Check if we are in the 'site' directory or the root
-    const isInSiteFolder = root.endsWith('site');
-    
+    const isInSiteFolder = root.endsWith("site");
+
     // Construct path: if in root, add 'site'. If not, just use root.
     const mdxPath = path.join(
       root,
       isInSiteFolder ? "" : "site",
       "src",
-      "app",
-      "docs",
-      "[slug]",
       "content",
-      `${slug}.mdx`
+      `${slug}.mdx`,
     );
 
     source = await fs.readFile(mdxPath, "utf-8");
   } catch (error) {
     // This log is your best friend. Check Vercel Dashboard > Logs > Functions
-    console.error(`FAILED to read MDX for slug: ${slug}. Path tried: ${error.path}`);
+    console.error(
+      `FAILED to read MDX for slug: ${slug}. Path tried: ${error.path}`,
+    );
     notFound();
   }
 

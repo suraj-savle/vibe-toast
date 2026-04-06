@@ -1,14 +1,14 @@
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useToast } from "../hooks/use-toast";
 import { ToasterProps } from "../types/types";
 import { ToastItem } from "./ToastItem";
 
 export const Toaster: React.FC<ToasterProps> = ({
-  position = "top-right",
-  theme = "system",
-  duration: globalDuration, // Added
-  hideProgressBar: globalHideProgress, // Added
+  position = "top-center",
+  theme = "light",
+  duration: globalDuration,
+  hideProgressBar: globalHideProgress = true,
 }) => {
   const { toasts, dismiss } = useToast();
   const isTop = position.includes("top");
@@ -30,13 +30,13 @@ export const Toaster: React.FC<ToasterProps> = ({
         zIndex: 9999,
         padding: "16px",
         inset: 0,
-        gap: "12px",
+        gap: "10px",
       }}
     >
       <AnimatePresence mode="popLayout">
         {toasts.map((toast) => (
           <ToastItem
-            key={toast.id} // This MUST stay here for AnimatePresence
+            key={toast.id}
             toast={{
               ...toast,
               duration: toast.duration ?? globalDuration,

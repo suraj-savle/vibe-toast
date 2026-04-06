@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaGithub, FaSearch } from "react-icons/fa";
+import { FaGithub, FaSearch, FaStar, FaDownload, FaTimes } from "react-icons/fa";
+import { FiPackage } from "react-icons/fi";
 
 const navigation = [
   {
@@ -33,71 +34,90 @@ const navigation = [
   },
 ];
 
-export default function Sidebar() {
+export default function DocsSidebar() {
   const pathname = usePathname();
   const [search, setSearch] = useState("");
   const [stars, setStars] = useState("...");
   const [downloads, setDownloads] = useState("...");
+  const [version, setVersion] = useState("0.1.6");
 
   useEffect(() => {
-    // 1. Fetch Dynamic GitHub Stars
+    // Fetch GitHub Stars
     fetch("https://api.github.com/repos/suraj-savle/vibe-toast")
       .then(res => res.json())
       .then(data => {
         const count = data.stargazers_count;
         setStars(count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString());
       })
-      .catch(() => setStars("0.1.6k"));
+      .catch(() => setStars("1.2k"));
 
-    // 2. Fetch Dynamic NPM Downloads (Last Month)
-    // Replace 'vibe-toast' with your actual package name on npm
+    // Fetch NPM Downloads
     fetch("https://api.npmjs.org/downloads/point/last-month/vibe-toast")
       .then(res => res.json())
       .then(data => {
         const count = data.downloads || 0;
-        setDownloads(count > 999 ? (count / 1000).toFixed(1) + "k" : count.toString());
+        setDownloads(count > 9999 ? (count / 1000).toFixed(1) + "k" : count.toString());
       })
-      .catch(() => setDownloads("12.5k"));
+      .catch(() => setDownloads("1.5k"));
+
+    // Fetch latest version from NPM
+    fetch("https://registry.npmjs.org/vibe-toast/latest")
+      .then(res => res.json())
+      .then(data => {
+        if (data.version) setVersion(data.version);
+      })
+      .catch(() => setVersion("0.1.6"));
   }, []);
 
   const filteredNav = navigation.map(section => ({
     ...section,
     items: section.items.filter(item =>
-      item.title.toLowerCase().includes(search.toLowerCase())
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase())
     )
   })).filter(section => section.items.length > 0);
 
+  const clearSearch = () => setSearch("");
+
   return (
     <aside className="w-72 border-r border-[var(--border)]/10 bg-white/50 backdrop-blur-sm overflow-y-auto h-screen sticky top-0">
-      <div className="p-6">
+      <div className="p-5">
         {/* Logo */}
-        <Link href="/ " className="block mb-6">
-          <h2 className="text-3xl font-pacifico" style={{ color: 'var(--text-main)' }}>
-            vibe-toast<span className="text-sm font-normal text-gray-400 ml-2">v.0.1.6</span>
+        <Link href="/" className="block mb-6 group">
+          <h2 className="text-4xl font-pacifico text-(--text-main)">
+            vibe-toast
           </h2>
-          <p className="text-xs text-gray-500 mt-1">Documentation</p>
+          
         </Link>
 
         {/* Search Bar */}
-        <div className="relative mb-8">
-          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-3" />
+        <div className="relative mb-6">
+          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-3.5" />
           <input
             type="text"
-            placeholder="Search documentation..."
+            placeholder="Search docs..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-gray-100/50 border border-gray-200 rounded-lg py-2 pl-9 pr-4 text-xs focus:outline-none focus:ring-1 focus:ring-gray-300 transition-all"
+            className="w-full bg-gray-50 border border-gray-200 rounded py-2 pl-9 pr-8 text-sm focus:outline-none focus:ring-1 focus:(--foreground)/10  transition-all"
           />
+          {search && (
+            <button
+              onClick={clearSearch}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              <FaTimes size={12} />
+            </button>
+          )}
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-8">
+        <nav className="space-y-6">
           {filteredNav.map((section, idx) => (
             <div key={idx}>
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+              <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-2">
                 {section.section}
               </h3>
-              <ul className="space-y-1">
+              <ul className="space-y-0.5">
                 {section.items.map((item) => {
                   const href = `/docs/${item.slug}`;
                   const isActive = pathname === href;
@@ -106,14 +126,17 @@ export default function Sidebar() {
                     <li key={item.slug}>
                       <Link
                         href={href}
-                        className={`block px-3 py-2 rounded-lg transition-colors group ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
-                          }`}
+                        className={`block px-3 py-2 rounded-lg transition-all duration-200 ${
+                          isActive 
+                            ? 'bg-(--foreground)/5' 
+                            : 'hover:bg-gray-50'
+                        }`}
+                        style={isActive ? { borderLeftColor: 'var(--text-main)' } : {}}
                       >
-                        <span className={`font-medium text-sm ${isActive ? 'text-black' : 'text-gray-900'
-                          }`}>
+                        <span className={`text-sm font-medium block `}>
                           {item.title}
                         </span>
-                        <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
+                        <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
                           {item.description}
                         </p>
                       </Link>
@@ -125,22 +148,11 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* Footer Links with Dynamic Data */}
-        <div className="mt-8 pt-6 border-t border-[var(--border)]/10">
-          <a href="https://github.com/suraj-savle/vibe-toast" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between text-sm text-gray-600 hover:text-black mb-3 group">
-            <div className="flex items-center gap-2">
-              <FaGithub />
-              <span>GitHub</span>
-            </div>
-            <span className="text-[10px] font-bold bg-gray-200 px-2 py-0.5 rounded-full">{stars}</span>
-          </a>
-          <a href="https://www.npmjs.com/package/vibe-toast" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between text-sm text-gray-600 hover:text-black">
-            <div className="flex items-center gap-2">
-              <span className="font-bold">npm</span>
-              <span>package</span>
-            </div>
-            <span className="text-[10px] font-bold bg-gray-200 px-2 py-0.5 rounded-full">{downloads}/mo</span>
-          </a>
+        {/* Version Info */}
+        <div className="mt-4 pt-3 text-center">
+          <p className="text-[10px] text-gray-400">
+            MIT Licensed • Open Source
+          </p>
         </div>
       </div>
     </aside>

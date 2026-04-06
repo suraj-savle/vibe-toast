@@ -1,9 +1,7 @@
 import React from 'react';
 import { ToastVariant } from '../types/types';
 import { FaCheckCircle, FaCircleNotch } from 'react-icons/fa';
-import { MdCancel, MdError } from 'react-icons/md';
-import { IoIosInformationCircle } from 'react-icons/io';
-import { TbAlertCircle, TbAlertCircleFilled, TbAlertTriangleFilled, TbBan, TbCircleLetterXFilled, TbCircleX, TbCircleXFilled } from 'react-icons/tb';
+import { TbAlertCircle, TbBan, TbCircleX } from 'react-icons/tb';
 
 export const resolveIcon = (variant: ToastVariant) => {
   const props = { size: 20, strokeWidth: 2.25 };

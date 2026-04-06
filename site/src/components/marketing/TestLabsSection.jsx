@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { Toaster, toast } from "vibe-toast";
 import {
@@ -13,24 +12,13 @@ import {
   IconTrash,
   IconCopy,
   IconBell,
-  IconClock,
   IconCloudUpload,
-  IconDownload,
   IconHeart,
   IconStar,
   IconRocket,
   IconGift,
-  IconWand,
   IconPalette,
-  IconSettings,
   IconArrowBackUp,
-  IconUserPlus,
-  IconShoppingCart,
-  IconCreditCard,
-  IconCalendarEvent,
-  IconSun,
-  IconMoon,
-  IconDeviceDesktop,
 } from "@tabler/icons-react";
 
 export default function ToastExamples() {
@@ -152,51 +140,6 @@ export default function ToastExamples() {
     });
   };
 
-  // Duration Examples
-  const showShortToast = () => {
-    toast.success("Quick message", { duration: 1500 });
-  };
-
-  const showLongToast = () => {
-    toast.info("Important notice - please read carefully", { duration: 8000 });
-  };
-
-  const showPersistentToast = () => {
-    toast.warning("This toast won't auto-dismiss - click X to close", {
-      duration: 0,
-    });
-  };
-
-  // Custom Style Examples
-  const showGlassToast = () => {
-    toast("Glassmorphism", {
-      style: {
-        background: "rgba(255, 255, 255, 0.7)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(255, 255, 255, 0.3)",
-      },
-    });
-  };
-
-  const showGradientToast = () => {
-    toast({
-      title: "System Update",
-      description: "New features available",
-      style: {
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        color: "#fff",
-        accent: "#fff",
-      },
-    });
-  };
-
-  const showDarkToast = () => {
-    toast({
-      title: "Dark theme",
-      description: "Custom dark background",
-      style: { background: "#1a1a1a", color: "#fff", accent: "#8b5cf6" },
-    });
-  };
 
   // Variant Examples
   const showVariantSuccess = () => {
@@ -415,7 +358,6 @@ export default function ToastExamples() {
           </div>
         </div>
       </div>
-      <Toaster position="top-right" theme="light" />
     </div>
   );
 }

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Sidebar from "./components/Sidebar";
-import RightPanel from "./components/RightPanel";
-import { FiMenu, FiX, FiMoreVertical } from "react-icons/fi";
+import DocsSidebar from "@/components/docs/DocsSidebar";
+import DocsRightPanel from "@/components/docs/DocsRightPanel";
+import { FiMenu, FiMoreVertical } from "react-icons/fi";
 import { Toaster } from "vibe-toast";
 import Link from "next/link";
 
@@ -24,7 +24,7 @@ export default function DocsLayout({ children }) {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-screen bg-[#FDFCF7] text-[#2A1A10] w-full m-0 p-0">
+    <div className="flex min-h-screen w-full m-0 p-0">
       
       {/* MOBILE HEADER - No padding, full width */}
       <header className="lg:hidden fixed top-0 w-full h-12 bg-(--background) border-b border-[#EEEADF] z-50 flex items-center justify-between">
@@ -55,19 +55,19 @@ export default function DocsLayout({ children }) {
 
       {/* LEFT SIDEBAR - Navigation */}
       <aside className={`
-        fixed inset-y-0 left-0 z-[70] w-fit bg-[#FDFCF7] border-r border-[#EEEADF]/60 transition-transform duration-200
+        fixed inset-y-0 left-0 z-70 w-fit border-r border-[#EEEADF]/60 transition-transform duration-200
         lg:sticky lg:translate-x-0 lg:z-30 lg:h-screen lg:top-0
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
       `}>
-        <div className="h-full overflow-hidden">
+        <div className="h-full bg-(--background) overflow-hidden">
           {/* Sidebar content should handle its own internal padding if needed */}
-          <Sidebar />
+          <DocsSidebar />
         </div>
       </aside>
 
       {/* MAIN CONTENT - ZERO PADDING */}
       <main className="flex-1 min-w-0 w-full p-4 m-4">
-        <div className="w-full pt-12 lg:pt-10"> 
+        <div className="w-full pt-8"> 
           {/* pt-12 only on mobile to clear the fixed header */}
           {children}
         </div>
@@ -75,16 +75,16 @@ export default function DocsLayout({ children }) {
 
       {/* RIGHT PANEL - Drawer */}
       <aside className={`
-        fixed inset-y-0 right-0 z-[70] w-84 bg-[#FDFCF7] border-l border-[#EEEADF]/60 transition-transform duration-200
+        fixed inset-y-0 right-0 z-70 w-84 border-l border-[#EEEADF]/60 transition-transform duration-200
         lg:sticky lg:translate-x-0 lg:z-30 lg:h-screen lg:top-0
         ${rightPanelOpen ? "translate-x-0" : "translate-x-full"}
       `}>
-        <div className="h-full overflow-y-auto">
-          <RightPanel />
+        <div className="h-full bg-(--background) overflow-y-auto">
+          <DocsRightPanel />
         </div>
       </aside>
 
-      <Toaster position="bottom-right" />
+      <Toaster />
     </div>
   );
 }

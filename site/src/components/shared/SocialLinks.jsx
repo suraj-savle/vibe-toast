@@ -20,7 +20,7 @@ export default function SocialLinks() {
     {
       name: "LinkedIn",
       icon: <IconBrandLinkedin size={18} />,
-      url: "https://linkedin.com/in/suraj-savle",
+      url: "https://linkedin.com/in/surajsavle",
       hoverColor: "#0a66c2",
     },
     {

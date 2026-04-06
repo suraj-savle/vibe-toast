@@ -1,15 +1,16 @@
 "use client";
 import React from "react";
-import { Navbar } from "../components/Navbar";
-import  Hero  from "../components/Hero";
-import { Footer } from "../components/Footer";
-import VibeLab from "@/components/VibeLab";
-import VibeFeatures from "@/components/VibeFeatures";
-import VibeFAQ from "@/components/VibeFAQ";
-import Playground from "@/components/PlaygroundCom";
-import QuickStart from "@/components/QuickStart";
-import SocialLinks from "@/components/SocialLinks/SocialLinks";
-import ScrollToTop from "@/components/ScrollToTop";
+import { Navbar } from "@/components/layout/Navbar";
+import Hero from "@/components/marketing/Hero";
+import { Footer } from "@/components/layout/Footer";
+import VibeLab from "@/components/marketing/TestLabsSection";
+import VibeFeatures from "@/components/marketing/FeaturesSection";
+import VibeFAQ from "@/components/marketing/FAQSection";
+import Playground from "@/components/marketing/PlaygroundSection";
+import QuickStart from "@/components/marketing/QuickStart";
+import SocialLinks from "@/components/shared/SocialLinks";
+import ScrollToTop from "@/components/layout/ScrollToTop";
+import { Toaster } from "vibe-toast";
 
 export default function VibeLanding() {
   return (

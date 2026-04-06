@@ -1,11 +1,11 @@
 // packages/vibe-toast/src/core/storeBridge.ts
-import React from 'react';
-import { 
-  Toast, 
-  ToastOptions, 
-  PromiseOptions, 
-  ToastVariant, 
-  ToastFunction 
+import React from "react";
+import {
+  Toast,
+  ToastOptions,
+  PromiseOptions,
+  ToastVariant,
+  ToastFunction,
 } from "../types/types";
 import { generateId } from "../utils/generateId";
 
@@ -47,20 +47,50 @@ class ToastStore {
   }
 
   add(options: ToastOptions): string {
-    const id = generateId();
     const variant = options.variant || "default";
-    const duration = options.duration !== undefined 
-      ? options.duration 
-      : DEFAULT_TIMEOUTS[variant];
+    const duration =
+      options.duration !== undefined
+        ? options.duration
+        : DEFAULT_TIMEOUTS[variant];
+
+    const dedupeKey =
+      options.groupKey ||
+      `${variant}-${String(options.title)}-${String(options.description || "")}`;
+
+    const existingIndex = this.toasts.findIndex(
+      (toast) => toast.groupKey === dedupeKey,
+    );
+
+    // DEDUPE / GROUP
+    if (options.dedupe !== false && existingIndex !== -1) {
+  const existingToast = this.toasts[existingIndex];
+
+  const updatedToast: Toast = {
+    ...existingToast,
+    count: (existingToast.count || 1) + 1,
+    duration,
+    updatedAt: Date.now(),
+  };
+
+  this.toasts = this.toasts.map((toast, index) =>
+    index === existingIndex ? updatedToast : toast
+  );
+
+  this.emit();
+  return existingToast.id;
+}
+
+    const id = generateId();
 
     const newToast: Toast = {
       id,
       ...options,
-      variant,    
+      variant,
       duration,
+      count: 1,
+      groupKey: dedupeKey,
     };
 
-    // Add new toast to the front and enforce limit
     this.toasts = [newToast, ...this.toasts].slice(0, this.settings.limit);
 
     this.emit();
@@ -71,9 +101,10 @@ class ToastStore {
     this.toasts = this.toasts.map((t) => {
       if (t.id === id) {
         const newVariant = options.variant || t.variant || "default";
-        const newDuration = options.duration !== undefined 
-          ? options.duration 
-          : DEFAULT_TIMEOUTS[newVariant as ToastVariant];
+        const newDuration =
+          options.duration !== undefined
+            ? options.duration
+            : DEFAULT_TIMEOUTS[newVariant as ToastVariant];
 
         return { ...t, ...options, variant: newVariant, duration: newDuration };
       }
@@ -108,7 +139,10 @@ const baseToast = (options: ToastOptions | string): string => {
  * Helper to create variant-specific methods (success, error, etc.)
  */
 const createHandler = (variant: ToastVariant) => {
-  return (title: React.ReactNode, options?: Omit<ToastOptions, "title" | "variant">) => {
+  return (
+    title: React.ReactNode,
+    options?: Omit<ToastOptions, "title" | "variant">,
+  ) => {
     return toastStore.add({
       ...options,
       title,
@@ -134,36 +168,38 @@ baseToast.setLimit = (n: number) => toastStore.setLimit(n);
  */
 baseToast.promise = <T>(
   promise: Promise<T>,
-  { loading, success, error }: PromiseOptions<T>
+  { loading, success, error }: PromiseOptions<T>,
 ) => {
   const id = toastStore.add({
-    variant: 'loading',
+    variant: "loading",
     title: loading,
-    duration: Infinity, 
+    duration: Infinity,
   });
-  
+
   promise
     .then((data) => {
-      const successTitle = typeof success === 'function' ? (success as Function)(data) : success;
+      const successTitle =
+        typeof success === "function" ? (success as Function)(data) : success;
       toastStore.update(id, {
-        variant: 'success',
+        variant: "success",
         title: successTitle,
-        duration: DEFAULT_TIMEOUTS.success
+        duration: DEFAULT_TIMEOUTS.success,
       });
     })
     .catch((err) => {
-      const errorTitle = typeof error === 'function' ? (error as Function)(err) : error;
+      const errorTitle =
+        typeof error === "function" ? (error as Function)(err) : error;
       toastStore.update(id, {
-        variant: 'error',
+        variant: "error",
         title: errorTitle,
-        duration: DEFAULT_TIMEOUTS.error
+        duration: DEFAULT_TIMEOUTS.error,
       });
     });
-  
+
   return promise;
 };
 
 /**
  * Final Export: Cast to ToastFunction for full TypeScript support
  */
-export const toast = (baseToast as unknown) as ToastFunction;
+export const toast = baseToast as unknown as ToastFunction;

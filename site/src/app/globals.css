@@ -4,15 +4,15 @@
 :root {
   --background: #fafafa;     /* clean premium white */
   --foreground: #111111;     /* rich black text */
-  --text-main: #000000;      /* brand heading black */
-  --code-panel: #0f0f0f;     /* premium dark code panel */
+  --text-main: #050505;      /* brand heading black */
+  --code-panel: #FFFFFF;     /* premium dark code panel */
   --card: #ffffff;           /* pure white card */
   --border: #1f1f1f;         /* elegant dark border */
 }
 
 
 @theme {
-  --font-sans: var(--font-inter);
+  --font-inter: var(--font-inter);
   --font-pacifico: var(--font-pacifico);
   /* Add Roboto Slab variable if you want to use it */
   --font-slab: var(--font-roboto-slab); 
@@ -25,6 +25,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
 }
 
 ::-webkit-scrollbar {

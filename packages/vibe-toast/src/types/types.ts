@@ -52,6 +52,11 @@ export interface Toast {
   className?: string;
   /** Set to true to hide the countdown progress bar */
   hideProgressBar?: boolean;
+  /** Number of times this toast was triggered */
+  count?: number;
+
+  /** Key used for deduplication */
+  groupKey?: string;
   
   /** Custom theme overrides for background, text, and accent colors */
   style?: React.CSSProperties & {
@@ -61,9 +66,13 @@ export interface Toast {
   };
   /** Additional data for custom internal logic */
   metadata?: Record<string, any>;
+
+  updatedAt?: number;
 }
 
-export type ToastOptions = Omit<Toast, 'id'>;
+export type ToastOptions = Omit<Toast, 'id'> & {
+  dedupe?: boolean;
+};
 
 export interface PromiseOptions<T = any> {
   loading: string | React.ReactNode;
@@ -90,4 +99,11 @@ export interface ToasterProps {
   duration?: number;
   /** Globally hide progress bars for all toasts */
   hideProgressBar?: boolean;
+
+
+  /** Width for desktop */
+  width?: number | string;
+
+  /** Width for mobile screens */
+  mobileWidth?: number | string;
 }

@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "src/components/VibeLab.jsx", "src/app/playground/page.jsx", "next.config.ts", "src/components/VibeFeatures.tsx", "src/components/VibeFAQ.jsx"  ],
+, "src/components/marketing/TestLabsSection.jsx", "src/app/playground/page.jsx", "next.config.ts", "src/components/marketing/FeaturesSection.tsx", "src/components/marketing/FAQSection.jsx"  ],
   "exclude": ["node_modules"]
 }

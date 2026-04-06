@@ -6,6 +6,7 @@
   --vibe-text-main: #ffffff;
   --vibe-text-muted: #a1a1aa;
   --vibe-progress-bg: rgba(255, 255, 255, 0.05);
+
   --vibe-accent: #3b82f6;
 }
 
@@ -27,24 +28,48 @@
 
 /* 3. The Toast Card */
 .vibe-toast-card {
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   pointer-events: auto;
   position: relative;
-  width: 320px;
-  background: var(--vibe-bg);
-  border: 1px solid var(--vibe-border);
+  width: 100%;
+  max-width: 300px;
+  min-width: 180px;
+  background: color-mix(in srgb, var(--vibe-bg) 92%, transparent);
+  backdrop-filter: blur(14px);
+  /* border: 1px solid color-mix(in srgb, var(--vibe-border) 70%, white 8%); */
   color: var(--vibe-text-main);
-  border-radius: 10px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.01),
+    0 2px 6px rgba(0, 0, 0, 0.02),
+    0 4px 10px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   touch-action: none;
   user-select: none;
   cursor: grab;
-  transition: none !important; /* Prevents CSS from breaking Framer Motion */
+  will-change: transform, opacity;
 }
+
+/* .vibe-toast-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--vibe-accent),
+    transparent
+  );
+  opacity: 0.8;
+} */
 
 .vibe-toast-inner {
   display: flex;
@@ -65,7 +90,7 @@
 
 /* Optional: Add a subtle glow to the icon to make it pop */
 .vibe-toast-icon-side svg {
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
 }
 
 .vibe-toast-content-side {
@@ -111,31 +136,65 @@
   line-height: 1.5;
 }
 
-/* 4. Progress Bar */
 .vibe-progress-track {
-  height: 3px;
   width: 100%;
+  height: 3px;
   background: var(--vibe-progress-bg);
-  position: relative; /* Changed to relative so it sits at the bottom of the column */
+  overflow: hidden;
+  border-radius: 999px;
 }
 
 .vibe-progress-fill {
+  width: 100%;
   height: 100%;
-  background: var(--vibe-accent);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--vibe-accent) 75%, white 12%),
+    var(--vibe-accent) 45%,
+    color-mix(in srgb, var(--vibe-accent) 85%, black 8%)
+  );
+  transform-origin: left;
+  border-radius: inherit;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--vibe-accent) 28%, transparent);
+}
+
+.vibe-progress-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  animation: vibe-progress-shine 1.6s linear infinite;
+}
+
+@keyframes vibe-progress-shrink {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
 }
 
 /* 5. Variants */
 .vibe-variant-success {
-  --vibe-accent: #10b981;
+  --vibe-accent: #34d399;
 }
+
 .vibe-variant-error {
-  --vibe-accent: #ef4444;
+  --vibe-accent: #fb7185;
 }
+
 .vibe-variant-warning {
-  --vibe-accent: #f59e0b;
+  --vibe-accent: #facc15;
 }
+
 .vibe-variant-info {
-  --vibe-accent: #3b82f6;
+  --vibe-accent: #818cf8;
 }
 
 .vibe-icon-spin {
@@ -152,42 +211,115 @@
 .vibe-action-stack {
   display: flex;
   gap: 8px;
-  padding: 4px 14px 14px 14px; /* Align with the inner padding */
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 /* Base button style */
 .vibe-action-btn {
-  flex: 1; /* Makes buttons equal width */
-  padding: 6px 12px;
+  flex: 1;
+  min-height: 34px;
+  padding: 8px 12px;
   font-size: 12px;
   font-weight: 600;
-  border-radius: 6px;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
   border: 1px solid var(--vibe-border);
-  background: transparent;
+  background: color-mix(in srgb, var(--vibe-bg) 92%, white 4%);
   color: var(--vibe-text-main);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease;
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+
+  will-change: transform;
+}
+
+.vibe-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
 /* Primary style (uses the accent color) */
 .vibe-btn-primary {
-  background: var(--vibe-accent);
-  border-color: var(--vibe-accent);
-  color: #ffffff;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--vibe-accent) 88%, white 8%),
+    var(--vibe-accent)
+  );
+
+  border-color: color-mix(in srgb, var(--vibe-accent) 80%, black 8%);
+  color: white;
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 6px 14px color-mix(in srgb, var(--vibe-accent) 18%, transparent);
 }
 
 .vibe-btn-primary:hover {
-  filter: brightness(1.1);
+  transform: translateY(-1px);
+  filter: brightness(1.04);
 }
 
-/* Ghost style */
 .vibe-btn-ghost {
-  border-color: transparent;
+  background: transparent;
+  border-color: black;
   color: var(--vibe-text-muted);
 }
 
 .vibe-btn-ghost:hover {
   background: var(--vibe-progress-bg);
   color: var(--vibe-text-main);
+}
+
+@media (max-width: 640px) {
+  .vibe-toast-card {
+    width: calc(100vw - 16px);
+    max-width: 260px;
+    border-radius: 8px;
+  }
+
+  .vibe-toast-inner {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .vibe-toast-title {
+    font-size: 13px;
+  }
+
+  .vibe-description-text {
+    font-size: 12px;
+  }
+}
+
+.vibe-toast-count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  background: color-mix(in srgb, var(--vibe-accent) 12%, transparent);
+  color: var(--vibe-text-main);
+  border: 1px solid color-mix(in srgb, var(--vibe-accent) 22%, transparent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
 }

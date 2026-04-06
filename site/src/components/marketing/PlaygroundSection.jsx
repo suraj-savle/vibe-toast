@@ -7,19 +7,14 @@ import {
   FaHeart,
   FaStar,
   FaSmile,
-  FaCopy,
   FaPlay,
   FaUndo,
-  FaPalette,
   FaCog,
-  FaSun,
-  FaMoon,
   FaTimes,
   FaCheck,
   FaInfo,
   FaExclamation,
 } from "react-icons/fa";
-import { Navbar } from "@/components/Navbar";
 
 function ToggleSwitch({ enabled, onChange, accentColor }) {
   return (
@@ -59,7 +54,7 @@ export default function Playground() {
   const [showActions, setShowActions] = useState(false);
   const [actionLabel1, setActionLabel1] = useState("Confirm");
   const [actionLabel2, setActionLabel2] = useState("Cancel");
-  const [hideProgressBar, setHideProgressBar] = useState(false);
+  const [hideProgressBar, setHideProgressBar] = useState(true);
   const [copied, setCopied] = useState(false);
   const [hasDescription, setHasDescription] = useState(true);
 
@@ -189,8 +184,11 @@ export default function Playground() {
   };
 
   return (
-    <div id="playground" className="min-h-screen max-w-xl px-4 py-6 sm:px-6 sm:py-8">
-      <Toaster position={position} theme={theme} duration={duration} />
+    <div
+      id="playground"
+      className="min-h-screen max-w-xl px-4 py-6 sm:px-6 sm:py-8"
+    >
+      <Toaster position={position} theme={theme} duration={duration} hideProgressBar={hideProgressBar} />
       <header className="text-left mb-8">
         <h1
           className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight"
@@ -349,7 +347,7 @@ export default function Playground() {
                   <button
                     key={t}
                     onClick={() => setTheme(t)}
-                    className={`flex px-4 py-1.5 rounded-2xl transition-all text-xs capitalize flex items-center justify-center gap-2 ${
+                    className={`flex px-4 py-1.5 rounded-2xl transition-all text-xs capitalize items-center justify-center gap-2 ${
                       theme === t ? "text-white" : "bg-gray-100 text-gray-700"
                     }`}
                     style={{
@@ -580,12 +578,12 @@ export default function Playground() {
             <div className="flex items-center justify-end mb-3">
               <button
                 onClick={copyConfig}
-                className="text-gray-200 hover:text-white transition-colors flex items-center gap-1 text-xs sm:text-sm cursor-pointer"
+                className=" transition-colors flex items-center gap-1 text-xs sm:text-sm cursor-pointer"
               >
                 Copy
               </button>
             </div>
-            <pre className="text-xs sm:text-sm text-gray-300 overflow-x-auto">
+            <pre className="text-xs sm:text-sm overflow-x-auto">
               <code>{`toast({
   title: "${title}",${
     hasDescription && description

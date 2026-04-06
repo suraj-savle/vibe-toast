@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Pacifico } from "next/font/google";
 import "./globals.css";
-import Analytics from "@/components/Analytics";
+import Analytics from "@/components/lib/Analytics";
+import { Toaster } from "vibe-toast";
+import { use } from "react";
 
 const inter = Inter({
   variable: "--font-inter",
