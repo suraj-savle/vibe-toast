@@ -23,6 +23,9 @@ A lightweight, zero-dependency toast notification library for React. Beautiful, 
 ```bash
 npm install vibe-toast
 ```
+```bash
+npx shadcn@latest add https://vibetoast.vercel.app/r/vibe-toast.json
+```
 
 ## 🚀 Quick Start
 
