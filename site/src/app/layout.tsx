@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
-import { Inter, Pacifico } from "next/font/google";
 import "./globals.css";
+import { Inter, Pacifico } from "next/font/google";
 import Analytics from "@/components/lib/Analytics";
-import { Toaster } from "vibe-toast";
-import { use } from "react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,35 +9,52 @@ const inter = Inter({
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
-  weight: "400", // Pacifico only comes in 400
+  weight: "400",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   metadataBase: new URL("https://vibetoast.vercel.app"),
   title: {
-    default: "vibe-toast | Elite React Notifications",
+    default: "vibe-toast | Modern React Toast Library",
     template: "%s | vibe-toast",
   },
+  verification: {
+    google: "2s5LQ5zlcB8ctu_O090b2BpAvumV7vZ-McHp7jf5dro",
+  },
   description:
-    "A headless, glassmorphic toast library for React powered by Framer Motion.",
+    "A modern, headless, hot toast notification library for React and Next.js powered by smooth animations.",
+
   keywords: [
     "react toast",
-    "notification library",
-    "shadcn toast",
-    "framer motion animations",
+    "toast notification",
+    "react notification library",
+    "nextjs toast",
+    "framer motion toast",
+    "glassmorphism ui",
     "vibe-toast",
   ],
   authors: [{ name: "Suraj" }],
   openGraph: {
-    title: "vibe-toast",
+    title: "vibe-toast | Modern React Toast Library",
     description:
-      "The most 'vibey' notification library for your modern React apps.",
+      "Beautiful animated toast notifications for React and Next.js apps.",
     url: "https://vibetoast.vercel.app", // Replace with your actual URL
     siteName: "vibe-toast",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "vibe-toast | Modern React Toast Library",
+    description:
+      "Beautiful animated toast notifications for React and Next.js apps.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
