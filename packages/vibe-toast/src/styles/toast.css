@@ -323,3 +323,8 @@
   justify-content: center;
   margin-right: 6px;
 }
+
+.vibe-vibe-aesthetic {
+  --vibe-accent: #000;
+  --vibe-bg: #fff;
+}

@@ -1,6 +1,8 @@
 import React from 'react';
 
 export type ToastVariant = 'default' | 'success' | 'error' | 'warning' | 'info' | 'loading';
+export type ToastVibe = 'default' | 'aesthetic';
+
 
 export type ToastPosition = 
   | 'top-left' | 'top-center' | 'top-right' 
@@ -33,6 +35,8 @@ export interface Toast {
   id: string;
   /** The visual style variant of the toast */
   variant?: ToastVariant;
+  /** The vibe variant of the toast */
+  vibe?: ToastVibe;
   /** The main message heading */
   title: React.ReactNode;
   /** Sub-text details that appear after a short delay */
@@ -85,6 +89,8 @@ export interface ToasterProps {
   position?: ToastPosition;
   /** Force 'light' or 'dark' mode, or follow 'system' settings */
   theme?: 'light' | 'dark' | 'system';
+  /** The vibe variant for the toaster */
+  vibe?: ToastVibe;
   /** Whether multiple toasts should expand or stack (logical prop) */
   expand?: boolean;
   /** Use stronger background colors for variants */
@@ -99,11 +105,8 @@ export interface ToasterProps {
   duration?: number;
   /** Globally hide progress bars for all toasts */
   hideProgressBar?: boolean;
-
-
   /** Width for desktop */
   width?: number | string;
-
   /** Width for mobile screens */
   mobileWidth?: number | string;
 }

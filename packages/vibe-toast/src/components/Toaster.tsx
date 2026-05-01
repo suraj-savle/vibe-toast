@@ -9,6 +9,7 @@ export const Toaster: React.FC<ToasterProps> = ({
   theme = "light",
   duration: globalDuration,
   hideProgressBar: globalHideProgress = true,
+  vibe: globalVibe = "default",
 }) => {
   const { toasts, dismiss } = useToast();
   const isTop = position.includes("top");
@@ -39,6 +40,7 @@ export const Toaster: React.FC<ToasterProps> = ({
             key={toast.id}
             toast={{
               ...toast,
+              vibe: toast.vibe ?? globalVibe,
               duration: toast.duration ?? globalDuration,
               hideProgressBar: toast.hideProgressBar ?? globalHideProgress,
             }}

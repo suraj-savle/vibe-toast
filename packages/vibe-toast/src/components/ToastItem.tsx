@@ -35,7 +35,10 @@ export const ToastItem = ({
 
   // 🎯 Icon
   const renderIcon = () => {
-    const iconColor = toast.style?.accent || `var(--vibe-accent)`;
+    const iconColor =
+      toast.vibe === "aesthetic"
+        ? "#000000"
+        : toast.style?.accent || `var(--vibe-accent)`;
 
     if (toast.icon) {
       if (React.isValidElement(toast.icon)) {
@@ -57,13 +60,17 @@ export const ToastItem = ({
     return iconElement;
   };
 
+  const isAesthetic = toast.vibe === "aesthetic";
+
   const containerStyle: React.CSSProperties = {
     ...toast.style,
-    backgroundColor: toast.style?.background || "var(--vibe-bg)",
-    color: toast.style?.color || "var(--vibe-text-main)",
-    borderColor: !!toast.style?.background
-      ? "transparent"
-      : "var(--vibe-border)",
+    backgroundColor: isAesthetic
+      ? "#FFFFFF"
+      : toast.style?.background || "var(--vibe-bg)",
+    color: isAesthetic
+      ? "#000000"
+      : toast.style?.color || "var(--vibe-text-main)",
+    
   };
 
   const textStyle = { color: toast.style?.color || "inherit" };
@@ -75,7 +82,7 @@ export const ToastItem = ({
       initial="initial"
       animate="animate"
       exit="exit"
-      className={`vibe-toast-card vibe-variant-${toast.variant}`}
+      className={`vibe-toast-card vibe-variant-${toast.variant} vibe-vibe-${toast.vibe || "default"}`}
       style={containerStyle}
       drag="x"
       dragConstraints={{ left: 0, right: 300 }}
@@ -162,10 +169,12 @@ export const ToastItem = ({
       {/* ✅ Premium Progress Bar */}
       {!toast.hideProgressBar && toast.duration !== Infinity && (
         <div className="vibe-progress-track">
+          {/* Update the progress fill style */}
           <div
             key={`${toast.id}-${toast.updatedAt || 0}`}
             className="vibe-progress-fill"
             style={{
+              backgroundColor: isAesthetic ? "#000000" : undefined, // Override for aesthetic
               animation: `vibe-progress-shrink ${toast.duration}ms linear forwards`,
             }}
           />
